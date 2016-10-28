@@ -449,17 +449,17 @@ public class main_compiler extends JFrame{
         boolean v_Inserta=false;
         boolean v_errCad=false;
         
-        //Espacio
-        while(p_Palabra.charAt(0)==' '){
-            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
-        }
-        
         //Linea
         while(p_Palabra.charAt(0)==10){
             p_Palabra=p_Palabra.substring(1,p_Palabra.length());
             a_Linea++;
         }
         
+        //Espacio
+        while(p_Palabra.charAt(0)==' '){
+            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+        }
+             
         //PalabrasReservadas
         PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();
         v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);
@@ -522,8 +522,8 @@ public class main_compiler extends JFrame{
                 p_Palabra="";
         }
         else{
-            if(v_Indice!=p_Palabra.length()){
-                if(v_Indice!=-1){
+            if(v_Indice!=p_Palabra.length()-1){
+                if(v_errCad){
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                     p_Palabra=p_Palabra.substring(1,p_Palabra.length());
