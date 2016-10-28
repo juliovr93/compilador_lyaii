@@ -468,17 +468,16 @@ public class main_compiler extends JFrame{
             v_Inserta=true;
             v_Indice=v_Recorrido;
         }
-        /*
+        
         //Operadores
         Operadores v_Operadores=new Operadores();
         v_Recorrido = v_Operadores.getOperadores(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
+        if(0!=v_Recorrido){
             m_AddToken(p_Palabra.substring(0,v_Recorrido),2);
             v_Inserta=true;
             v_Indice=v_Recorrido;
-            v_Recorrido=0;
         }
-        
+        /*
         //Identificadores
         Identificadores v_Ident=new Identificadores();
         v_Recorrido = v_Ident.getIndentificador(p_Palabra);
