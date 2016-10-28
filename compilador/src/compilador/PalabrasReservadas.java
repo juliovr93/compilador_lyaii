@@ -21,7 +21,16 @@ public class PalabrasReservadas {
                     if(cad(p_Palabra)>0)
                         v_Indice=cad(p_Palabra);
                     else{
-                        
+                        if(ent(p_Palabra)>0)
+                            v_Indice=ent(p_Palabra);
+                        else{
+                            if(mientras(p_Palabra)>0)
+                                v_Indice=mientras(p_Palabra);
+                            else{
+                                if(imprime(p_Palabra)>0)
+                                    v_Indice=imprime(p_Palabra);
+                            }
+                        }
                     }
                 }
             }
@@ -102,6 +111,9 @@ public class PalabrasReservadas {
             if(p_Palabra.charAt(p_Index)==' '){
                 v_Recorrido=6;
             }
+            if(p_Palabra.charAt(p_Index)==10){
+                v_Recorrido=6;
+            }
         }
         else{
             v_Recorrido=6;
@@ -163,6 +175,9 @@ public class PalabrasReservadas {
             if(p_Palabra.charAt(p_Index)==' '){
                 v_Recorrido=4;
             }
+            if(p_Palabra.charAt(p_Index)==10){
+                v_Recorrido=4;
+            }
         }else{
             v_Recorrido=4;
         }
@@ -205,6 +220,9 @@ public class PalabrasReservadas {
             if(p_Palabra.charAt(p_Index)==' '){
                 v_Recorrido=2;
             }
+            if(p_Palabra.charAt(p_Index)==10){
+                v_Recorrido=2;
+            }
             if(p_Palabra.charAt(p_Index)=='n'){
                 v_Recorrido=m_siQ3(p_Palabra,3);
             }
@@ -231,6 +249,9 @@ public class PalabrasReservadas {
                 v_Recorrido=4;
             }
             if(p_Palabra.charAt(p_Index)==' '){
+                v_Recorrido=4;
+            }
+            if(p_Palabra.charAt(p_Index)==10){
                 v_Recorrido=4;
             }
         }else{
@@ -275,11 +296,14 @@ public class PalabrasReservadas {
         }
         return v_Recorrido;
     }
-   
+    
     int m_entQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
+                v_Recorrido=3;
+            }
+            if(p_Palabra.charAt(p_Index)==10){
                 v_Recorrido=3;
             }
         }else{
@@ -329,6 +353,9 @@ public class PalabrasReservadas {
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
+                v_Recorrido=3;
+            }
+            if(p_Palabra.charAt(p_Index)==10){
                 v_Recorrido=3;
             }
         }else{
@@ -430,6 +457,9 @@ public class PalabrasReservadas {
             if(p_Palabra.charAt(p_Index)==' '){
                 v_Recorrido=8;
             }
+            if(p_Palabra.charAt(p_Index)==10){
+                v_Recorrido=8;
+            }
             if(p_Palabra.charAt(p_Index)=='('){
                 v_Recorrido=8;
             }
@@ -520,6 +550,9 @@ public class PalabrasReservadas {
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
+                v_Recorrido=7;
+            }
+            if(p_Palabra.charAt(p_Index)==10){
                 v_Recorrido=7;
             }
             if(p_Palabra.charAt(p_Index)=='('){

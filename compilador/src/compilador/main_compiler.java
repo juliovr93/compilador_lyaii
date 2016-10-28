@@ -433,37 +433,40 @@ public class main_compiler extends JFrame{
             }
             v_brLinea.close();                                                  //Cierra el BufferedReader
             v_frDocumento.close();                                              //Cierra el FileReader
-            m_anaLexico(v_Documento);
+            while(v_Documento!=""){
+                v_Documento=m_anaLexico(v_Documento);
+            }
+            System.out.println("");
         }catch(Exception Ex){
             
         }
         
     }
     
-    private void m_anaLexico(String p_Palabra){
+    private String m_anaLexico(String p_Palabra){
         //Variables de control 
-        int v_Bandera=0,v_Recorrido=0,v_Indice=0;
+        int v_Recorrido=0,v_Indice=0;
         boolean v_Inserta=false;
         
         //Espacio
         while(p_Palabra.charAt(0)==' '){
-            p_Palabra.substring(1,p_Palabra.length());
-            a_Linea++;
+            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
         }
         
         //Linea
         while(p_Palabra.charAt(0)==10){
-            p_Palabra.substring(1,p_Palabra.length());
+            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+            a_Linea++;
+            v_Indice++;
         }
         
         //PalabrasReservadas
         PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();
         v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
+        if(0!=v_Recorrido){
             m_AddToken(p_Palabra.substring(0,v_Recorrido),3);
             v_Inserta=true;
             v_Indice=v_Recorrido;
-            v_Recorrido=0;
         }
         /*
         //Operadores
@@ -510,17 +513,20 @@ public class main_compiler extends JFrame{
         if(v_Inserta){
             //Verifica que la palabra a analizar se haya termiando
             if(v_Indice!=p_Palabra.length())
-                //Si no a terminado continua con el analisis
-                 m_anaLexico(p_Palabra.substring(v_Indice,p_Palabra.length()));
+                p_Palabra=p_Palabra.substring(v_Indice,p_Palabra.length());
+            else
+                p_Palabra="";
         }
         else{
-            a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
-            a_txtaConsola.setText(a_txtaConsola.getText()+"Error [181]: Error en la linea: '"+p_Palabra.charAt(0)+"'\n");
-            //Verifica que la palabra a analizar se haya termiando
-            if(1!=p_Palabra.length())
-                //Si no a terminado continua con el analisis
-                 m_anaLexico(p_Palabra.substring(1,p_Palabra.length()));
+            if(v_Indice!=p_Palabra.length()){
+                a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
+                a_txtaConsola.setText(a_txtaConsola.getText()+"Error [181]: Error en la linea: '"+a_Linea+"'\n");
+                p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+            }else{
+                p_Palabra="";
+            }
         }
+        return p_Palabra;
     }
     
     private boolean m_BuscaToken(String p_Palabra){
