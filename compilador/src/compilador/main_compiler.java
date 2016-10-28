@@ -30,7 +30,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class main_compiler extends JFrame{
     
-    File a_Archivo;
+    private File a_Archivo;
+    private int a_Linea=1;
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      //ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          //Bandera para Guardar Archivo
 
@@ -423,35 +424,20 @@ public class main_compiler extends JFrame{
     private void m_Lexico(){
         Scanner v_Lector=null;
         try{
-            v_Lector= new Scanner(new FileReader(a_Archivo));
+            String v_Linea;                                                     //Se crea una variable para leer el documento linea por linea
+            String v_Documento="";                                              //Se crea una variable que contendra todo el texto del documento
+            FileReader v_frDocumento=new FileReader(a_Archivo);                 //Se usa un FileReader para leer el documento
+            BufferedReader v_brLinea=new BufferedReader(v_frDocumento);         //Se unsa Un BufferedReade para reservar un espacio de memoria para leer los datos del documento
+            while((v_Linea=v_brLinea.readLine())!=null){                        //Si la siguiente linea contiene texo, lee el parrafo
+                v_Documento+=v_Linea+"\n";                                      //Añada la linea a la variable que contendra el texto del documento
+            }
+            v_brLinea.close();                                                  //Cierra el BufferedReader
+            v_frDocumento.close();                                              //Cierra el FileReader
+            m_anaLexico(v_Documento);
         }catch(Exception Ex){
             
         }
-        if(v_Lector!=null){
-            while(v_Lector.hasNext()){
-                String v_Palabra=v_Lector.next();
-                m_anaLexico(v_Palabra);
-            }
-            v_Lector.close();
-        }
-    }
-    
-    private boolean m_BuscaToken(String p_Palabra){
-        boolean v_Bandera=false;
-        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
-            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
-            if(v_Temporal.m_getPalabra().equals(p_Palabra))
-                v_Bandera=true;
-        }
-        return v_Bandera;
-    }
-    
-    private void m_AddToken(String p_Palabra,int p_Tipo){
-        if(!m_BuscaToken(p_Palabra)){
-            int v_ID = a_TablaDeSimbolos.size()+1;
-            Token v_newSimbolo = new Token(v_ID,p_Palabra,p_Tipo);
-            a_TablaDeSimbolos.add(v_newSimbolo);
-        }        
+        
     }
     
     private void m_anaLexico(String p_Palabra){
@@ -459,20 +445,32 @@ public class main_compiler extends JFrame{
         int v_Bandera=0,v_Recorrido=0,v_Indice=0;
         boolean v_Inserta=false;
         
-        //Operadores
-        Operadores v_Operadores=new Operadores();
-        v_Recorrido = v_Operadores.getOperadores(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),2);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
-            v_Recorrido=0;
+        //Espacio
+        while(p_Palabra.charAt(0)==' '){
+            p_Palabra.substring(1,p_Palabra.length());
+            a_Linea++;
         }
+        
+        //Linea
+        while(p_Palabra.charAt(0)==10){
+            p_Palabra.substring(1,p_Palabra.length());
+        }
+        
         //PalabrasReservadas
         PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();
         v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);
         if(v_Bandera!=v_Recorrido){
             m_AddToken(p_Palabra.substring(0,v_Recorrido),3);
+            v_Inserta=true;
+            v_Indice=v_Recorrido;
+            v_Recorrido=0;
+        }
+        /*
+        //Operadores
+        Operadores v_Operadores=new Operadores();
+        v_Recorrido = v_Operadores.getOperadores(p_Palabra);
+        if(v_Bandera!=v_Recorrido){
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),2);
             v_Inserta=true;
             v_Indice=v_Recorrido;
             v_Recorrido=0;
@@ -507,7 +505,7 @@ public class main_compiler extends JFrame{
             v_Indice=v_Recorrido;
             v_Recorrido=0;
         }
-        
+        */
         //Verifica que el simbolo se haya insertado
         if(v_Inserta){
             //Verifica que la palabra a analizar se haya termiando
@@ -517,11 +515,30 @@ public class main_compiler extends JFrame{
         }
         else{
             a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
+            a_txtaConsola.setText(a_txtaConsola.getText()+"Error [181]: Error en la linea: '"+p_Palabra.charAt(0)+"'\n");
             //Verifica que la palabra a analizar se haya termiando
             if(1!=p_Palabra.length())
                 //Si no a terminado continua con el analisis
                  m_anaLexico(p_Palabra.substring(1,p_Palabra.length()));
         }
+    }
+    
+    private boolean m_BuscaToken(String p_Palabra){
+        boolean v_Bandera=false;
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            if(v_Temporal.m_getPalabra().equals(p_Palabra))
+                v_Bandera=true;
+        }
+        return v_Bandera;
+    }
+    
+    private void m_AddToken(String p_Palabra,int p_Tipo){
+        if(!m_BuscaToken(p_Palabra)){
+            int v_ID = a_TablaDeSimbolos.size()+1;
+            Token v_newSimbolo = new Token(v_ID,p_Palabra,p_Tipo);
+            a_TablaDeSimbolos.add(v_newSimbolo);
+        }        
     }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed
