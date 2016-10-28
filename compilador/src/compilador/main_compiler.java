@@ -447,6 +447,7 @@ public class main_compiler extends JFrame{
         //Variables de control 
         int v_Recorrido=0,v_Indice=0;
         boolean v_Inserta=false;
+        boolean v_errCad=false;
         
         //Espacio
         while(p_Palabra.charAt(0)==' '){
@@ -457,7 +458,6 @@ public class main_compiler extends JFrame{
         while(p_Palabra.charAt(0)==10){
             p_Palabra=p_Palabra.substring(1,p_Palabra.length());
             a_Linea++;
-            v_Indice++;
         }
         
         //PalabrasReservadas
@@ -477,37 +477,42 @@ public class main_compiler extends JFrame{
             v_Inserta=true;
             v_Indice=v_Recorrido;
         }
-        /*
-        //Identificadores
-        Identificadores v_Ident=new Identificadores();
-        v_Recorrido = v_Ident.getIndentificador(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),4);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
-            v_Recorrido=0;
-        }
-        
-        //Delimitadores 
-        Datos v_Datos=new Datos();
-        v_Recorrido = v_Datos.getDatos(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),5);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
-            v_Recorrido=0;
-        }
         
         //Delimitadores 
         Delimitadores v_Delimitadores=new Delimitadores();
         v_Recorrido = v_Delimitadores.getDelimitadores(p_Palabra);
-        if(v_Bandera!=v_Recorrido){
+        if(0!=v_Recorrido){
             m_AddToken(p_Palabra.substring(0,v_Recorrido),1);
             v_Inserta=true;
             v_Indice=v_Recorrido;
-            v_Recorrido=0;
         }
-        */
+                
+        
+        //Datos
+        Datos v_Datos=new Datos();
+        v_Recorrido = v_Datos.getDatos(p_Palabra);
+        if(0!=v_Recorrido){
+            if(v_Recorrido>0){
+                m_AddToken(p_Palabra.substring(0,v_Recorrido),5);
+                v_Inserta=true;
+                v_Indice=v_Recorrido;
+                v_Recorrido=0;
+            }
+            else{
+                p_Palabra=p_Palabra.substring(0,v_Recorrido);
+                v_errCad=true;
+            }
+        }        
+                
+        //Identificadores
+        Identificadores v_Ident=new Identificadores();
+        v_Recorrido = v_Ident.getIndentificador(p_Palabra);
+        if(0!=v_Recorrido){
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),4);
+            v_Inserta=true;
+            v_Indice=v_Recorrido;        
+        }
+        
         //Verifica que el simbolo se haya insertado
         if(v_Inserta){
             //Verifica que la palabra a analizar se haya termiando
@@ -518,9 +523,14 @@ public class main_compiler extends JFrame{
         }
         else{
             if(v_Indice!=p_Palabra.length()){
-                a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
-                a_txtaConsola.setText(a_txtaConsola.getText()+"Error [181]: Error en la linea: '"+a_Linea+"'\n");
-                p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+                if(v_Indice!=-1){
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
+                    p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+                }else{
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [182]: Cadena no completada: '"+p_Palabra.charAt(0)+"'\n");
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
+                }
             }else{
                 p_Palabra="";
             }
