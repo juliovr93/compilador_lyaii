@@ -18,4 +18,12 @@ public class Token {
     String m_getPalabra(){
         return a_Lexema;
     }
+    
+    int m_getID(){
+        return a_idToken;
+    }
+    
+    int m_getTipo(){
+        return a_Tipo;
+    }
 }
