@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 public class main_compiler extends JFrame{
     
@@ -164,7 +165,7 @@ public class main_compiler extends JFrame{
             a_pnlCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(a_pnlCodigoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(a_scrllCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
+                .addComponent(a_scrllCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
                 .addContainerGap())
         );
         a_pnlCodigoLayout.setVerticalGroup(
@@ -195,7 +196,7 @@ public class main_compiler extends JFrame{
             a_pnlSimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(a_pnlSimbolosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
                 .addContainerGap())
         );
         a_pnlSimbolosLayout.setVerticalGroup(
@@ -556,6 +557,21 @@ public class main_compiler extends JFrame{
         }        
     }
     
+    void m_creaTabla(){
+        String[] v_tblModel=new String[]{"ID","Lexema","Tipo"};
+        DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
+        a_tblSimbolos.setModel(v_Modelo);
+        String[] v_Datos={"","",""};
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            v_Datos[0]=v_Temporal.m_getID()+"";
+            v_Datos[1]=v_Temporal.m_getPalabra();
+            v_Datos[2]=v_Temporal.m_getTipo()+"";
+            v_Modelo.addRow(v_Datos);
+        }
+    }
+    
+    
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed
         m_NuevoArchivo();
     }//GEN-LAST:event_a_mniNuevoActionPerformed
@@ -568,6 +584,7 @@ public class main_compiler extends JFrame{
         m_Guardar();
         a_TablaDeSimbolos = new ArrayList<Token>();
         m_Lexico();
+        m_creaTabla();
         System.out.println("Termino Analizador Lexico");
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
