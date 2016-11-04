@@ -6,11 +6,11 @@
 package compilador;
 
 //Componentes para la interfaz
-import javax.swing.JFrame;                                                      //Importación de Componente JFrame
-import javax.swing.ImageIcon;                                                   //Importación de Componente Icon
+import javax.swing.JFrame;                                                      
+import javax.swing.ImageIcon;                                                   
 
 //Componentes para Look And Feel
-import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;                  //Importacion de Tema Look and Feel
+import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import javax.swing.UIManager;
 
 //Componentes para Abrir Documento
@@ -21,30 +21,33 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 //Componente para usar ArrayList
 import java.util.ArrayList;
-import java.util.Scanner;
+
+//Componente para Mensajes
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
+//Componente para mostrar tablas de simbolos
 import javax.swing.table.DefaultTableModel;
 
 public class main_compiler extends JFrame{
     
-    private File a_Archivo;
-    private int a_Linea=1;
-    private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      //ArrayList para Tabla de Simbolos
-    private boolean a_bnGuardaArchivo;                                          //Bandera para Guardar Archivo
+    private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
+    private int a_Linea=1;                                                      // Contador de numero de linea donde se encuentra el lexema
+    private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
+    private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
 
     public main_compiler() {
-        initComponents();                                                       //Inicialización de componentes
-        ImageIcon img = new ImageIcon("src/compilador/resource/compiler.png");  //Carga un icono para la aplicación
-        setIconImage(img.getImage());                                           //Asigna ícono al proyecto
-        setLocationRelativeTo(null);                                            //Centra la ventana
-        TextLineNumber tln_contador=new TextLineNumber(a_txtpCodigo);           //Carga la libreria TextLineNumber
-        a_scrllCodigo.setRowHeaderView(tln_contador);                           //Agregar la libreria al scroll del codigo
-        setExtendedState(this.MAXIMIZED_BOTH);                                  //Maximiza la ventana
-        setVisible(true);                                                       //Hace visible la ventana al usuario
+        initComponents();                                                       // Inicialización de componentes
+        ImageIcon img = new ImageIcon("src/compilador/resource/compiler.png");  // Carga un icono para la aplicación
+        setIconImage(img.getImage());                                           // Asigna ícono al proyecto
+        setLocationRelativeTo(null);                                            // Centra la ventana
+        TextLineNumber tln_contador=new TextLineNumber(a_txtpCodigo);           // Carga la libreria TextLineNumber para numerar las lineas de codigo
+        a_scrllCodigo.setRowHeaderView(tln_contador);                           // Agregar la libreria al scroll del codigo
+        setExtendedState(this.MAXIMIZED_BOTH);                                  // Maximiza la ventana
+        setVisible(true);                                                       // Hace visible la ventana al usuario
     }
     
     //Generacion de Componente
@@ -318,20 +321,20 @@ public class main_compiler extends JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_NuevoArchivo(){
-        int  v_opcion;
-        if(!a_txtpCodigo.getText().equals("")){
+        int  v_opcion;                                                          // Variable para captura de opciones
+        if(!a_txtpCodigo.getText().equals("")){                                 // Analiza si el textpane se encuentra vacio
+            // Si el documento no se ecuentra vacio pregunta si se desea guardar el documento
             v_opcion=JOptionPane.showConfirmDialog(this,"¿Desea guardar el documento?");
-            System.out.println("Opcion: "+v_opcion);
-            if(v_opcion==0)
-                m_Guardar();
-                a_txtpCodigo.setText("");
-                a_txtpCodigo.setEnabled(true);
-                a_mniGuardar.setEnabled(true);
-                a_mniGuardarComo.setEnabled(true);
-                a_btnGuardar.setEnabled(true);
-                a_btnGuardarComo.setEnabled(true);
-                a_btnCompilar.setEnabled(true);
-                a_bnGuardaArchivo=true;
+            if(v_opcion==0)                                                     // Si la opcion es aceptar                                                     // 
+                m_Guardar();                                                    // Llama el metodo para guardar el documento
+                a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
+                a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
+                a_mniGuardar.setEnabled(true);                                  // Habilita el JMenuItem Guardar
+                a_mniGuardarComo.setEnabled(true);                              // Habilita el JMenuItem Guardar como
+                a_btnGuardar.setEnabled(true);                                  // Habilita el JButton Guardar del JToolBar
+                a_btnGuardarComo.setEnabled(true);                              // Habilita el JButton Guardar como del JToolBar
+                a_btnCompilar.setEnabled(true);                                 // Habilita el JButton Compilar del JToolBar
+                a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
             if(v_opcion==1){
                 a_txtpCodigo.setText("");
                 a_txtpCodigo.setEnabled(true);
@@ -423,7 +426,6 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Lexico(){
-        Scanner v_Lector=null;
         try{
             String v_Linea;                                                     //Se crea una variable para leer el documento linea por linea
             String v_Documento="";                                              //Se crea una variable que contendra todo el texto del documento
