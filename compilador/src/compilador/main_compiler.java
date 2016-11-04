@@ -55,6 +55,7 @@ public class main_compiler extends JFrame{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
         a_ToolBar = new javax.swing.JToolBar();
         a_btnNuevo = new javax.swing.JButton();
         a_btnAbrir = new javax.swing.JButton();
@@ -79,6 +80,9 @@ public class main_compiler extends JFrame{
         a_mniSalir = new javax.swing.JMenuItem();
         a_mnuHerramientas = new javax.swing.JMenu();
         a_mniCompilar = new javax.swing.JMenuItem();
+        a_mnuAyuda = new javax.swing.JMenu();
+
+        jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Compilador");
@@ -205,7 +209,7 @@ public class main_compiler extends JFrame{
         a_pnlSimbolosLayout.setVerticalGroup(
             a_pnlSimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(a_pnlSimbolosLayout.createSequentialGroup()
-                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -286,6 +290,9 @@ public class main_compiler extends JFrame{
         a_mnuHerramientas.add(a_mniCompilar);
 
         a_MenuBar.add(a_mnuHerramientas);
+
+        a_mnuAyuda.setText("Ayuda");
+        a_MenuBar.add(a_mnuAyuda);
 
         setJMenuBar(a_MenuBar);
 
@@ -638,6 +645,7 @@ public class main_compiler extends JFrame{
     private javax.swing.JMenuItem a_mniNuevo;
     private javax.swing.JMenuItem a_mniSalir;
     private javax.swing.JMenu a_mnuArchivo;
+    private javax.swing.JMenu a_mnuAyuda;
     private javax.swing.JMenu a_mnuHerramientas;
     private javax.swing.JPanel a_pnlCodigo;
     private javax.swing.JPanel a_pnlConsola;
@@ -648,5 +656,6 @@ public class main_compiler extends JFrame{
     private javax.swing.JTable a_tblSimbolos;
     private javax.swing.JTextArea a_txtaConsola;
     private javax.swing.JTextPane a_txtpCodigo;
+    private javax.swing.JMenu jMenu1;
     // End of variables declaration//GEN-END:variables
 }
