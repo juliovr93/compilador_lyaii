@@ -332,7 +332,7 @@ public class main_compiler extends JFrame{
         if(!a_txtpCodigo.getText().equals("")){                                 // Analiza si el textpane se encuentra vacio
             // Si el documento no se ecuentra vacio pregunta si se desea guardar el documento
             v_opcion=JOptionPane.showConfirmDialog(this,"¿Desea guardar el documento?");
-            if(v_opcion==0)                                                     // Si la opcion es aceptar                                                     // 
+            if(v_opcion==0)                                                     // Si la opcion es "si"
                 m_Guardar();                                                    // Llama el metodo para guardar el documento
                 a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
                 a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
@@ -342,175 +342,165 @@ public class main_compiler extends JFrame{
                 a_btnGuardarComo.setEnabled(true);                              // Habilita el JButton Guardar como del JToolBar
                 a_btnCompilar.setEnabled(true);                                 // Habilita el JButton Compilar del JToolBar
                 a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
-            if(v_opcion==1){
-                a_txtpCodigo.setText("");
-                a_txtpCodigo.setEnabled(true);
-                a_mniGuardar.setEnabled(true);
-                a_mniGuardarComo.setEnabled(true);
-                a_btnGuardar.setEnabled(true);
-                a_btnGuardarComo.setEnabled(true);
-                a_btnCompilar.setEnabled(true);
-                a_bnGuardaArchivo=true;
+            if(v_opcion==1){                                                    // Si la opcion es "no"
+                a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
+                a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
+                a_mniGuardar.setEnabled(true);                                  // Habilita el JMenuItem Guardar
+                a_mniGuardarComo.setEnabled(true);                              // Habilita el JMenuItem Guardar como
+                a_btnGuardar.setEnabled(true);                                  // Habilita el JButton Guardar del JToolBar
+                a_btnGuardarComo.setEnabled(true);                              // Habilita el JButton Guardar como del JToolBar
+                a_btnCompilar.setEnabled(true);                                 // Habilita el JButton Compilar del JToolBar
+                a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
             }
-        }else{
-            a_txtpCodigo.setText("");
-            a_txtpCodigo.setEnabled(true);
-            a_mniGuardar.setEnabled(true);
-            a_mniGuardarComo.setEnabled(true);
-            a_btnGuardar.setEnabled(true);
-            a_btnGuardarComo.setEnabled(true);
-            a_btnCompilar.setEnabled(true);
-            a_bnGuardaArchivo=true;
+        }else{                                                                  // Si el documento se encuentra vacio
+            a_txtpCodigo.setText("");                                           // Limpia el textpane para generar un nuevo codigo fuente
+            a_txtpCodigo.setEnabled(true);                                      // Habilita el textpane para editarlo
+            a_mniGuardar.setEnabled(true);                                      // Habilita el JMenuItem Guardar
+            a_mniGuardarComo.setEnabled(true);                                  // Habilita el JMenuItem Guardar como
+            a_btnGuardar.setEnabled(true);                                      // Habilita el JButton Guardar del JToolBar
+            a_btnGuardarComo.setEnabled(true);                                  // Habilita el JButton Guardar como del JToolBar
+            a_btnCompilar.setEnabled(true);                                     // Habilita el JButton Compilar del JToolBar
+            a_bnGuardaArchivo=true;                                             // Cambia el estado de la bandera bnGuardarArchivo a verdadero
         }
     }
     
     private void m_AbrirArchivo(){
                                
-        JFileChooser v_AbrirArchivo=new JFileChooser();                         //Genera un nuevo JFileChooser para abrir el archivo
-        //Filtro para mostrar solo los archivos con extension *.lya
+        JFileChooser v_AbrirArchivo=new JFileChooser();                         // Genera un nuevo JFileChooser para abrir el archivo
+        // Filtro para mostrar solo los archivos con extension *.lya
         v_AbrirArchivo.setFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
-        int v_Seleccion =v_AbrirArchivo.showDialog(null,"Abrir");               //Se comprueba si ha aceptado abrir el archivo
-        if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           //Si la opcion fue aceptar
+        int v_Seleccion =v_AbrirArchivo.showDialog(null,"Abrir");               // Se comprueba si ha aceptado abrir el archivo
+        if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           // Si la opcion fue aceptar
             try{            
-                a_Archivo = v_AbrirArchivo.getSelectedFile();                   //Se abre el documento en un File
-                String v_Linea;                                                 //Se crea una variable para leer el documento linea por linea
-                String v_Documento="";                                          //Se crea una variable que contendra todo el texto del documento
-                FileReader v_frDocumento=new FileReader(a_Archivo);             //Se usa un FileReader para leer el documento
-                BufferedReader v_brLinea=new BufferedReader(v_frDocumento);     //Se unsa Un BufferedReade para reservar un espacio de memoria para leer los datos del documento
-                while((v_Linea=v_brLinea.readLine())!=null){                    //Si la siguiente linea contiene texo, lee el parrafo
-                    v_Documento+=v_Linea+"\n";                                  //Añada la linea a la variable que contendra el texto del documento
+                a_Archivo = v_AbrirArchivo.getSelectedFile();                   // Se abre el documento en un JFile (a_Archivo)
+                String v_Linea;                                                 // Se crea una variable para leer el documento linea por linea (v_Linea)
+                String v_codigoFuente="";                                       // Se crea una variable que contendra todo el texto del documento (v_codigoFuente)
+                FileReader v_frArchivo=new FileReader(a_Archivo);               // Se usa un FileReader para leer el archivo almacenado en a_Archivo (v_frArchivo)
+                BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);     // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
+                while((v_Linea=v_brArchivo.readLine())!=null){                  // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
+                    v_codigoFuente+=v_Linea+"\n";                               // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del codigo fuente
                 }
-                a_txtpCodigo.setText(v_Documento);                              //Inserta el texto del documento en el JTextPane
-                a_txtpCodigo.setEnabled(true);                                  //Habilita el JTextPane para editar el documento
-                a_mniGuardar.setEnabled(true);                                  //Habilita el MenuItem para Guardar
-                a_mniGuardarComo.setEnabled(true);                              //Habilita el MenuItem para Guardar Como...
-                a_btnGuardar.setEnabled(true);                                  //Habilita el Button para Guardar
-                a_btnGuardarComo.setEnabled(true);                              //Habilita el Button para Guardar Como...
-                a_btnCompilar.setEnabled(true);                                 //Habilita el Button para Compilar
-                v_brLinea.close();                                              //Cierra el BufferedReader
-                v_frDocumento.close();                                          //Cierra el FileReader
+                a_txtpCodigo.setText(v_codigoFuente);                           // Inserta el texto del documento en el JTextPane (a_txtpCodigo)
+                a_txtpCodigo.setEnabled(true);                                  // Habilita el JTextPane para editar el documento
+                a_mniGuardar.setEnabled(true);                                  // Habilita el MenuItem para Guardar
+                a_mniGuardarComo.setEnabled(true);                              // Habilita el MenuItem para Guardar Como...
+                a_btnGuardar.setEnabled(true);                                  // Habilita el Button para Guardar
+                a_btnGuardarComo.setEnabled(true);                              // Habilita el Button para Guardar Como...
+                a_btnCompilar.setEnabled(true);                                 // Habilita el Button para Compilar
+                v_brArchivo.close();                                            // Cierra el BufferedReader (v_brArchivo)
+                v_frArchivo.close();                                            // Cierra el FileReader (v_frArchivo)
             }catch(Exception Ex){
-                JOptionPane.showMessageDialog(this,"Error al abrir el archivo");//Mensaje en caso de error al abrir el archivo
+                JOptionPane.showMessageDialog(this,"Error al abrir el archivo");//Mensaje de error al abrir el archivo
             }
         }
     }
     
     private void m_Guardar(){
-        if(!a_bnGuardaArchivo){
-            try{
-                BufferedWriter bw_Escribe;                                          //Crea un BufferedWriter
-                bw_Escribe = new BufferedWriter(new FileWriter(a_Archivo));         ///Se cierra el documento para guardar/Se inicializa el BufferedWriter para escribir en el archivo abierto
-                bw_Escribe.write(a_txtpCodigo.getText());                           //Se escribe el codigo en el archivo
-                bw_Escribe.close();                                                 //Se cierra el documento para guardar
+        if(!a_bnGuardaArchivo){                                                 // Revisa la bandera para guardar el documento
+            try{                                
+                BufferedWriter v_bwArchivo;                                     // Crea un BufferedWriter para escribir el codigo fuente (v_bwArchivo)
+                v_bwArchivo = new BufferedWriter(new FileWriter(a_Archivo));    // Inicializa el BufferedWriter para escribir el codigo fuente
+                v_bwArchivo.write(a_txtpCodigo.getText());                      // Escribe nuestro codigo fuente almacenado en a_txtpCodigo
+                v_bwArchivo.close();                                            // Cierra el BufferedWriter para guardar los cambios en el archivo
             }catch(Exception Ex){
-                JOptionPane.showMessageDialog(this,"Error al guardar el archivo");  //Mensaje en caso de error al guardar el archivo
+                JOptionPane.showMessageDialog(this,"Error al guardar el archivo");//Mensaje de error al guardar el archivo
             }
         }else
-            m_GuardarComo();
+            m_GuardarComo();                                                    // Llama el método para guardar un nuevo documento
     }
     
     private void m_GuardarComo(){
-        JFileChooser v_GuardarArchivo=new JFileChooser();                       //Genera un nuevo JFileChooser para guardar el archivo
+        JFileChooser v_GuardarArchivo=new JFileChooser();                       // Genera un nuevo JFileChooser para guardar el archivo
         //Filtro para mostrar solo los archivos con extension *.lya
         v_GuardarArchivo.addChoosableFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
-        int v_Seleccion = v_GuardarArchivo.showSaveDialog(null);                //Comprueba que haya presionado aceptar
-        if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           //Si acepto
+        int v_Seleccion = v_GuardarArchivo.showSaveDialog(null);                // Comprueba que haya presionado aceptar
+        if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           // Si acepto guardar el archivo
             try{
-                a_Archivo = v_GuardarArchivo.getSelectedFile();                 //Se genera el documento en un File
-                String v_path= a_Archivo.getAbsolutePath();                     //Obtenemos el Path del archivo a guardar
-                PrintWriter pw_Escribe = new PrintWriter(a_Archivo);            //Genera el PrintWriter para escribir nuestro archivo
-                pw_Escribe.print(a_txtpCodigo.getText());                       //Inserta el codigo en el archivo
-                pw_Escribe.close();                                             //Cierra el archivo para esctibirlo
-                if(!v_path.endsWith(".lya")){                                   //Compuesna que el archivo se haya guardado con la extension .lya
-                    File v_tempArchivo = new File(v_path+".lya");               //Si no genera un nuevo archivo para renomdrarlo
-                    a_Archivo.renameTo(v_tempArchivo);                          //Renombra el nuevo archivo
+                a_Archivo = v_GuardarArchivo.getSelectedFile();                 // Se genera el archivo en un File (a_Archivo)
+                String v_path= a_Archivo.getAbsolutePath();                     // Obtenemos el path del archivo a guardar
+                PrintWriter v_pwArchivo = new PrintWriter(a_Archivo);           // Se genera un PrintWriter para escribir nuestro archivo en el disco duro
+                v_pwArchivo.print(a_txtpCodigo.getText());                      // Se escribe el codigo fuente almacenado en a_txtpCodigo
+                v_pwArchivo.close();                                            // Se cierra el archivo para escribirlo
+                if(!v_path.endsWith(".lya")){                                   // Se comprueba que el archivo se haya guardado en la ruta correcta
+                    File v_tempArchivo = new File(v_path+".lya");               // Si no genera un nuevo archivo para renombrarlo
+                    a_Archivo.renameTo(v_tempArchivo);                          // Renombra el nuevo archivo
                 }
-                a_bnGuardaArchivo=false;
+                a_bnGuardaArchivo=false;                                        // Cambia la bandera a_bnGuardaArchivo a falso
             }catch(Exception Ex){
-                JOptionPane.showMessageDialog(this,"Error al guardar el archivo");  //Mensaje en caso de error al guardar el archivo
+                JOptionPane.showMessageDialog(this,"Error al guardar el archivo");//Mensaje en caso de error al guardar el archivo
             }
         }
     }
     
     private void m_Lexico(){
         try{
-            String v_Linea;                                                     //Se crea una variable para leer el documento linea por linea
-            String v_Documento="";                                              //Se crea una variable que contendra todo el texto del documento
-            FileReader v_frDocumento=new FileReader(a_Archivo);                 //Se usa un FileReader para leer el documento
-            BufferedReader v_brLinea=new BufferedReader(v_frDocumento);         //Se unsa Un BufferedReade para reservar un espacio de memoria para leer los datos del documento
-            while((v_Linea=v_brLinea.readLine())!=null){                        //Si la siguiente linea contiene texo, lee el parrafo
-                v_Documento+=v_Linea+"\n";                                      //Añada la linea a la variable que contendra el texto del documento
+            String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
+            String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
+            FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
+            BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
+            while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
+                v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
             }
-            v_brLinea.close();                                                  //Cierra el BufferedReader
-            v_frDocumento.close();                                              //Cierra el FileReader
-            while(v_Documento!=""){
-                v_Documento=m_anaLexico(v_Documento);
+            v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
+            v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
+            while(v_codigoFuente!=""){                                          // Analiza el codigo fuente mientras sea difernte de ""
+                v_codigoFuente=m_anaLexico(v_codigoFuente);                     // Llama al método del ánalisis léxico y envía el código fuente como parámetro
             }
-            System.out.println("");
         }catch(Exception Ex){
-            
+            JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
         }
-        
     }
     
     private String m_anaLexico(String p_Palabra){
-        //Variables de control 
-        int v_Recorrido=0,v_Indice=0;
-        boolean v_Inserta=false;
-        boolean v_errCad=false;
-        
-        //Linea
-        while(p_Palabra.charAt(0)==10){
-            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
-            a_Linea++;
+        int v_Recorrido=0,v_Indice=0;                                           // Variables de control para el recorrido del codigo fuente
+        boolean v_Inserta=false;                                                // Bandera para control de insercion de token
+        boolean v_errLexema=false;                                              // Bandera para control de error de lexemas
+        /*********************  Saltos de Linea  ******************************/
+        while(p_Palabra.charAt(0)==10){                                         // Compara el carácter con el numero 10 (Salto de Linea)
+            p_Palabra=p_Palabra.substring(1,p_Palabra.length());                // Mientras encuentre saltos de lineas omite dichos carácteres y reduce el tamaño del string en 
+            a_Linea++;                                                          // Aumenta en uno el contador de lineas
         }
-        
-        //Espacio
-        while(p_Palabra.charAt(0)==' '){
-            p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+        /*********************  Espacios  *************************************/
+        while(p_Palabra.charAt(0)==' '){                                        // Compara el carácter con un espacio 
+            p_Palabra=p_Palabra.substring(1,p_Palabra.length());                // Mientras encuentre saltos de lineas omite dichos carácteres y reduce el tamaño del string en 1
         }
-             
-        //PalabrasReservadas
-        PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();
-        v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);
-        if(0!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),3);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
+        /*********************  Palabras Reservadas ***************************/
+        PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();           // Llama a la clase PalabrasReservadas para detectar palabras reservadas en el código fuente
+        v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);        // Manda llamar el metodo getPalabrasReservadas para regresar el numero de caracteres que componen a la palabra reservada
+        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),3);                   // Si el recorrido es diferente de 0 encontro una palabra reservada y añade el token a la tabla de simbolos
+            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
+            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
         }
-        
-        //Operadores
-        Operadores v_Operadores=new Operadores();
-        v_Recorrido = v_Operadores.getOperadores(p_Palabra);
-        if(0!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),2);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
+        /********************  Operadores  ************************************/
+        Operadores v_Operadores=new Operadores();                               // Llama a la clase Operadores para detectar operadores en el código fuente
+        v_Recorrido = v_Operadores.getOperadores(p_Palabra);                    // Manda llamar el método getOperadores para regresar el número de caráceres que componen al operador
+        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),2);                   // Si el recorrido es diferente de 0 encontro un operador y añade el token a la tabla de simbolos
+            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
+            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
         }
-        
-        //Delimitadores 
-        Delimitadores v_Delimitadores=new Delimitadores();
-        v_Recorrido = v_Delimitadores.getDelimitadores(p_Palabra);
-        if(0!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),1);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;
-        }
-                
-        
-        //Datos
-        Datos v_Datos=new Datos();
-        v_Recorrido = v_Datos.getDatos(p_Palabra);
-        if(0!=v_Recorrido){
-            if(v_Recorrido>0){
-                m_AddToken(p_Palabra.substring(0,v_Recorrido),5);
-                v_Inserta=true;
-                v_Indice=v_Recorrido;
-                v_Recorrido=0;
+        /*********************  Delimitadores  ********************************/
+        Delimitadores v_Delimitadores=new Delimitadores();                      // Llama a la clase Delimitadores para detectar delimitadores en el código fuente
+        v_Recorrido = v_Delimitadores.getDelimitadores(p_Palabra);              // Manda llamar el método getDelimitadores para regresar el número de carácteres que componen al delimitador
+        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),1);                   // Si el recorrido es diferente de 0 encontro un delimitador y añade el token a la tabla de simbolos
+            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
+            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
+        }        
+        /********************  Datos  *****************************************/
+        Datos v_Datos=new Datos();                                              // Llama a la clase Datos para detectar los tipos de datos en el código fuente
+        v_Recorrido = v_Datos.getDatos(p_Palabra);                              // Manda llamar el método getDatos para regresar el número de carácteres que componen al tipo de dato
+        if(0!=v_Recorrido){                                                     // Compara si recorrido del código fuente es diferente de 0
+            if(v_Recorrido>0){                                                  // Compara si el recorrido del código fue mayor a 0
+                m_AddToken(p_Palabra.substring(0,v_Recorrido),5);               // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
+                v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
+                v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
+                v_Recorrido=0;                                                  // 
             }
             else{
                 p_Palabra=p_Palabra.substring(0,v_Recorrido);
-                v_errCad=true;
+                v_errLexema=true;
             }
         }        
                 
@@ -533,7 +523,7 @@ public class main_compiler extends JFrame{
         }
         else{
             if(v_Indice!=p_Palabra.length()-1){
-                if(v_errCad){
+                if(v_errLexema){
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                     p_Palabra=p_Palabra.substring(1,p_Palabra.length());

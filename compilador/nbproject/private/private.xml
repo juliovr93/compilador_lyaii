@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/Token.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/Identificadores.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/Datos.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/Operadores.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/Delimitadores.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/PalabrasReservadas.java</file>
-            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/main_compiler.java</file>
+            <file>file:/home/julio/Documentos/GitHub/compilador_lyaii/compilador/src/compilador/PalabrasReservadas.java</file>
+            <file>file:/home/julio/Documentos/GitHub/compilador_lyaii/compilador/src/compilador/main_compiler.java</file>
         </group>
     </open-files>
 </project-private>
