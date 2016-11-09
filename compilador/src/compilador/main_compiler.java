@@ -496,11 +496,11 @@ public class main_compiler extends JFrame{
                 m_AddToken(p_Palabra.substring(0,v_Recorrido),5);               // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-                v_Recorrido=0;                                                  // 
+                v_Recorrido=0;                                                  // Reinicia el valor del reco rrido a 0
             }
             else{
-                p_Palabra=p_Palabra.substring(0,v_Recorrido);
-                v_errLexema=true;
+                p_Palabra=p_Palabra.substring(0,v_Recorrido);                   // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
+                v_errLexema=true;                                               // Cambia la bandera v_errLexema a cierto
             }
         }        
                 
