@@ -447,7 +447,7 @@ public class main_compiler extends JFrame{
                 v_codigoFuente=m_anaLexico(v_codigoFuente);                     // Llama al método del ánalisis léxico y envía el código fuente como parámetro
             }
         }catch(Exception Ex){
-            JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
+            //JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
         }
     }
     
