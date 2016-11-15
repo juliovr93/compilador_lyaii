@@ -120,8 +120,8 @@ public class main_compiler extends JFrame{
         a_btnAbrir.setText("Abrir");
         a_btnAbrir.setFocusable(false);
         a_btnAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        a_btnAbrir.setMaximumSize(new java.awt.Dimension(100, 47));
-        a_btnAbrir.setMinimumSize(new java.awt.Dimension(100, 47));
+        a_btnAbrir.setMaximumSize(new java.awt.Dimension(120, 47));
+        a_btnAbrir.setMinimumSize(new java.awt.Dimension(120, 47));
         a_btnAbrir.setPreferredSize(new java.awt.Dimension(100, 47));
         a_btnAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
