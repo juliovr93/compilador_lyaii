@@ -2,11 +2,11 @@
  * @author Ramirez García Juana Rubi
  * @author Valle Rodriguez Julio Cesar
  */
-package compilador;
+package compilador.lexico;
 
 public class Operadores {
     
-    int getOperadores(String p_Palabra){
+    public int getOperadores(String p_Palabra){
         int v_Indice=0;
         if(Mas(p_Palabra) >0){
             v_Indice=Mas(p_Palabra);

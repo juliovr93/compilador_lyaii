@@ -2,11 +2,11 @@
  * @author Ramirez García Juana Rubi
  * @author Valle Rodriguez Julio Cesar
  */
-package compilador;
+package compilador.lexico;
 
 public class PalabrasReservadas {
     
-    int getPalabrasReservadas(String p_Palabra){
+    public int getPalabrasReservadas(String p_Palabra){
         int v_Indice=0;
         if(start(p_Palabra)>0){
             v_Indice=start(p_Palabra);
@@ -45,7 +45,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ0(String p_Palabra,int p_Index){
+    private int m_startQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='#'){
@@ -55,7 +55,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ1(String p_Palabra,int p_Index){
+    private int m_startQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='s'){
@@ -65,7 +65,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ2(String p_Palabra,int p_Index){
+    private int m_startQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='t'){
@@ -75,7 +75,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ3(String p_Palabra,int p_Index){
+    private int m_startQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='a'){
@@ -85,7 +85,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ4(String p_Palabra,int p_Index){
+    private int m_startQ4(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='r'){
@@ -95,7 +95,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ5(String p_Palabra,int p_Index){
+    private int m_startQ5(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='t'){
@@ -105,7 +105,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_startQ6(String p_Palabra,int p_Index){
+    private int m_startQ6(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
@@ -129,7 +129,7 @@ public class PalabrasReservadas {
     }
     
     
-    int m_endQ0(String p_Palabra,int p_Index){
+    private int m_endQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='#'){
@@ -139,7 +139,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_endQ1(String p_Palabra,int p_Index){
+    private int m_endQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='e'){
@@ -149,7 +149,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_endQ2(String p_Palabra,int p_Index){
+    private int m_endQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='n'){
@@ -159,7 +159,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_endQ3(String p_Palabra,int p_Index){
+    private int m_endQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='d'){
@@ -169,7 +169,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_endQ4(String p_Palabra,int p_Index){
+    private int m_endQ4(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
@@ -191,7 +191,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_siQ0(String p_Palabra,int p_Index){
+    private int m_siQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='s'){
@@ -201,7 +201,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_siQ1(String p_Palabra,int p_Index){
+    private int m_siQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='i'){
@@ -211,7 +211,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_siQ2(String p_Palabra,int p_Index){
+    private int m_siQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='('){
@@ -232,7 +232,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_siQ3(String p_Palabra,int p_Index){
+    private int m_siQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='o'){
@@ -242,7 +242,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_siQ4(String p_Palabra,int p_Index){
+    private int m_siQ4(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='{'){
@@ -267,7 +267,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_entQ0(String p_Palabra,int p_Index){
+    private int m_entQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='e'){
@@ -277,7 +277,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_entQ1(String p_Palabra,int p_Index){
+    private int m_entQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='n'){
@@ -287,7 +287,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_entQ2(String p_Palabra,int p_Index){
+    private int m_entQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='t'){
@@ -297,7 +297,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_entQ3(String p_Palabra,int p_Index){
+    private int m_entQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
@@ -319,7 +319,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_cadQ0(String p_Palabra,int p_Index){
+    private int m_cadQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='c'){
@@ -329,7 +329,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_cadQ1(String p_Palabra,int p_Index){
+    private int m_cadQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='a'){
@@ -339,7 +339,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_cadQ2(String p_Palabra,int p_Index){
+    private int m_cadQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='d'){
@@ -349,7 +349,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
    
-    int m_cadQ3(String p_Palabra,int p_Index){
+    private int m_cadQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
@@ -371,7 +371,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ0(String p_Palabra,int p_Index){
+    private int m_mientrasQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='m'){
@@ -381,7 +381,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ1(String p_Palabra,int p_Index){
+    private int m_mientrasQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='i'){
@@ -391,7 +391,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ2(String p_Palabra,int p_Index){
+    private int m_mientrasQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='e'){
@@ -401,7 +401,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
    
-    int m_mientrasQ3(String p_Palabra,int p_Index){
+    private int m_mientrasQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='n'){
@@ -411,7 +411,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ4(String p_Palabra,int p_Index){
+    private int m_mientrasQ4(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='t'){
@@ -421,7 +421,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ5(String p_Palabra,int p_Index){
+    private int m_mientrasQ5(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='r'){
@@ -431,7 +431,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ6(String p_Palabra,int p_Index){
+    private int m_mientrasQ6(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='a'){
@@ -441,7 +441,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ7(String p_Palabra,int p_Index){
+    private int m_mientrasQ7(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='s'){
@@ -451,7 +451,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_mientrasQ8(String p_Palabra,int p_Index){
+    private int m_mientrasQ8(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){
@@ -476,7 +476,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ0(String p_Palabra,int p_Index){
+    private int m_imprimeQ0(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='i'){
@@ -486,7 +486,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ1(String p_Palabra,int p_Index){
+    private int m_imprimeQ1(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='m'){
@@ -496,7 +496,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ2(String p_Palabra,int p_Index){
+    private int m_imprimeQ2(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='p'){
@@ -506,7 +506,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ3(String p_Palabra,int p_Index){
+    private int m_imprimeQ3(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='r'){
@@ -516,7 +516,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ4(String p_Palabra,int p_Index){
+    private int m_imprimeQ4(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='i'){
@@ -526,7 +526,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ5(String p_Palabra,int p_Index){
+    private int m_imprimeQ5(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='m'){
@@ -536,7 +536,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ6(String p_Palabra,int p_Index){
+    private int m_imprimeQ6(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)=='e'){
@@ -546,7 +546,7 @@ public class PalabrasReservadas {
         return v_Recorrido;
     }
     
-    int m_imprimeQ7(String p_Palabra,int p_Index){
+    private int m_imprimeQ7(String p_Palabra,int p_Index){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Index){
             if(p_Palabra.charAt(p_Index)==' '){

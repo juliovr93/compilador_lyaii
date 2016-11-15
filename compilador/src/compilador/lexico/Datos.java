@@ -2,10 +2,10 @@
  * @author Ramirez García Juana Rubi
  * @author Valle Rodriguez Julio Cesar
  */
-package compilador;
+package compilador.lexico;
 public class Datos {
 
-    int getDatos(String p_Palabra){
+    public int getDatos(String p_Palabra){
         int v_Index=0;
         if (m_entQ0(p_Palabra,0)>0){
             v_Index=m_entQ0(p_Palabra,0);
@@ -16,7 +16,7 @@ public class Datos {
         return v_Index;
     }
     
-    int m_entQ0(String p_Palabra,int p_Indice){
+    private int m_entQ0(String p_Palabra,int p_Indice){
         int v_Index=p_Indice;
         if(p_Palabra.charAt(p_Indice)>=48&&p_Palabra.charAt(p_Indice)<=57){    
             v_Index=m_entQ1(p_Palabra,v_Index+1);
@@ -24,7 +24,7 @@ public class Datos {
         return v_Index;
     }
     
-    int m_entQ1(String p_Palabra,int p_Indice){
+    private int m_entQ1(String p_Palabra,int p_Indice){
         int v_Index=p_Indice;
         if (p_Palabra.length()-1>=p_Indice){
             if(p_Palabra.charAt(p_Indice)>=48&&p_Palabra.charAt(p_Indice)<=57){    
@@ -34,7 +34,7 @@ public class Datos {
         return v_Index;
     }
     
-    int m_cadQ0(String p_Palabra,int p_Indice){
+    private int m_cadQ0(String p_Palabra,int p_Indice){
         int v_Recorrido=0;
         if(p_Palabra.length()-1>=p_Indice){
             if(p_Palabra.charAt(p_Indice)=='"'){
@@ -44,7 +44,7 @@ public class Datos {
         return v_Recorrido;
     }
     
-    int m_cadQ1(String p_Palabra,int p_Indice){
+    private int m_cadQ1(String p_Palabra,int p_Indice){
         int v_Indice=p_Indice;
         if (p_Palabra.length()-1>=p_Indice){
             if(p_Palabra.charAt(p_Indice)!='"'){

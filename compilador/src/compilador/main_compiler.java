@@ -6,6 +6,11 @@
 package compilador;
 
 //Componentes para la interfaz
+import compilador.lexico.Identificadores;
+import compilador.lexico.PalabrasReservadas;
+import compilador.lexico.Datos;
+import compilador.lexico.Operadores;
+import compilador.lexico.Delimitadores;
 import javax.swing.JFrame;                                                      
 import javax.swing.ImageIcon;                                                   
 

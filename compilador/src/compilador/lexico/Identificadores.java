@@ -2,11 +2,11 @@
  * @author Ramirez García Juana Rubi
  * @author Valle Rodriguez Julio Cesar
  */
-package compilador;
+package compilador.lexico;
 
 public class Identificadores {
     
-    int getIndentificador(String p_Palabra){
+    public int getIndentificador(String p_Palabra){
         int v_Indice=0;
         v_Indice=m_IdentQ0(p_Palabra,0);
         return v_Indice;
