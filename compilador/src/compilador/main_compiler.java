@@ -502,21 +502,18 @@ public class main_compiler extends JFrame{
                 p_Palabra=p_Palabra.substring(0,v_Recorrido);                   // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
                 v_errLexema=true;                                               // Cambia la bandera v_errLexema a cierto
             }
-        }        
-                
-        //Identificadores
-        Identificadores v_Ident=new Identificadores();
-        v_Recorrido = v_Ident.getIndentificador(p_Palabra);
-        if(0!=v_Recorrido){
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),4);
-            v_Inserta=true;
-            v_Indice=v_Recorrido;        
+        }              
+        /********************  Identificadores  *******************************/
+        Identificadores v_Ident=new Identificadores();                          // Llama a la clase Identificadores para detectar los tipos de datos en el código fuente
+        v_Recorrido = v_Ident.getIndentificador(p_Palabra);                     // Manda llamar el método getIdentificadores para regresar el número de carácteres que componen al tipo de dato
+        if(0!=v_Recorrido){                                                     // Compara si el recorrido del código fuente es diferente de 0
+            m_AddToken(p_Palabra.substring(0,v_Recorrido),4);                   // Si el recorrido es mayor de 0 encontro un identificador y añade el token a la tabla de simbolos
+            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
+            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
         }
-        
-        //Verifica que el simbolo se haya insertado
-        if(v_Inserta){
-            //Verifica que la palabra a analizar se haya termiando
-            if(v_Indice!=p_Palabra.length())
+        /********************  Verificacion de Inserción   ********************/        
+        if(v_Inserta){                                                          // Verifica que el simbolo se haya insertado
+            if(v_Indice!=p_Palabra.length())                                    // Verifica que la palabra a analizar se haya termiando
                 p_Palabra=p_Palabra.substring(v_Indice,p_Palabra.length());
             else
                 p_Palabra="";
