@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 
 //Componentes para Look And Feel
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
+import java.awt.Color;
 import javax.swing.UIManager;
 
 //Componentes para Abrir Documento
@@ -45,7 +46,8 @@ public class main_compiler extends JFrame{
     private int a_Linea=1;                                                      // Contador de numero de linea donde se encuentra el lexema
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
-
+    private boolean a_bdLexico=true;
+            
     public main_compiler() {
         initComponents();                                                       // Inicialización de componentes
         ImageIcon img = new ImageIcon("src/compilador/resource/compiler.png");  // Carga un icono para la aplicación
@@ -78,6 +80,10 @@ public class main_compiler extends JFrame{
         a_pnlConsola = new javax.swing.JPanel();
         a_scrllConsola = new javax.swing.JScrollPane();
         a_txtaConsola = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        a_lblLexico = new javax.swing.JLabel();
+        a_lblSintactico = new javax.swing.JLabel();
+        a_lblSemantico = new javax.swing.JLabel();
         a_MenuBar = new javax.swing.JMenuBar();
         a_mnuArchivo = new javax.swing.JMenu();
         a_mniNuevo = new javax.swing.JMenuItem();
@@ -171,6 +177,11 @@ public class main_compiler extends JFrame{
         a_pnlCodigo.setBorder(javax.swing.BorderFactory.createTitledBorder("Codígo"));
 
         a_txtpCodigo.setEnabled(false);
+        a_txtpCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                a_txtpCodigoKeyPressed(evt);
+            }
+        });
         a_scrllCodigo.setViewportView(a_txtpCodigo);
 
         javax.swing.GroupLayout a_pnlCodigoLayout = new javax.swing.GroupLayout(a_pnlCodigo);
@@ -185,7 +196,7 @@ public class main_compiler extends JFrame{
         a_pnlCodigoLayout.setVerticalGroup(
             a_pnlCodigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(a_pnlCodigoLayout.createSequentialGroup()
-                .addComponent(a_scrllCodigo)
+                .addComponent(a_scrllCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,11 +227,12 @@ public class main_compiler extends JFrame{
         a_pnlSimbolosLayout.setVerticalGroup(
             a_pnlSimbolosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(a_pnlSimbolosLayout.createSequentialGroup()
-                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                .addComponent(a_scrllSimbolos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         a_pnlConsola.setBorder(javax.swing.BorderFactory.createTitledBorder("Consola"));
+        a_pnlConsola.setForeground(new java.awt.Color(255, 0, 0));
 
         a_txtaConsola.setEditable(false);
         a_txtaConsola.setColumns(20);
@@ -242,6 +254,35 @@ public class main_compiler extends JFrame{
                 .addContainerGap()
                 .addComponent(a_scrllConsola)
                 .addContainerGap())
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Semáforo"));
+
+        a_lblLexico.setText("Análisis Léxico");
+
+        a_lblSintactico.setText("Análisis Sintáctico");
+
+        a_lblSemantico.setText("Análisis Semántico");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(a_lblLexico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(a_lblSintactico)
+                .addGap(88, 88, 88)
+                .addComponent(a_lblSemantico)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(a_lblLexico)
+                .addComponent(a_lblSintactico)
+                .addComponent(a_lblSemantico))
         );
 
         a_mnuArchivo.setText("Archivo");
@@ -315,7 +356,9 @@ public class main_compiler extends JFrame{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(a_pnlCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -325,7 +368,10 @@ public class main_compiler extends JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(a_pnlCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(a_pnlConsola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -441,6 +487,9 @@ public class main_compiler extends JFrame{
     
     private void m_Lexico(){
         try{
+            a_txtaConsola.setText("");                                          // Limpia la consola de errores
+            a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
+            a_bdLexico=true;                                                    // Reinicia para la bandera del análisis léxico
             String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
             String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
@@ -519,21 +568,23 @@ public class main_compiler extends JFrame{
             v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
         }
         /********************  Verificacion de Inserción   ********************/        
-        if(v_Inserta){                                                          // Verifica que el simbolo se haya insertado
+        if(v_Inserta){                                                          // Verifica que el léxema se haya insertado
             if(v_Indice!=p_Palabra.length())                                    // Verifica que la palabra a analizar se haya termiando
-                p_Palabra=p_Palabra.substring(v_Indice,p_Palabra.length());
-            else
-                p_Palabra="";
+                p_Palabra=p_Palabra.substring(v_Indice,p_Palabra.length());     // Si no, recorta el codigo fuente a analizar
+            else    
+                p_Palabra="";                                                   // Si el codigo fuente termina, lo inicializa a vacio
         }
-        else{
-            if(v_Indice!=p_Palabra.length()-1){
-                if(v_errLexema){
+        else{                                                                   // Si el léxema no se   inserto
+            if(v_Indice!=p_Palabra.length()-1){                                 // Analiza que el indice tenga un valor diferente a 0
+                a_bdLexico=false;
+                if(v_errLexema){                                                    
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [182]: Cadena no completada: '"+p_Palabra.charAt(0)+"'\n");
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
+                    //p_Palabra=p_Palabra.substring(1,p_Palabra.length());
+                }else{
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                     p_Palabra=p_Palabra.substring(1,p_Palabra.length());
-                }else{
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [182]: Cadena no completada: '"+p_Palabra.charAt(0)+"'\n");
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                 }
             }else{
                 p_Palabra="";
@@ -585,10 +636,17 @@ public class main_compiler extends JFrame{
 
     private void a_btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnCompilarActionPerformed
         m_Guardar();
-        a_TablaDeSimbolos = new ArrayList<Token>();
         m_Lexico();
         m_creaTabla();
+        if(a_bdLexico){
+            a_lblLexico.setForeground(Color.GREEN);
+            a_lblSintactico.setForeground(Color.YELLOW);
+        }else{
+            a_lblLexico.setForeground(Color.RED);
+            
+        }
         System.out.println("Termino Analizador Lexico");
+        
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
     private void a_mniGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniGuardarActionPerformed
@@ -615,6 +673,12 @@ public class main_compiler extends JFrame{
         m_GuardarComo();
     }//GEN-LAST:event_a_mniGuardarComoActionPerformed
 
+    private void a_txtpCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_a_txtpCodigoKeyPressed
+        a_lblLexico.setForeground(Color.YELLOW);
+        a_lblSintactico.setForeground(Color.BLACK);
+        a_lblSemantico.setForeground(Color.BLACK);
+    }//GEN-LAST:event_a_txtpCodigoKeyPressed
+
     public static void main(String args[]) {
         try{
             UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());         //Carga el tema look and feel
@@ -632,6 +696,9 @@ public class main_compiler extends JFrame{
     private javax.swing.JButton a_btnGuardar;
     private javax.swing.JButton a_btnGuardarComo;
     private javax.swing.JButton a_btnNuevo;
+    private javax.swing.JLabel a_lblLexico;
+    private javax.swing.JLabel a_lblSemantico;
+    private javax.swing.JLabel a_lblSintactico;
     private javax.swing.JMenuItem a_mniAbrir;
     private javax.swing.JMenuItem a_mniCompilar;
     private javax.swing.JMenuItem a_mniGuardar;
@@ -651,5 +718,6 @@ public class main_compiler extends JFrame{
     private javax.swing.JTextArea a_txtaConsola;
     private javax.swing.JTextPane a_txtpCodigo;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
