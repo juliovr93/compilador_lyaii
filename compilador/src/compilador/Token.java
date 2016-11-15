@@ -8,6 +8,7 @@ public class Token {
     private int a_idToken;
     private String a_Lexema;
     private int a_Tipo;
+    private Object a_Valor;
     
     Token(int p_idToken,String p_Lexema,int p_Tipo){
         a_idToken=p_idToken;

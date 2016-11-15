@@ -5,12 +5,14 @@
 
 package compilador;
 
-//Componentes para la interfaz
+//Clases para realizar el análisis léxico
 import compilador.lexico.Identificadores;
 import compilador.lexico.PalabrasReservadas;
 import compilador.lexico.Datos;
 import compilador.lexico.Operadores;
 import compilador.lexico.Delimitadores;
+
+//Componentes para la interfaz
 import javax.swing.JFrame;                                                      
 import javax.swing.ImageIcon;                                                   
 
