@@ -129,9 +129,9 @@
                   <Group type="102" attributes="0">
                       <Component id="a_pnlCodigo" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="a_pnlSimbolos" max="32767" attributes="0"/>
-                          <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="a_pnlSimbolos" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -430,41 +430,50 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="a_lblLexico" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="a_lblSintactico" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                  <Component id="a_lblSemantico" min="-2" max="-2" attributes="0"/>
+                  <Component id="a_btnLexico" min="-2" pref="135" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="a_btnSintactico" min="-2" pref="144" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="a_btnSemantico" pref="128" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="a_lblLexico" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="a_lblSintactico" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="a_lblSemantico" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="a_btnLexico" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="a_btnSintactico" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="a_btnSemantico" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="a_lblLexico">
+        <Component class="javax.swing.JButton" name="a_btnLexico">
           <Properties>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis L&#xe9;xico"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="a_btnLexicoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="a_lblSintactico">
+        <Component class="javax.swing.JButton" name="a_btnSintactico">
           <Properties>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis Sint&#xe1;ctico"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="a_lblSemantico">
+        <Component class="javax.swing.JButton" name="a_btnSemantico">
           <Properties>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis Sem&#xe1;ntico"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

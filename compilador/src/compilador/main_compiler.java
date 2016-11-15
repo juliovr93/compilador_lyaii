@@ -81,9 +81,9 @@ public class main_compiler extends JFrame{
         a_scrllConsola = new javax.swing.JScrollPane();
         a_txtaConsola = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        a_lblLexico = new javax.swing.JLabel();
-        a_lblSintactico = new javax.swing.JLabel();
-        a_lblSemantico = new javax.swing.JLabel();
+        a_btnLexico = new javax.swing.JButton();
+        a_btnSintactico = new javax.swing.JButton();
+        a_btnSemantico = new javax.swing.JButton();
         a_MenuBar = new javax.swing.JMenuBar();
         a_mnuArchivo = new javax.swing.JMenu();
         a_mniNuevo = new javax.swing.JMenuItem();
@@ -258,11 +258,18 @@ public class main_compiler extends JFrame{
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Semáforo"));
 
-        a_lblLexico.setText("Análisis Léxico");
+        a_btnLexico.setText("Análisis Léxico");
+        a_btnLexico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a_btnLexicoActionPerformed(evt);
+            }
+        });
 
-        a_lblSintactico.setText("Análisis Sintáctico");
+        a_btnSintactico.setText("Análisis Sintáctico");
+        a_btnSintactico.setEnabled(false);
 
-        a_lblSemantico.setText("Análisis Semántico");
+        a_btnSemantico.setText("Análisis Semántico");
+        a_btnSemantico.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -270,19 +277,22 @@ public class main_compiler extends JFrame{
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(a_lblLexico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(a_lblSintactico)
-                .addGap(88, 88, 88)
-                .addComponent(a_lblSemantico)
+                .addComponent(a_btnLexico, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(a_btnSintactico, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(a_btnSemantico, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(a_lblLexico)
-                .addComponent(a_lblSintactico)
-                .addComponent(a_lblSemantico))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(a_btnLexico)
+                    .addComponent(a_btnSintactico)
+                    .addComponent(a_btnSemantico))
+                .addContainerGap())
         );
 
         a_mnuArchivo.setText("Archivo");
@@ -356,9 +366,9 @@ public class main_compiler extends JFrame{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(a_pnlCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(a_pnlSimbolos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -487,6 +497,7 @@ public class main_compiler extends JFrame{
     
     private void m_Lexico(){
         try{
+            a_Linea=1;                                                          // Inicializa el numero de lineas a 1
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
             a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_bdLexico=true;                                                    // Reinicia para la bandera del análisis léxico
@@ -582,7 +593,7 @@ public class main_compiler extends JFrame{
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                     //p_Palabra=p_Palabra.substring(1,p_Palabra.length());
                 }else{
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: '"+p_Palabra.charAt(0)+"'\n");
+                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: ' "+p_Palabra.charAt(0)+" ' para cerrar cadena\n");
                     a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
                     p_Palabra=p_Palabra.substring(1,p_Palabra.length());
                 }
@@ -639,14 +650,13 @@ public class main_compiler extends JFrame{
         m_Lexico();
         m_creaTabla();
         if(a_bdLexico){
-            a_lblLexico.setForeground(Color.GREEN);
-            a_lblSintactico.setForeground(Color.YELLOW);
+            a_btnLexico.setBackground(Color.GREEN);
+            a_btnSintactico.setBackground(Color.YELLOW);
         }else{
-            a_lblLexico.setForeground(Color.RED);
+            a_btnLexico.setBackground(Color.RED);
             
         }
         System.out.println("Termino Analizador Lexico");
-        
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
     private void a_mniGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniGuardarActionPerformed
@@ -674,10 +684,25 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_mniGuardarComoActionPerformed
 
     private void a_txtpCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_a_txtpCodigoKeyPressed
-        a_lblLexico.setForeground(Color.YELLOW);
-        a_lblSintactico.setForeground(Color.BLACK);
-        a_lblSemantico.setForeground(Color.BLACK);
+        a_btnLexico.setBackground(Color.YELLOW);
+        a_btnSintactico.setBackground(Color.BLACK);
+        a_btnSemantico.setBackground(Color.BLACK);
     }//GEN-LAST:event_a_txtpCodigoKeyPressed
+
+    private void a_btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnLexicoActionPerformed
+        m_Guardar();
+        m_Lexico();
+        m_creaTabla();
+        if(a_bdLexico){
+            a_btnLexico.setBackground(Color.GREEN);
+            a_btnSintactico.setEnabled(true);
+            a_btnSintactico.setBackground(Color.YELLOW);
+        }else{
+            a_btnLexico.setBackground(Color.RED);
+            
+        }
+        System.out.println("Termino Analizador Lexico");
+    }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     public static void main(String args[]) {
         try{
@@ -695,10 +720,10 @@ public class main_compiler extends JFrame{
     private javax.swing.JButton a_btnCompilar;
     private javax.swing.JButton a_btnGuardar;
     private javax.swing.JButton a_btnGuardarComo;
+    private javax.swing.JButton a_btnLexico;
     private javax.swing.JButton a_btnNuevo;
-    private javax.swing.JLabel a_lblLexico;
-    private javax.swing.JLabel a_lblSemantico;
-    private javax.swing.JLabel a_lblSintactico;
+    private javax.swing.JButton a_btnSemantico;
+    private javax.swing.JButton a_btnSintactico;
     private javax.swing.JMenuItem a_mniAbrir;
     private javax.swing.JMenuItem a_mniCompilar;
     private javax.swing.JMenuItem a_mniGuardar;
