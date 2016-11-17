@@ -12,6 +12,9 @@ import compilador.lexico.Datos;
 import compilador.lexico.Operadores;
 import compilador.lexico.Delimitadores;
 
+//Clases para realizar el análisis sintáctico
+import compilador.sintactico.mainSintactico;
+
 //Componentes para la interfaz
 import javax.swing.JFrame;                                                      
 import javax.swing.ImageIcon;                                                   
@@ -267,6 +270,11 @@ public class main_compiler extends JFrame{
 
         a_btnSintactico.setText("Análisis Sintáctico");
         a_btnSintactico.setEnabled(false);
+        a_btnSintactico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a_btnSintacticoActionPerformed(evt);
+            }
+        });
 
         a_btnSemantico.setText("Análisis Semántico");
         a_btnSemantico.setEnabled(false);
@@ -608,7 +616,7 @@ public class main_compiler extends JFrame{
         boolean v_Bandera=false;
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
-            if(v_Temporal.m_getPalabra().equals(p_Palabra))
+            if(v_Temporal.m_getLexema().equals(p_Palabra))
                 v_Bandera=true;
         }
         return v_Bandera;
@@ -630,12 +638,18 @@ public class main_compiler extends JFrame{
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getID()+"";
-            v_Datos[1]=v_Temporal.m_getPalabra();
+            v_Datos[1]=v_Temporal.m_getLexema();
             v_Datos[2]=v_Temporal.m_getTipo()+"";
             v_Modelo.addRow(v_Datos);
         }
     }
     
+    private void m_anaSintactico(){
+        mainSintactico o_mainSintactico=new mainSintactico(a_TablaDeSimbolos);
+        String v_Mensaje=o_mainSintactico.mainSintaxis();
+        if(!v_Mensaje.equals(""))
+            a_txtaConsola.setText(a_txtaConsola.getText()+v_Mensaje+"\n");
+    }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed
         m_NuevoArchivo();
@@ -652,6 +666,7 @@ public class main_compiler extends JFrame{
         if(a_bdLexico){
             a_btnLexico.setBackground(Color.GREEN);
             a_btnSintactico.setBackground(Color.YELLOW);
+            
         }else{
             a_btnLexico.setBackground(Color.RED);
             
@@ -703,6 +718,10 @@ public class main_compiler extends JFrame{
         }
         System.out.println("Termino Analizador Lexico");
     }//GEN-LAST:event_a_btnLexicoActionPerformed
+
+    private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
+        m_anaSintactico();
+    }//GEN-LAST:event_a_btnSintacticoActionPerformed
 
     public static void main(String args[]) {
         try{

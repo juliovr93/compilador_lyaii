@@ -16,15 +16,15 @@ public class Token {
         a_Tipo=p_Tipo;
     }
     
-    String m_getPalabra(){
+    public String m_getLexema(){
         return a_Lexema;
     }
     
-    int m_getID(){
+    public int m_getID(){
         return a_idToken;
     }
     
-    int m_getTipo(){
+    public int m_getTipo(){
         return a_Tipo;
     }
 }
