@@ -256,6 +256,7 @@ public class main_compiler extends JFrame{
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Semáforo"));
 
+        a_btnLexico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnLexico.setText("Análisis Léxico");
         a_btnLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,6 +264,7 @@ public class main_compiler extends JFrame{
             }
         });
 
+        a_btnSintactico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnSintactico.setText("Análisis Sintáctico");
         a_btnSintactico.setEnabled(false);
         a_btnSintactico.addActionListener(new java.awt.event.ActionListener() {
@@ -271,6 +273,7 @@ public class main_compiler extends JFrame{
             }
         });
 
+        a_btnSemantico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnSemantico.setText("Análisis Semántico");
         a_btnSemantico.setEnabled(false);
 
@@ -499,20 +502,26 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Lexico(){
+        String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
+        String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
         try{
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
             a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
             
-            String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
-            String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
+            
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
             BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
             while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
                 v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
             }
-            
-            AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);
+            v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
+            v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
+        }catch(Exception Ex){
+            System.out.println(Ex.getMessage());
+            //JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
+        }
+        AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);
             a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();
             a_txtaConsola.setText(o_anaLexico.m_getConsola());
             a_bdLexico=o_anaLexico.m_getLexico();
@@ -524,13 +533,6 @@ public class main_compiler extends JFrame{
             }else{
                 a_btnLexico.setBackground(Color.RED);
             }
-            
-            v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
-            v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
-        }catch(Exception Ex){
-            System.out.println(Ex.getMessage());
-            //JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
-        }
     }
     
     void m_creaTabla(){

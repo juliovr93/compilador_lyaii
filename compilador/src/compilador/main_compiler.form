@@ -458,6 +458,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="a_btnLexico">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis L&#xe9;xico"/>
           </Properties>
           <Events>
@@ -466,6 +469,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="a_btnSintactico">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis Sint&#xe1;ctico"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -475,6 +481,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="a_btnSemantico">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="An&#xe1;lisis Sem&#xe1;ntico"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
