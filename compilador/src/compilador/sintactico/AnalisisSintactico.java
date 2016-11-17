@@ -7,13 +7,14 @@ package compilador.sintactico;
 import compilador.Token;
 import java.util.ArrayList;
 
-public class mainSintactico {
+public class AnalisisSintactico {
     
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();
+    private String a_codFuente;
     
-    public mainSintactico(ArrayList p_TablaDeSimbolos){
+    public AnalisisSintactico(ArrayList p_TablaDeSimbolos, String p_codFuente){
         a_TablaDeSimbolos=p_TablaDeSimbolos;
-        m_BuscaToken();
+        a_codFuente=p_codFuente;
     }
     
     private boolean m_BuscaToken(){
@@ -33,7 +34,7 @@ public class mainSintactico {
     public String mainSintaxis(){
         String v_Mensaje="";
         if(m_BuscaToken()){
-            
+            BloqueCodigo o_Sintactico = new BloqueCodigo(a_codFuente);
         }else{
             v_Mensaje="Error []: La sentencia <main> no esta completa";
         }

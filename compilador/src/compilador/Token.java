@@ -10,7 +10,7 @@ public class Token {
     private int a_Tipo;
     private Object a_Valor;
     
-    Token(int p_idToken,String p_Lexema,int p_Tipo){
+    public Token(int p_idToken,String p_Lexema,int p_Tipo){
         a_idToken=p_idToken;
         a_Lexema=p_Lexema;
         a_Tipo=p_Tipo;

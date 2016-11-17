@@ -5,15 +5,11 @@
 
 package compilador;
 
-//Clases para realizar el análisis léxico
-import compilador.lexico.Identificadores;
-import compilador.lexico.PalabrasReservadas;
-import compilador.lexico.Datos;
-import compilador.lexico.Operadores;
-import compilador.lexico.Delimitadores;
+//Clase para realizar el análisis léxico
+import compilador.lexico.AnalisisLexico;
 
-//Clases para realizar el análisis sintáctico
-import compilador.sintactico.mainSintactico;
+//Clase para realizar el análisis sintáctico
+import compilador.sintactico.AnalisisSintactico;
 
 //Componentes para la interfaz
 import javax.swing.JFrame;                                                      
@@ -46,10 +42,9 @@ import javax.swing.table.DefaultTableModel;
 public class main_compiler extends JFrame{
     
     private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
-    private int a_Linea=1;                                                      // Contador de numero de linea donde se encuentra el lexema
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
-    private boolean a_bdLexico=true;
+    private boolean a_bdLexico=false;                                            // Bandera del Análisis Léxico
             
     public main_compiler() {
         initComponents();                                                       // Inicialización de componentes
@@ -505,10 +500,10 @@ public class main_compiler extends JFrame{
     
     private void m_Lexico(){
         try{
-            a_Linea=1;                                                          // Inicializa el numero de lineas a 1
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
             a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
-            a_bdLexico=true;                                                    // Reinicia para la bandera del análisis léxico
+            a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
+            
             String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
             String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
@@ -516,118 +511,26 @@ public class main_compiler extends JFrame{
             while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
                 v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
             }
+            
+            AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);
+            a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();
+            a_txtaConsola.setText(o_anaLexico.m_getConsola());
+            a_bdLexico=o_anaLexico.m_getLexico();
+            m_creaTabla();
+            if(a_bdLexico){
+                a_btnLexico.setBackground(Color.GREEN);
+                a_btnSintactico.setEnabled(true);
+                a_btnSintactico.setBackground(Color.YELLOW);
+            }else{
+                a_btnLexico.setBackground(Color.RED);
+            }
+            
             v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
             v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
-            while(v_codigoFuente!=""){                                          // Analiza el codigo fuente mientras sea difernte de ""
-                v_codigoFuente=m_anaLexico(v_codigoFuente);                     // Llama al método del ánalisis léxico y envía el código fuente como parámetro
-            }
         }catch(Exception Ex){
+            System.out.println(Ex.getMessage());
             //JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
         }
-    }
-    
-    private String m_anaLexico(String p_Palabra){
-        int v_Recorrido=0,v_Indice=0;                                           // Variables de control para el recorrido del codigo fuente
-        boolean v_Inserta=false;                                                // Bandera para control de insercion de token
-        boolean v_errLexema=false;                                              // Bandera para control de error de lexemas
-        /*********************  Saltos de Linea  ******************************/
-        while(p_Palabra.charAt(0)==10){                                         // Compara el carácter con el numero 10 (Salto de Linea)
-            p_Palabra=p_Palabra.substring(1,p_Palabra.length());                // Mientras encuentre saltos de lineas omite dichos carácteres y reduce el tamaño del string en 
-            a_Linea++;                                                          // Aumenta en uno el contador de lineas
-        }
-        /*********************  Espacios  *************************************/
-        while(p_Palabra.charAt(0)==' '){                                        // Compara el carácter con un espacio 
-            p_Palabra=p_Palabra.substring(1,p_Palabra.length());                // Mientras encuentre saltos de lineas omite dichos carácteres y reduce el tamaño del string en 1
-        }
-        /*********************  Palabras Reservadas ***************************/
-        PalabrasReservadas v_PalabrasReserv=new PalabrasReservadas();           // Llama a la clase PalabrasReservadas para detectar palabras reservadas en el código fuente
-        v_Recorrido = v_PalabrasReserv.getPalabrasReservadas(p_Palabra);        // Manda llamar el metodo getPalabrasReservadas para regresar el numero de caracteres que componen a la palabra reservada
-        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),3);                   // Si el recorrido es diferente de 0 encontro una palabra reservada y añade el token a la tabla de simbolos
-            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
-            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-        }
-        /********************  Operadores  ************************************/
-        Operadores v_Operadores=new Operadores();                               // Llama a la clase Operadores para detectar operadores en el código fuente
-        v_Recorrido = v_Operadores.getOperadores(p_Palabra);                    // Manda llamar el método getOperadores para regresar el número de caráceres que componen al operador
-        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),2);                   // Si el recorrido es diferente de 0 encontro un operador y añade el token a la tabla de simbolos
-            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
-            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-        }
-        /*********************  Delimitadores  ********************************/
-        Delimitadores v_Delimitadores=new Delimitadores();                      // Llama a la clase Delimitadores para detectar delimitadores en el código fuente
-        v_Recorrido = v_Delimitadores.getDelimitadores(p_Palabra);              // Manda llamar el método getDelimitadores para regresar el número de carácteres que componen al delimitador
-        if(0!=v_Recorrido){                                                     // Compara si recorrido del codigo fuente es diferente de 0
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),1);                   // Si el recorrido es diferente de 0 encontro un delimitador y añade el token a la tabla de simbolos
-            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
-            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-        }        
-        /********************  Datos  *****************************************/
-        Datos v_Datos=new Datos();                                              // Llama a la clase Datos para detectar los tipos de datos en el código fuente
-        v_Recorrido = v_Datos.getDatos(p_Palabra);                              // Manda llamar el método getDatos para regresar el número de carácteres que componen al tipo de dato
-        if(0!=v_Recorrido){                                                     // Compara si recorrido del código fuente es diferente de 0
-            if(v_Recorrido>0){                                                  // Compara si el recorrido del código fue mayor a 0
-                m_AddToken(p_Palabra.substring(0,v_Recorrido),5);               // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
-                v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
-                v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-                v_Recorrido=0;                                                  // Reinicia el valor del reco rrido a 0
-            }
-            else{
-                p_Palabra=p_Palabra.substring(0,v_Recorrido);                   // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                v_errLexema=true;                                               // Cambia la bandera v_errLexema a cierto
-            }
-        }              
-        /********************  Identificadores  *******************************/
-        Identificadores v_Ident=new Identificadores();                          // Llama a la clase Identificadores para detectar los tipos de datos en el código fuente
-        v_Recorrido = v_Ident.getIndentificador(p_Palabra);                     // Manda llamar el método getIdentificadores para regresar el número de carácteres que componen al tipo de dato
-        if(0!=v_Recorrido){                                                     // Compara si el recorrido del código fuente es diferente de 0
-            m_AddToken(p_Palabra.substring(0,v_Recorrido),4);                   // Si el recorrido es mayor de 0 encontro un identificador y añade el token a la tabla de simbolos
-            v_Inserta=true;                                                     // Cambia la bandera de control de insercion a cierto
-            v_Indice=v_Recorrido;                                               // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
-        }
-        /********************  Verificacion de Inserción   ********************/        
-        if(v_Inserta){                                                          // Verifica que el léxema se haya insertado
-            if(v_Indice!=p_Palabra.length())                                    // Verifica que la palabra a analizar se haya termiando
-                p_Palabra=p_Palabra.substring(v_Indice,p_Palabra.length());     // Si no, recorta el codigo fuente a analizar
-            else    
-                p_Palabra="";                                                   // Si el codigo fuente termina, lo inicializa a vacio
-        }
-        else{                                                                   // Si el léxema no se   inserto
-            if(v_Indice!=p_Palabra.length()-1){                                 // Analiza que el indice tenga un valor diferente a 0
-                a_bdLexico=false;
-                if(v_errLexema){                                                    
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [182]: Cadena no completada: '"+p_Palabra.charAt(0)+"'\n");
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
-                    //p_Palabra=p_Palabra.substring(1,p_Palabra.length());
-                }else{
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error [180]: No se encuentra simbolo: ' "+p_Palabra.charAt(0)+" ' para cerrar cadena\n");
-                    a_txtaConsola.setText(a_txtaConsola.getText()+"Error en la linea: "+a_Linea+"\n");
-                    p_Palabra=p_Palabra.substring(1,p_Palabra.length());
-                }
-            }else{
-                p_Palabra="";
-            }
-        }
-        return p_Palabra;
-    }
-    
-    private boolean m_BuscaToken(String p_Palabra){
-        boolean v_Bandera=false;
-        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
-            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
-            if(v_Temporal.m_getLexema().equals(p_Palabra))
-                v_Bandera=true;
-        }
-        return v_Bandera;
-    }
-    
-    private void m_AddToken(String p_Palabra,int p_Tipo){
-        if(!m_BuscaToken(p_Palabra)){
-            int v_ID = a_TablaDeSimbolos.size()+1;
-            Token v_newSimbolo = new Token(v_ID,p_Palabra,p_Tipo);
-            a_TablaDeSimbolos.add(v_newSimbolo);
-        }        
     }
     
     void m_creaTabla(){
@@ -645,10 +548,20 @@ public class main_compiler extends JFrame{
     }
     
     private void m_anaSintactico(){
-        mainSintactico o_mainSintactico=new mainSintactico(a_TablaDeSimbolos);
-        String v_Mensaje=o_mainSintactico.mainSintaxis();
-        if(!v_Mensaje.equals(""))
-            a_txtaConsola.setText(a_txtaConsola.getText()+v_Mensaje+"\n");
+        try{
+            String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
+            String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
+            FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
+            BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
+            while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
+                v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
+            }
+            v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
+            v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
+            AnalisisSintactico o_anaSintactico=new AnalisisSintactico(a_TablaDeSimbolos,v_codigoFuente);
+        }catch(Exception e){
+            
+        }
     }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed
@@ -662,16 +575,6 @@ public class main_compiler extends JFrame{
     private void a_btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnCompilarActionPerformed
         m_Guardar();
         m_Lexico();
-        m_creaTabla();
-        if(a_bdLexico){
-            a_btnLexico.setBackground(Color.GREEN);
-            a_btnSintactico.setBackground(Color.YELLOW);
-            
-        }else{
-            a_btnLexico.setBackground(Color.RED);
-            
-        }
-        System.out.println("Termino Analizador Lexico");
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
     private void a_mniGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniGuardarActionPerformed
@@ -707,16 +610,6 @@ public class main_compiler extends JFrame{
     private void a_btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnLexicoActionPerformed
         m_Guardar();
         m_Lexico();
-        m_creaTabla();
-        if(a_bdLexico){
-            a_btnLexico.setBackground(Color.GREEN);
-            a_btnSintactico.setEnabled(true);
-            a_btnSintactico.setBackground(Color.YELLOW);
-        }else{
-            a_btnLexico.setBackground(Color.RED);
-            
-        }
-        System.out.println("Termino Analizador Lexico");
     }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
