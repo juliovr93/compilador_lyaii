@@ -9,7 +9,7 @@ public class Token {
     private String a_Lexema;
     private int a_TipoLexema;
     private int a_Tipo;
-    private Object a_Valor;
+    private int a_Valor;
     
     public Token(int p_idToken,String p_Lexema,int p_tipoLexema){
         a_idToken=p_idToken;
@@ -39,5 +39,9 @@ public class Token {
     
     public void m_setTipo(int p_Tipo){
         a_Tipo=p_Tipo;
+    }
+    
+    public void m_setValor(int p_Tipo){
+        a_Valor=p_Tipo;
     }
 }

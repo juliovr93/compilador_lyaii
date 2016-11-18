@@ -124,15 +124,27 @@ public class Valor {
     }
     
     private boolean m_entQ3(String p_codFuente,int p_index){
-        m_buscaToken(a_codFuente.substring(0,p_index));
+        m_buscaValor(a_codFuente.substring(1,p_index+1));
         return true;
     }
     
-    private void m_buscaToken(String p_Palabra){
+    private void m_buscaValor(String p_Palabra){
+        String v_Palabra=p_Palabra;
+        int v_tipo=-1;
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             if(v_Temporal.m_getLexema().equals(p_Palabra)){
-                v_Temporal.m_setTipo(a_Tipo);
+                v_tipo=v_Temporal.m_getID();
+                m_buscaVariable(v_tipo);
+            }    
+        }
+    }
+    
+    private void m_buscaVariable(int p_valor){        
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            if(v_Temporal.m_getID()==a_Tipo){
+                v_Temporal.m_setValor(p_valor);
             }    
         }
     }

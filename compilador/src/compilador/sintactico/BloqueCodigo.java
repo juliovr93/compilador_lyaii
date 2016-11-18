@@ -174,7 +174,7 @@ public class BloqueCodigo {
                 a_TablaDeSimbolos=o_Linea.m_getTabla();
                 a_codFuente=o_Linea.m_getCodigoFuente();
                 // ********************** Linea ***************************** //
-                //m_end(v_codFuente);
+                m_end(v_codFuente);
             }
         }else{
             a_consola+="Error [190]: Error al declarar '#end'\n";

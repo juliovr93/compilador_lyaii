@@ -138,11 +138,11 @@ public class Variable {
             }
         }
         if(!"".equals(v_codFuente)){
+            m_variableQ4(v_codFuente.substring(1,v_codFuente.length()),p_index);
             Valor o_Valor=new Valor(a_TablaDeSimbolos, p_codFuente, a_Linea,m_buscaVariable(a_codFuente.substring(0,p_index)));
             a_TablaDeSimbolos=o_Valor.m_getTabla();
             a_consola+=o_Valor.m_getConsola();
             a_codFuente=o_Valor.m_getCodigoFuente();
-            m_variableQ4(v_codFuente.substring(1,v_codFuente.length()),p_index);
        }else{
             a_consola+="Error [215]: Error no se declaro ningun valor\n";
             a_consola+="Error en la linea: "+a_Linea+"\n";
