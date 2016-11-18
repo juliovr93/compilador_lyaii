@@ -530,21 +530,23 @@ public class main_compiler extends JFrame{
                 a_btnLexico.setBackground(Color.GREEN);
                 a_btnSintactico.setEnabled(true);
                 a_btnSintactico.setBackground(Color.YELLOW);
+                m_Sintactico();
             }else{
                 a_btnLexico.setBackground(Color.RED);
             }
     }
     
     void m_creaTabla(){
-        String[] v_tblModel=new String[]{"ID","Lexema","Tipo"};
+        String[] v_tblModel=new String[]{"ID","Lexema","Tipo","Valor"};
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
-        String[] v_Datos={"","",""};
+        String[] v_Datos={"","","",""};
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getID()+"";
             v_Datos[1]=v_Temporal.m_getLexema();
             v_Datos[2]=v_Temporal.m_getTipo()+"";
+            v_Datos[3]=v_Temporal.m_getValor()+"";
             v_Modelo.addRow(v_Datos);
         }
     }
@@ -561,9 +563,11 @@ public class main_compiler extends JFrame{
             v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
             v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
             AnalisisSintactico o_anaSintactico=new AnalisisSintactico(a_TablaDeSimbolos,v_codigoFuente);
+            a_txtaConsola.setText(o_anaSintactico.m_getConsola());
         }catch(Exception e){
             
         }
+
     }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed

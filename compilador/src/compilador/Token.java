@@ -27,4 +27,8 @@ public class Token {
     public int m_getTipo(){
         return a_Tipo;
     }
+    
+    public Object m_getValor(){
+        return a_Valor;
+    }
 }
