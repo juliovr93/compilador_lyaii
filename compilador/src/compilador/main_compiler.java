@@ -537,7 +537,7 @@ public class main_compiler extends JFrame{
     }
     
     void m_creaTabla(){
-        String[] v_tblModel=new String[]{"ID","Lexema","Tipo","Valor"};
+        String[] v_tblModel=new String[]{"ID","Lexema","TipoLexema","Tipo","Valor"};
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
         String[] v_Datos={"","","",""};
@@ -545,8 +545,9 @@ public class main_compiler extends JFrame{
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getID()+"";
             v_Datos[1]=v_Temporal.m_getLexema();
-            v_Datos[2]=v_Temporal.m_getTipo()+"";
-            v_Datos[3]=v_Temporal.m_getValor()+"";
+            v_Datos[2]=v_Temporal.m_getTipoLexema()+"";
+            v_Datos[3]=v_Temporal.m_getTipo()+"";
+            v_Datos[4]=v_Temporal.m_getValor()+"";
             v_Modelo.addRow(v_Datos);
         }
     }

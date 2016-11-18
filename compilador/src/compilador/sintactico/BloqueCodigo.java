@@ -33,7 +33,6 @@ public class BloqueCodigo {
         while(!"".equals(v_codFuente)&&v_bandera){                                    
             if(v_codFuente.charAt(0)==32){
                 v_bandera=true;
-                a_Linea++;
                 v_codFuente=v_codFuente.substring(1,v_codFuente.length());
             }else{
                 if(v_codFuente.charAt(0)==10){
@@ -151,7 +150,6 @@ public class BloqueCodigo {
         while(!"".equals(v_codFuente)&&v_bandera){                                    
             if(v_codFuente.charAt(0)==32){
                 v_bandera=true;
-                a_Linea++;
                 v_codFuente=v_codFuente.substring(1,v_codFuente.length());
             }else{
                 if(v_codFuente.charAt(0)==10){
@@ -172,8 +170,12 @@ public class BloqueCodigo {
             if(v_codFuente.charAt(0)=='#'){
                 m_end(v_codFuente);
             }else{
-                //Linea codigo
-                m_end(v_codFuente);
+                // ********************** Linea ***************************** //
+                Linea o_Linea= new Linea(a_TablaDeSimbolos,v_codFuente,a_Linea);
+                v_codFuente=o_Linea.m_getCodigoFuente();
+                a_consola+=o_Linea.m_getConsola();
+                // ********************** Linea ***************************** //
+                //m_end(v_codFuente);
             }
         }else{
             a_consola+="Error [190]: Error al declarar '#end'\n";
@@ -285,7 +287,6 @@ public class BloqueCodigo {
         while(!"".equals(v_codFuente)&&v_bandera){                                    
             if(v_codFuente.charAt(0)==32){
                 v_bandera=true;
-                a_Linea++;
                 v_codFuente=v_codFuente.substring(1,v_codFuente.length());
             }else{
                 if(v_codFuente.charAt(0)==10){
