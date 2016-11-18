@@ -100,7 +100,7 @@ public class CreaVariable {
             }
         }
         if(!"".equals(v_codFuente)){
-            Variable o_variable = new Variable(a_TablaDeSimbolos,v_codFuente,a_Linea,m_buscaToken("cad"));
+            Variable o_variable = new Variable(a_TablaDeSimbolos,v_codFuente,a_Linea,m_buscaTipoVariable("cad"));
             a_TablaDeSimbolos=o_variable.m_getTabla();
             a_consola+=o_variable.m_getConsola();
             a_codFuente=o_variable.m_getCodigoFuente();
@@ -110,12 +110,12 @@ public class CreaVariable {
         }
     }
     
-    private int m_buscaToken(String p_Palabra){
+    private int m_buscaTipoVariable(String p_Palabra){
         int v_tipo=-1;
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             if(v_Temporal.m_getLexema().equals(p_Palabra)){
-                v_Temporal.m_getID();
+                v_tipo=v_Temporal.m_getID();
             }    
         }
         return v_tipo;

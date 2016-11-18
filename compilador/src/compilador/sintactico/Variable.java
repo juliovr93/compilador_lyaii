@@ -103,21 +103,65 @@ public class Variable {
                 if(v_codFuente.charAt(0)==';'){
                     m_variableQ4(v_codFuente.substring(1,v_codFuente.length()),p_index);
                 }else{
-                    
+                    a_consola+="Error [210]: Error falta ';'\n";
+                    a_consola+="Error en la linea: "+a_Linea+"\n";
+                    m_variableQ4(v_codFuente.substring(1,v_codFuente.length()),p_index);
                 }
             }
         }else{
-            a_consola+="Error [210]: Error no se declaro ninguna variable\n";
+            a_consola+="Error [210]: Error falta ';'\n";
             a_consola+="Error en la linea: "+a_Linea+"\n";
+            m_buscaToken(a_codFuente.substring(0,p_index));
         }
     }
     
     private void m_variableQ3(String p_codFuente,int p_index){
-        System.out.println("Valor");
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            if(v_codFuente.charAt(0)==32){
+                v_bandera=true;
+                v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+            }else{
+                if(v_codFuente.charAt(0)==10){
+                    v_bandera=true;
+                    a_Linea++;
+                    v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                }else{
+                    if(v_codFuente.charAt(0)==' '){
+                        v_bandera=true;
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }else{
+                        v_bandera=false;
+                    }
+                }
+            }
+        }
+        if(!"".equals(v_codFuente)){
+            Valor o_Valor=new Valor(a_TablaDeSimbolos, p_codFuente, a_Linea,m_buscaVariable(a_codFuente.substring(0,p_index)));
+            a_TablaDeSimbolos=o_Valor.m_getTabla();
+            a_consola+=o_Valor.m_getConsola();
+            a_codFuente=o_Valor.m_getCodigoFuente();
+            m_variableQ4(v_codFuente.substring(1,v_codFuente.length()),p_index);
+       }else{
+            a_consola+="Error [215]: Error no se declaro ningun valor\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
     }
     
     private void m_variableQ4(String p_codFuente,int p_index){
         m_buscaToken(a_codFuente.substring(0,p_index));
+    }
+    
+    private int m_buscaVariable(String p_Palabra){
+        int v_tipo=-1;
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            if(v_Temporal.m_getLexema().equals(p_Palabra)){
+                v_tipo=v_Temporal.m_getID();
+            }    
+        }
+        return v_tipo;
     }
     
     private void m_buscaToken(String p_Palabra){

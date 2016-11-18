@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/AnalisisSintactico.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/BloqueCodigo.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/lexico/Datos.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/CreaVariable.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/Linea.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/Variable.java</file>
+            <file>file:/D:/Users/Valle/Documents/GitHub/compilador_lyaii/compilador/src/compilador/sintactico/Valor.java</file>
+        </group>
     </open-files>
 </project-private>
