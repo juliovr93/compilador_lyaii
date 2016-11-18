@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class AnalisisSintactico {
     
-    private ArrayList a_TablaDeSimbolos;
+    private ArrayList <Token> a_TablaDeSimbolos;
     private String a_codFuente;
     private String a_consola="";
     
@@ -22,9 +22,14 @@ public class AnalisisSintactico {
     private void a_anaSintactico(){
         BloqueCodigo o_bloqueCodigo=new BloqueCodigo(a_TablaDeSimbolos,a_codFuente);
         a_consola=o_bloqueCodigo.m_getConsola();
+        a_TablaDeSimbolos=o_bloqueCodigo.a_TablaDeSimbolos;
     }
     
     public String m_getConsola(){
         return a_consola;
+    }
+    
+    public  ArrayList <Token> m_getTabla(){
+        return a_TablaDeSimbolos;
     }
 }

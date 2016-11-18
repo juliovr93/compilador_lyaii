@@ -4,10 +4,11 @@
  */
 package compilador.sintactico;
 
+import compilador.Token;
 import java.util.ArrayList;
 
 public class BloqueCodigo {
-    ArrayList a_TablaDeSimbolos;
+    ArrayList <Token> a_TablaDeSimbolos;
     private String a_codFuente;
     private int a_Linea=1;
     private String a_consola="";
@@ -16,10 +17,6 @@ public class BloqueCodigo {
         a_codFuente=p_codFuente;
         a_TablaDeSimbolos=p_TablaDeSimbolos;
         m_start(a_codFuente);
-    }
-    
-    public String m_getConsola(){
-        return a_consola;
     }
     
     //#start
@@ -174,6 +171,8 @@ public class BloqueCodigo {
                 Linea o_Linea= new Linea(a_TablaDeSimbolos,v_codFuente,a_Linea);
                 v_codFuente=o_Linea.m_getCodigoFuente();
                 a_consola+=o_Linea.m_getConsola();
+                a_TablaDeSimbolos=o_Linea.m_getTabla();
+                a_codFuente=o_Linea.m_getCodigoFuente();
                 // ********************** Linea ***************************** //
                 //m_end(v_codFuente);
             }
@@ -335,5 +334,17 @@ public class BloqueCodigo {
             a_consola+="Error [190]: Error al declarar '#end'\n";
             a_consola+="Error en la linea: "+a_Linea+"\n";
         }
+    }
+    
+    public String m_getConsola(){
+        return a_consola;
+    }
+    
+    public String m_getCodigoFuente(){
+        return a_codFuente;
+    }
+    
+    public  ArrayList <Token> m_getTabla(){
+        return a_TablaDeSimbolos;
     }
 }

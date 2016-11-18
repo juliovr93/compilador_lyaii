@@ -11,10 +11,10 @@ public class Token {
     private int a_Tipo;
     private Object a_Valor;
     
-    public Token(int p_idToken,String p_Lexema,int p_Tipo){
+    public Token(int p_idToken,String p_Lexema,int p_tipoLexema){
         a_idToken=p_idToken;
         a_Lexema=p_Lexema;
-        a_TipoLexema=p_Tipo;
+        a_TipoLexema=p_tipoLexema;
     }
     
     public String m_getLexema(){
@@ -30,10 +30,14 @@ public class Token {
     }
     
     public int m_getTipo(){
-        return a_TipoLexema;
+        return a_Tipo;
     }
     
     public Object m_getValor(){
         return a_Valor;
+    }
+    
+    public void m_setTipo(int p_Tipo){
+        a_Tipo=p_Tipo;
     }
 }

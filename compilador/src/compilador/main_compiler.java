@@ -540,7 +540,7 @@ public class main_compiler extends JFrame{
         String[] v_tblModel=new String[]{"ID","Lexema","TipoLexema","Tipo","Valor"};
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
-        String[] v_Datos={"","","",""};
+        String[] v_Datos={"","","","",""    };
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getID()+"";
@@ -565,6 +565,8 @@ public class main_compiler extends JFrame{
             v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
             AnalisisSintactico o_anaSintactico=new AnalisisSintactico(a_TablaDeSimbolos,v_codigoFuente);
             a_txtaConsola.setText(o_anaSintactico.m_getConsola());
+            a_TablaDeSimbolos=o_anaSintactico.m_getTabla();
+            m_creaTabla();
         }catch(Exception e){
             
         }

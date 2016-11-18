@@ -4,10 +4,11 @@
  */
 package compilador.sintactico;
 
+import compilador.Token;
 import java.util.ArrayList;
 
 public class CreaVariable {
-    private ArrayList a_TablaDeSimbolos;
+    private ArrayList <Token> a_TablaDeSimbolos;
     private String a_consola="";
     private String a_codFuente;
     private int a_Linea;
@@ -99,11 +100,25 @@ public class CreaVariable {
             }
         }
         if(!"".equals(v_codFuente)){
-            Variable o_variable = new Variable(a_TablaDeSimbolos,v_codFuente,a_Linea);
+            Variable o_variable = new Variable(a_TablaDeSimbolos,v_codFuente,a_Linea,m_buscaToken("cad"));
+            a_TablaDeSimbolos=o_variable.m_getTabla();
+            a_consola+=o_variable.m_getConsola();
+            a_codFuente=o_variable.m_getCodigoFuente();
         }else{
             a_consola+="Error [210]: Error no se declaro ninguna variable\n";
             a_consola+="Error en la linea: "+a_Linea+"\n";
         }
+    }
+    
+    private int m_buscaToken(String p_Palabra){
+        int v_tipo=-1;
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            if(v_Temporal.m_getLexema().equals(p_Palabra)){
+                v_Temporal.m_getID();
+            }    
+        }
+        return v_tipo;
     }
     
     public String m_getCodigoFuente(){
@@ -112,5 +127,9 @@ public class CreaVariable {
     
     public String m_getConsola(){
         return a_consola;
+    }
+    
+    public  ArrayList <Token> m_getTabla(){
+        return a_TablaDeSimbolos;
     }
 }

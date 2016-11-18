@@ -4,15 +4,18 @@
  */
 package compilador.sintactico;
 
+import compilador.Token;
 import java.util.ArrayList;
 
 public class Variable {
-    private ArrayList a_TablaDeSimbolos;
+    private ArrayList <Token> a_TablaDeSimbolos;
     private String a_consola="";
     private String a_codFuente;
     private int a_Linea;
+    private int a_Tipo;
     
-    public Variable (ArrayList p_TablaDeSimbolos, String p_codFuente,int p_Linea){
+    public Variable (ArrayList p_TablaDeSimbolos, String p_codFuente,int p_Linea,int p_Tipo){
+        a_Tipo=p_Tipo;
         a_Linea=p_Linea;
         a_codFuente=p_codFuente;
         a_TablaDeSimbolos=p_TablaDeSimbolos;
@@ -114,6 +117,27 @@ public class Variable {
     }
     
     private void m_variableQ4(String p_codFuente,int p_index){
-        System.out.println("Valor");
+        m_buscaToken(a_codFuente.substring(0,p_index));
+    }
+    
+    private void m_buscaToken(String p_Palabra){
+        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+            if(v_Temporal.m_getLexema().equals(p_Palabra)){
+                v_Temporal.m_setTipo(a_Tipo);
+            }    
+        }
+    }
+    
+    public  ArrayList <Token> m_getTabla(){
+        return a_TablaDeSimbolos;
+    }
+    
+    public String m_getCodigoFuente(){
+        return a_codFuente;
+    }
+    
+    public String m_getConsola(){
+        return a_consola;
     }
 }
