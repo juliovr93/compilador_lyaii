@@ -549,7 +549,7 @@ public class main_compiler extends JFrame{
         }
     }
     
-    private void m_anaSintactico(){
+    private void m_Sintactico(){
         try{
             String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
             String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
@@ -615,7 +615,7 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
-        m_anaSintactico();
+        m_Sintactico();
     }//GEN-LAST:event_a_btnSintacticoActionPerformed
 
     public static void main(String args[]) {
