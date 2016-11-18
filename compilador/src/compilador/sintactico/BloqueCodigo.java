@@ -3,105 +3,336 @@
  * @author Valle Rodriguez Julio Cesar
  */
 package compilador.sintactico;
+
+import java.util.ArrayList;
+
 public class BloqueCodigo {
-  
+    ArrayList a_TablaDeSimbolos;
     private String a_codFuente;
+    private int a_Linea=1;
+    private String a_consola="";
     
-    public BloqueCodigo(String p_codFuente){
+    public BloqueCodigo(ArrayList p_TablaDeSimbolos, String p_codFuente){
         a_codFuente=p_codFuente;
-        start(p_codFuente);
+        a_TablaDeSimbolos=p_TablaDeSimbolos;
+        m_start(a_codFuente);
+    }
+    
+    public String m_getConsola(){
+        return a_consola;
     }
     
     //#start
-    private int start(String p_codFuente){
-        int v_Recorrido=0;
-        v_Recorrido=m_startQ0(p_codFuente,0);
-        return v_Recorrido;
+    private void m_start(String p_codFuente){
+        m_startQ0(p_codFuente);
     }
     
-    private int m_startQ0(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)==' '){
-                v_Recorrido=m_startQ0(p_Palabra,1);
+    private void m_startQ0(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            if(v_codFuente.charAt(0)==32){
+                v_bandera=true;
+                a_Linea++;
+                v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+            }else{
+                if(v_codFuente.charAt(0)==10){
+                    v_bandera=true;
+                    a_Linea++;
+                    v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                }else{
+                    if(v_codFuente.charAt(0)==' '){
+                        v_bandera=true;
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }else{
+                        v_bandera=false;
+                    }
+                }
             }
-            if(p_Palabra.charAt(p_Index)==' '){
-                v_Recorrido=m_startQ0(p_Palabra,1);
-            }
-            if(p_Palabra.charAt(p_Index)=='#'){
-                v_Recorrido=m_startQ0(p_Palabra,1);
+        }
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='#'){
+                m_startQ1(v_codFuente.substring(1,v_codFuente.length()));
             }
             else{
-                
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ1(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)=='s'){
-                v_Recorrido=m_startQ2(p_Palabra,2);
+    private void m_startQ1(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='s'){
+                m_startQ2(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ2(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)=='t'){
-                v_Recorrido=m_startQ3(p_Palabra,3);
+    private void m_startQ2(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='t'){
+                m_startQ3(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ3(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)=='a'){
-                v_Recorrido=m_startQ4(p_Palabra,4);
+    private void m_startQ3(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='a'){
+                m_startQ4(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ4(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)=='r'){
-                v_Recorrido=m_startQ5(p_Palabra,5);
+    private void m_startQ4(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='r'){
+                m_startQ5(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ5(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)=='t'){
-                v_Recorrido=m_startQ6(p_Palabra,6);
+    private void m_startQ5(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='t'){
+                m_startQ7(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#start'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_startError(v_codFuente);
             }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#start'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
-    private int m_startQ6(String p_Palabra,int p_Index){
-        int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Index){
-            if(p_Palabra.charAt(p_Index)==' '){
-                v_Recorrido=6;
-            }
-            if(p_Palabra.charAt(p_Index)==10){
-                v_Recorrido=6;
+    private void m_startQ7(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            if(v_codFuente.charAt(0)==32){
+                v_bandera=true;
+                a_Linea++;
+                v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+            }else{
+                if(v_codFuente.charAt(0)==10){
+                    v_bandera=true;
+                    a_Linea++;
+                    v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                }else{
+                    if(v_codFuente.charAt(0)==' '){
+                        v_bandera=true;
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }else{
+                        v_bandera=false;
+                    }
+                }
             }
         }
-        else{
-            v_Recorrido=6;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='#'){
+                m_end(v_codFuente);
+            }else{
+                //Linea codigo
+                m_end(v_codFuente);
+            }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
         }
-        return v_Recorrido;
     }
     
+    private void m_startError(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            v_bandera=true;
+            if(v_codFuente.charAt(0)!=32){    
+                if(v_codFuente.charAt(0)!=10){
+                    if(v_codFuente.charAt(0)!=' '){
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }
+                    else{
+                        v_bandera=false;
+                    }
+                }else{
+                    v_bandera=false;
+                }
+            }else{
+                v_bandera=false;
+            }
+        }
+        
+        if(!"".equals(v_codFuente)){
+            m_startQ7(v_codFuente);
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
+    
+    //#end
+    private void m_end(String p_codFuente){
+        m_endQ0(p_codFuente);
+    }
+    
+    private void m_endQ0(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='#'){
+                m_endQ1(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#end'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_endError(v_codFuente);
+            }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
+    
+    private void m_endQ1(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='e'){
+                m_endQ2(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#end'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_endError(v_codFuente);
+            }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
+    
+    private void m_endQ2(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='n'){
+                m_endQ3(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#end'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_endError(v_codFuente);
+            }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
+    
+    private void m_endQ3(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        if(!"".equals(v_codFuente)){
+            if(v_codFuente.charAt(0)=='d'){
+                m_endQ4(v_codFuente.substring(1,v_codFuente.length()));
+            }else{
+                a_consola+="Error [190]: Error al declarar '#end'\n";
+                a_consola+="Error en la linea: "+a_Linea+"\n";
+                m_endError(v_codFuente);
+            }
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
+    
+    private void m_endQ4(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            if(v_codFuente.charAt(0)==32){
+                v_bandera=true;
+                a_Linea++;
+                v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+            }else{
+                if(v_codFuente.charAt(0)==10){
+                    v_bandera=true;
+                    a_Linea++;
+                    v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                }else{
+                    if(v_codFuente.charAt(0)==' '){
+                        v_bandera=true;
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }else{
+                        v_bandera=false;
+                        a_consola+="Error [200]: Error al declarar instrucciones fuera del método principal \n";
+                        a_consola+="Error en la linea: "+a_Linea+"\n";
+                        m_endError(v_codFuente);
+                    }
+                }
+            }
+        }
+    }
+    
+    private void m_endError(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        while(!"".equals(v_codFuente)&&v_bandera){                                    
+            v_bandera=true;
+            if(v_codFuente.charAt(0)!=32){    
+                if(v_codFuente.charAt(0)!=10){
+                    if(v_codFuente.charAt(0)!=' '){
+                        v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    }
+                    else{
+                        v_bandera=false;
+                    }
+                }else{
+                    v_bandera=false;
+                }
+            }else{
+                v_bandera=false;
+            }
+        }
+        
+        if(!"".equals(v_codFuente)){
+            m_endQ4(v_codFuente);
+        }else{
+            a_consola+="Error [190]: Error al declarar '#end'\n";
+            a_consola+="Error en la linea: "+a_Linea+"\n";
+        }
+    }
 }
