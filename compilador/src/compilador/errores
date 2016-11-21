@@ -1,0 +1,9 @@
+// Errores de Archivo
+Error [100]: Error al abrir el archivo
+Error [110]: Error al guardar el archivo
+
+//Errores de analisis léxico
+Error []: No hay código fuente
+Error []: No se encontro ningún léxema
+Error []: No se encuentra simbolo: ' '
+Error []: Cadena no completada

@@ -1,5 +1,5 @@
 /**
- * @author Ramirez García Juana Rubi
+ * @author Ramírez García Juana Rubí
  * @author Valle Rodriguez Julio Cesar
  */
 
@@ -20,7 +20,7 @@ import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import java.awt.Color;
 import javax.swing.UIManager;
 
-//Componentes para Abrir Documento
+//Componentes para abrir el archivo
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -44,7 +44,9 @@ public class main_compiler extends JFrame{
     private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
-    private boolean a_bdLexico=false;                                            // Bandera del Análisis Léxico
+    private boolean a_bdLexico=false;                                           // Bandera del Análisis Léxico
+    private boolean a_bdSintactico=false;                                       // Bandera del Análisis Léxico
+    private boolean a_bdSemantico=false;                                        // Bandera del Análisis Léxico
             
     public main_compiler() {
         initComponents();                                                       // Inicialización de componentes
@@ -258,6 +260,7 @@ public class main_compiler extends JFrame{
 
         a_btnLexico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnLexico.setText("Análisis Léxico");
+        a_btnLexico.setEnabled(false);
         a_btnLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 a_btnLexicoActionPerformed(evt);
@@ -401,16 +404,19 @@ public class main_compiler extends JFrame{
         if(!a_txtpCodigo.getText().equals("")){                                 // Analiza si el textpane se encuentra vacio
             // Si el documento no se ecuentra vacio pregunta si se desea guardar el documento
             v_opcion=JOptionPane.showConfirmDialog(this,"¿Desea guardar el documento?");
-            if(v_opcion==0)                                                     // Si la opcion es "si"
-                m_Guardar();                                                    // Llama el metodo para guardar el documento
-                a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
-                a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
-                a_mniGuardar.setEnabled(true);                                  // Habilita el JMenuItem Guardar
-                a_mniGuardarComo.setEnabled(true);                              // Habilita el JMenuItem Guardar como
-                a_btnGuardar.setEnabled(true);                                  // Habilita el JButton Guardar del JToolBar
-                a_btnGuardarComo.setEnabled(true);                              // Habilita el JButton Guardar como del JToolBar
-                a_btnCompilar.setEnabled(true);                                 // Habilita el JButton Compilar del JToolBar
-                a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
+            if(v_opcion==0){                                                    // Si la opcion es "si"
+                if(m_Guardar()){                                                // Llama el metodo para guardar el documento
+                    a_txtpCodigo.setText("");                                   // Limpia el textpane para generar un nuevo digo fuente
+                    a_txtpCodigo.setEnabled(true);                              // Habilita el JTextPane para ingresar el código fuente
+                    a_mniGuardar.setEnabled(true);                              // Habilita el JMenuItem Guardar
+                    a_mniGuardarComo.setEnabled(true);                          // Habilita el JMenuItem Guardar como
+                    a_btnGuardar.setEnabled(true);                              // Habilita el JButton Guardar del JToolBar
+                    a_btnGuardarComo.setEnabled(true);                          // Habilita el JButton Guardar como del JToolBar
+                    a_btnCompilar.setEnabled(true);                             // Habilita el JButton Compilar del JToolBar
+                    a_btnLexico.setEnabled(true);                               // 
+                    a_bnGuardaArchivo=true;                                     // Cambia el estado de la bandera bnGuardarArchivo a verdadero
+                }
+            }
             if(v_opcion==1){                                                    // Si la opcion es "no"
                 a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
                 a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
@@ -419,6 +425,7 @@ public class main_compiler extends JFrame{
                 a_btnGuardar.setEnabled(true);                                  // Habilita el JButton Guardar del JToolBar
                 a_btnGuardarComo.setEnabled(true);                              // Habilita el JButton Guardar como del JToolBar
                 a_btnCompilar.setEnabled(true);                                 // Habilita el JButton Compilar del JToolBar
+                a_btnLexico.setEnabled(true);
                 a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
             }
         }else{                                                                  // Si el documento se encuentra vacio
@@ -429,12 +436,12 @@ public class main_compiler extends JFrame{
             a_btnGuardar.setEnabled(true);                                      // Habilita el JButton Guardar del JToolBar
             a_btnGuardarComo.setEnabled(true);                                  // Habilita el JButton Guardar como del JToolBar
             a_btnCompilar.setEnabled(true);                                     // Habilita el JButton Compilar del JToolBar
+            a_btnLexico.setEnabled(true);                                       // Habilita el 
             a_bnGuardaArchivo=true;                                             // Cambia el estado de la bandera bnGuardarArchivo a verdadero
         }
     }
     
     private void m_AbrirArchivo(){
-                               
         JFileChooser v_AbrirArchivo=new JFileChooser();                         // Genera un nuevo JFileChooser para abrir el archivo
         // Filtro para mostrar solo los archivos con extension *.lya
         v_AbrirArchivo.setFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
@@ -450,12 +457,14 @@ public class main_compiler extends JFrame{
                     v_codigoFuente+=v_Linea+"\n";                               // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del codigo fuente
                 }
                 a_txtpCodigo.setText(v_codigoFuente);                           // Inserta el texto del documento en el JTextPane (a_txtpCodigo)
-                a_txtpCodigo.setEnabled(true);                                  // Habilita el JTextPane para editar el documento
+                a_txtpCodigo.setEnabled(true);                                  // Limpia el textpane para generar un nuevo codigo fuente
                 a_mniGuardar.setEnabled(true);                                  // Habilita el MenuItem para Guardar
                 a_mniGuardarComo.setEnabled(true);                              // Habilita el MenuItem para Guardar Como...
                 a_btnGuardar.setEnabled(true);                                  // Habilita el Button para Guardar
                 a_btnGuardarComo.setEnabled(true);                              // Habilita el Button para Guardar Como...
                 a_btnCompilar.setEnabled(true);                                 // Habilita el Button para Compilar
+                a_btnLexico.setEnabled(true);
+                a_bnGuardaArchivo=false;
                 v_brArchivo.close();                                            // Cierra el BufferedReader (v_brArchivo)
                 v_frArchivo.close();                                            // Cierra el FileReader (v_frArchivo)
             }catch(Exception Ex){
@@ -464,52 +473,57 @@ public class main_compiler extends JFrame{
         }
     }
     
-    private void m_Guardar(){
+    private boolean m_Guardar(){
         if(!a_bnGuardaArchivo){                                                 // Revisa la bandera para guardar el documento
             try{                                
                 BufferedWriter v_bwArchivo;                                     // Crea un BufferedWriter para escribir el codigo fuente (v_bwArchivo)
                 v_bwArchivo = new BufferedWriter(new FileWriter(a_Archivo));    // Inicializa el BufferedWriter para escribir el codigo fuente
                 v_bwArchivo.write(a_txtpCodigo.getText());                      // Escribe nuestro codigo fuente almacenado en a_txtpCodigo
                 v_bwArchivo.close();                                            // Cierra el BufferedWriter para guardar los cambios en el archivo
+                return true;                                                    // Regresar un true para certificar que el archivo se guardo
             }catch(Exception Ex){
                 JOptionPane.showMessageDialog(this,"Error al guardar el archivo");//Mensaje de error al guardar el archivo
+                return false;                                                   // Regresa un false si en documento no se pudo guardar correctamente
             }
-        }else
-            m_GuardarComo();                                                    // Llama el método para guardar un nuevo documento
+        }else{
+            return m_GuardarComo();                                             // Llama el método para guardar un nuevo documento y regresar el valro obtenido
+        }
     }
     
-    private void m_GuardarComo(){
-        JFileChooser v_GuardarArchivo=new JFileChooser();                       // Genera un nuevo JFileChooser para guardar el archivo
+    private boolean m_GuardarComo(){
+        JFileChooser v_guardarArchivo=new JFileChooser();                       // Genera un nuevo JFileChooser para guardar el archivo
         //Filtro para mostrar solo los archivos con extension *.lya
-        v_GuardarArchivo.addChoosableFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
-        int v_Seleccion = v_GuardarArchivo.showSaveDialog(null);                // Comprueba que haya presionado aceptar
+        v_guardarArchivo.addChoosableFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
+        int v_Seleccion = v_guardarArchivo.showSaveDialog(null);                // Comprueba que haya presionado aceptar
         if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           // Si acepto guardar el archivo
             try{
-                a_Archivo = v_GuardarArchivo.getSelectedFile();                 // Se genera el archivo en un File (a_Archivo)
-                String v_path= a_Archivo.getAbsolutePath();                     // Obtenemos el path del archivo a guardar
+                a_Archivo = v_guardarArchivo.getSelectedFile();                 // Se genera el archivo en un File (a_Archivo)
+                String v_Path= a_Archivo.getAbsolutePath();                     // Obtenemos el path del archivo a guardar
                 PrintWriter v_pwArchivo = new PrintWriter(a_Archivo);           // Se genera un PrintWriter para escribir nuestro archivo en el disco duro
                 v_pwArchivo.print(a_txtpCodigo.getText());                      // Se escribe el codigo fuente almacenado en a_txtpCodigo
                 v_pwArchivo.close();                                            // Se cierra el archivo para escribirlo
-                if(!v_path.endsWith(".lya")){                                   // Se comprueba que el archivo se haya guardado en la ruta correcta
-                    File v_tempArchivo = new File(v_path+".lya");               // Si no genera un nuevo archivo para renombrarlo
+                if(!v_Path.endsWith(".lya")){                                   // Se comprueba que el archivo se haya guardado en la ruta correcta
+                    File v_tempArchivo = new File(v_Path+".lya");               // Si no genera un nuevo archivo para renombrarlo
                     a_Archivo.renameTo(v_tempArchivo);                          // Renombra el nuevo archivo
                 }
                 a_bnGuardaArchivo=false;                                        // Cambia la bandera a_bnGuardaArchivo a falso
+                return true;                                                    // Regresar un true para certificar que el archivo se guardo
             }catch(Exception Ex){
                 JOptionPane.showMessageDialog(this,"Error al guardar el archivo");//Mensaje en caso de error al guardar el archivo
+                return false;                                                   // Regresa un false si en documento no se pudo guardar correctamente
             }
+        }else{
+            return false;                                                       // Regresa un false si el documento no se desea guardar
         }
     }
     
     private void m_Lexico(){
-        String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
-        String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
+        String v_Linea;                                                         // Se crea una variable para leer el documento linea por linea
+        String v_codigoFuente="";                                               // Se crea una variable que contendra todo el texto del archivo
         try{
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
             a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
-            
-            
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
             BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
             while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
@@ -519,24 +533,23 @@ public class main_compiler extends JFrame{
             v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
         }catch(Exception Ex){
             System.out.println(Ex.getMessage());
-            //JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
+            JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
         }
-        AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);
-            a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();
-            a_txtaConsola.setText(o_anaLexico.m_getConsola());
-            a_bdLexico=o_anaLexico.m_getLexico();
-            m_creaTabla();
-            if(a_bdLexico){
-                a_btnLexico.setBackground(Color.GREEN);
-                a_btnSintactico.setEnabled(true);
-                a_btnSintactico.setBackground(Color.YELLOW);
-                m_Sintactico();
-            }else{
-                a_btnLexico.setBackground(Color.RED);
-            }
+        AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);          // Llama a la clase para el analisis léxico
+        a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();                   // Obtiene la tabla de simbolos generada
+        a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
+        a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
+        m_muestraTabla();                                                       // Muetra la tabla de simbolos
+        if(a_bdLexico){                                                         // Analiza la bandera el analisis léxico
+            a_btnLexico.setBackground(Color.GREEN);                             // Si es correcto pone en boton en verde (Correcto)
+            a_btnSintactico.setEnabled(true);                                   // Habilita el botón para el análisis sintáctico
+            a_btnSintactico.setBackground(Color.YELLOW);                        // El botón del análisis sintáctico se pone en amarillo (Preparado)
+        }else{
+            a_btnLexico.setBackground(Color.RED);                               // El botón del análisis léxico se pone en rojo (Falló)
+        }
     }
     
-    void m_creaTabla(){
+    void m_muestraTabla(){
         String[] v_tblModel=new String[]{"ID","Lexema","TipoLexema","Tipo","Valor"};
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
@@ -566,7 +579,7 @@ public class main_compiler extends JFrame{
             AnalisisSintactico o_anaSintactico=new AnalisisSintactico(a_TablaDeSimbolos,v_codigoFuente);
             a_txtaConsola.setText(o_anaSintactico.m_getConsola());
             a_TablaDeSimbolos=o_anaSintactico.m_getTabla();
-            m_creaTabla();
+            m_muestraTabla();
         }catch(Exception e){
             
         }
@@ -582,8 +595,9 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_mniAbrirActionPerformed
 
     private void a_btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnCompilarActionPerformed
-        m_Guardar();
-        m_Lexico();
+        if(m_Guardar()){
+            m_Lexico();
+        }
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
     private void a_mniGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniGuardarActionPerformed
@@ -617,8 +631,9 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_txtpCodigoKeyPressed
 
     private void a_btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnLexicoActionPerformed
-        m_Guardar();
-        m_Lexico();
+        if(m_Guardar()){
+            m_Lexico();
+        }
     }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed

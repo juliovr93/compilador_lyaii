@@ -3,15 +3,21 @@
  * @author Valle Rodriguez Julio Cesar
  */
 package compilador.lexico;
-public class Datos {
+public class Constantes {
 
     public int getDatos(String p_Palabra){
         int v_Index=0;
-        if (m_entQ0(p_Palabra,0)>0){
-            v_Index=m_entQ0(p_Palabra,0);
+        if (m_entQ0(p_Palabra,0)>=0){
+            if(m_entQ0(p_Palabra,0)>0){
+                v_Index=m_entQ0(p_Palabra,0);
+            }else{
+                if(m_cadQ0(p_Palabra,0)>0)
+                    v_Index=m_cadQ0(p_Palabra,0);
+                else
+                    v_Index=m_cadQ0(p_Palabra,0);
+            }
         }else{
-            if(m_cadQ0(p_Palabra,0)>0)
-                v_Index=m_cadQ0(p_Palabra,0);
+            v_Index=m_entQ0(p_Palabra,0);
         }
         return v_Index;
     }
@@ -29,6 +35,17 @@ public class Datos {
         if (p_Palabra.length()-1>=p_Indice){
             if(p_Palabra.charAt(p_Indice)>=48&&p_Palabra.charAt(p_Indice)<=57){    
                 v_Index=m_entQ1(p_Palabra,v_Index+1);
+            }else{
+                if(p_Palabra.charAt(p_Indice)!=';')
+                    if(p_Palabra.charAt(p_Indice)!=')')
+                        if(p_Palabra.charAt(p_Indice)!='+')
+                            if(p_Palabra.charAt(p_Indice)!='-')
+                                if(p_Palabra.charAt(p_Indice)!='*')
+                                    if(p_Palabra.charAt(p_Indice)!='/')
+                                        if(p_Palabra.charAt(p_Indice)!='=')
+                                            if(p_Palabra.charAt(p_Indice)!='<')
+                                                if(p_Palabra.charAt(p_Indice)!='>')
+                                                    v_Index=-1;
             }
         }
         return v_Index;
