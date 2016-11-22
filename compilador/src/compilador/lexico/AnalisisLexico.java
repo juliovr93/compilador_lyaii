@@ -176,14 +176,6 @@ public class AnalisisLexico {
                         v_codFuente=v_codFuente.substring(1,v_codFuente.length());
                     }
                 }
-                /*
-                if(v_Indice!=v_codFuente.length()-1){                                 // Analiza que el indice tenga un valor diferente a 0
-                    a_bdLexico=false;
-                    v_Indice=m_errorConstantes(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                    a_consola+="Error [180]: No se reconoce simbolo: ' "+v_codFuente.charAt(0)+" '\n";
-                    a_consola+="Error en la linea: "+a_Linea+"\n";
-                    v_codFuente=v_codFuente.substring(v_Indice,v_codFuente.length());
-                }*/
             }
             else{
                 if(a_TablaDeSimbolos.size()==0){
@@ -206,7 +198,7 @@ public class AnalisisLexico {
     }
     
     private void m_addToken(String p_Palabra,int p_Tipo){
-        if(!m_buscaToken(p_Palabra)){
+        if(true){//!m_buscaToken(p_Palabra)){
             int v_ID = a_TablaDeSimbolos.size()+1;
             Token v_newSimbolo = new Token(v_ID,p_Palabra,p_Tipo);
             a_TablaDeSimbolos.add(v_newSimbolo);

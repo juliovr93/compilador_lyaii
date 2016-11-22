@@ -7,17 +7,9 @@ public class Constantes {
 
     public int getConstante(String p_codFuente){
         int v_Recorrido=0;
-        if (m_entQ0(p_codFuente)>=0){
-            if(m_entQ0(p_codFuente)>0){
-                v_Recorrido=m_entQ0(p_codFuente);
-            }else{
-                if(m_cadQ0(p_codFuente)>0)
-                    v_Recorrido=m_cadQ0(p_codFuente);
-                else
-                    v_Recorrido=m_cadQ0(p_codFuente);
-            }
-        }else{
-            v_Recorrido=m_entQ0(p_codFuente);
+        v_Recorrido=m_entQ0(p_codFuente);
+        if(v_Recorrido==0){
+            v_Recorrido=m_cadQ0(p_codFuente);
         }
         return v_Recorrido;
     }
@@ -63,9 +55,9 @@ public class Constantes {
     
     private int m_cadQ1(String p_codFuente,int p_Recorrido){
         int v_Recorrido=p_Recorrido;
-        if(!"".equals(0)){
+        if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)!='"'){
-                if(p_codFuente.charAt(p_Recorrido)!='\n'){
+                if(p_codFuente.charAt(0)!=10){
                     v_Recorrido=m_cadQ1(p_codFuente.substring(1),v_Recorrido+1);
                 }else{
                     v_Recorrido=-2;
