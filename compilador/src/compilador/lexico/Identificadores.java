@@ -27,7 +27,7 @@ public class Identificadores {
             if(p_codFuente.charAt(0)>=48&&p_codFuente.charAt(0)<=57||
                p_codFuente.charAt(0)>=65&&p_codFuente.charAt(0)<=90||
                p_codFuente.charAt(0)>=97&&p_codFuente.charAt(0)<=122)
-                v_Recorrido=m_IdentQ1(p_codFuente,v_Recorrido+1);
+                v_Recorrido=m_IdentQ1(p_codFuente.substring(1),v_Recorrido+1);
             else{
                 if(p_codFuente.charAt(0)!=';'){
                     if(p_codFuente.charAt(0)!='('){
@@ -42,7 +42,7 @@ public class Identificadores {
                                                         if(p_codFuente.charAt(0)!='='){
                                                             if(p_codFuente.charAt(0)!=' '){
                                                                 if(p_codFuente.charAt(0)!=10){
-                                                                    
+                                                                    v_Recorrido=-1;
                                                                 }
                                                             }
                                                         }

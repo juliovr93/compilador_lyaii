@@ -117,6 +117,7 @@ public class main_compiler extends JFrame{
         });
         a_ToolBar.add(a_btnNuevo);
 
+        a_btnAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/open.png"))); // NOI18N
         a_btnAbrir.setText("Abrir");
         a_btnAbrir.setFocusable(false);
         a_btnAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -130,13 +131,14 @@ public class main_compiler extends JFrame{
         });
         a_ToolBar.add(a_btnAbrir);
 
+        a_btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/save.png"))); // NOI18N
         a_btnGuardar.setText("Guardar");
         a_btnGuardar.setEnabled(false);
         a_btnGuardar.setFocusable(false);
         a_btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        a_btnGuardar.setMaximumSize(new java.awt.Dimension(100, 47));
-        a_btnGuardar.setMinimumSize(new java.awt.Dimension(100, 47));
-        a_btnGuardar.setPreferredSize(new java.awt.Dimension(100, 47));
+        a_btnGuardar.setMaximumSize(new java.awt.Dimension(120, 47));
+        a_btnGuardar.setMinimumSize(new java.awt.Dimension(120, 47));
+        a_btnGuardar.setPreferredSize(new java.awt.Dimension(120, 47));
         a_btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 a_btnGuardarActionPerformed(evt);
@@ -307,6 +309,7 @@ public class main_compiler extends JFrame{
         a_mnuArchivo.setText("Archivo");
 
         a_mniNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        a_mniNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/new_16.png"))); // NOI18N
         a_mniNuevo.setText("Nuevo");
         a_mniNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,6 +319,7 @@ public class main_compiler extends JFrame{
         a_mnuArchivo.add(a_mniNuevo);
 
         a_mniAbrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        a_mniAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/open_16.png"))); // NOI18N
         a_mniAbrir.setText("Abrir");
         a_mniAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,6 +329,7 @@ public class main_compiler extends JFrame{
         a_mnuArchivo.add(a_mniAbrir);
 
         a_mniGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        a_mniGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/save_16.png"))); // NOI18N
         a_mniGuardar.setText("Guardar");
         a_mniGuardar.setEnabled(false);
         a_mniGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -345,7 +350,13 @@ public class main_compiler extends JFrame{
         a_mnuArchivo.add(a_mniGuardarComo);
 
         a_mniSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        a_mniSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/exit_16.png"))); // NOI18N
         a_mniSalir.setText("Salir");
+        a_mniSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a_mniSalirActionPerformed(evt);
+            }
+        });
         a_mnuArchivo.add(a_mniSalir);
 
         a_MenuBar.add(a_mnuArchivo);
@@ -353,6 +364,7 @@ public class main_compiler extends JFrame{
         a_mnuHerramientas.setText("Herramientas");
 
         a_mniCompilar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, java.awt.event.InputEvent.CTRL_MASK));
+        a_mniCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compilador/resource/build_16.png"))); // NOI18N
         a_mniCompilar.setText("Compilar");
         a_mnuHerramientas.add(a_mniCompilar);
 
@@ -639,6 +651,10 @@ public class main_compiler extends JFrame{
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
         m_Sintactico();
     }//GEN-LAST:event_a_btnSintacticoActionPerformed
+
+    private void a_mniSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_a_mniSalirActionPerformed
 
     public static void main(String args[]) {
         try{
