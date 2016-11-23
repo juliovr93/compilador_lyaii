@@ -5,28 +5,32 @@
 package compilador;
 
 public class Token {
-    private int a_idToken;
+    private int a_noToken;
     private String a_Lexema;
-    private int a_TipoLexema;
+    private int a_tipoLexema;
     private int a_Tipo;
     private int a_Valor;
+    private int a_noLinea;
+    private int a_idToken;
     
-    public Token(int p_idToken,String p_Lexema,int p_tipoLexema){
-        a_idToken=p_idToken;
+    public Token(int p_noToken,String p_Lexema,int p_tipoLexema,int p_noLinea,int p_idToken){
+        a_noToken=p_noToken;
         a_Lexema=p_Lexema;
-        a_TipoLexema=p_tipoLexema;
+        a_tipoLexema=p_tipoLexema;
+        a_noLinea=p_noLinea;
+        a_idToken=p_idToken;
+    }
+    
+    public int m_getNoToken(){
+        return a_noToken;
     }
     
     public String m_getLexema(){
         return a_Lexema;
     }
     
-    public int m_getID(){
-        return a_idToken;
-    }
-    
     public int m_getTipoLexema(){
-        return a_TipoLexema;
+        return a_tipoLexema;
     }
     
     public int m_getTipo(){
@@ -35,6 +39,14 @@ public class Token {
     
     public Object m_getValor(){
         return a_Valor;
+    }
+    
+    public int m_getNoLinea(){
+        return a_noLinea;
+    }
+    
+    public int m_getIdToken(){
+        return a_idToken;
     }
     
     public void m_setTipo(int p_Tipo){

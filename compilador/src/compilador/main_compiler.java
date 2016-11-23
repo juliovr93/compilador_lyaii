@@ -568,7 +568,7 @@ public class main_compiler extends JFrame{
         String[] v_Datos={"","","","",""    };
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
-            v_Datos[0]=v_Temporal.m_getID()+"";
+            v_Datos[0]=v_Temporal.m_getNoToken()+"";
             v_Datos[1]=v_Temporal.m_getLexema();
             v_Datos[2]=v_Temporal.m_getTipoLexema()+"";
             v_Datos[3]=v_Temporal.m_getTipo()+"";
@@ -578,24 +578,7 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Sintactico(){
-        try{
-            String v_Linea;                                                     // Se crea una variable para leer el documento linea por linea
-            String v_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del archivo
-            FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
-            BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
-            while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
-                v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
-            }
-            v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
-            v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
-            AnalisisSintactico o_anaSintactico=new AnalisisSintactico(a_TablaDeSimbolos,v_codigoFuente);
-            a_txtaConsola.setText(o_anaSintactico.m_getConsola());
-            a_TablaDeSimbolos=o_anaSintactico.m_getTabla();
-            m_muestraTabla();
-        }catch(Exception e){
-            
-        }
-
+        
     }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed

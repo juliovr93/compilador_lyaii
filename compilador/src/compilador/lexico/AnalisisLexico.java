@@ -13,6 +13,7 @@ public class AnalisisLexico {
     private String a_consola="";
     private int a_Linea=1;
     private ArrayList<Token> a_TablaDeSimbolos = new ArrayList<Token>();
+    private ArrayList<Token> a_TablaLexico = new ArrayList<Token>();
     private boolean a_bdLexico=true;
     
     public AnalisisLexico(String p_codFuente){
@@ -76,7 +77,7 @@ public class AnalisisLexico {
             PalabrasReservadas v_palabrasReservadas=new PalabrasReservadas();   // Llama a la clase PalabrasReservadas para detectar palabras reservadas en el código fuente
             v_Recorrido = v_palabrasReservadas.getPalabrasReservadas(v_codFuente);// Manda llamar el metodo getPalabrasReservadas para regresar el numero de caracteres que componen a la palabra reservada
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
-                m_addToken(v_codFuente.substring(0,v_Recorrido),3);             // Si el recorrido es diferente de 0 encontro una palabra reservada y añade el token a la tabla de simbolos
+                m_addToken(v_codFuente.substring(0,v_Recorrido),3,a_Linea,0);             // Si el recorrido es diferente de 0 encontro una palabra reservada y añade el token a la tabla de simbolos
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }
@@ -88,7 +89,7 @@ public class AnalisisLexico {
             v_Recorrido = v_Ident.getIndentificador(v_codFuente);               // Manda llamar el método getIdentificadores para regresar el número de carácteres que componen al tipo de dato
             if(0!=v_Recorrido){                                                 // Compara si el recorrido del código fuente es diferente de 0
                 if(v_Recorrido>0){
-                    m_addToken(v_codFuente.substring(0,v_Recorrido),4);             // Si el recorrido es mayor de 0 encontro un identificador y añade el token a la tabla de simbolos
+                    m_addToken(v_codFuente.substring(0,v_Recorrido),4,a_Linea,0);             // Si el recorrido es mayor de 0 encontro un identificador y añade el token a la tabla de simbolos
                     v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                     v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
                 }else{
@@ -111,7 +112,7 @@ public class AnalisisLexico {
             v_Recorrido = v_Constantes.getConstante(v_codFuente);                   // Manda llamar el método getConstante para regresar el número de carácteres que componen al tipo de dato
             if(0!=v_Recorrido){                                                 // Compara si recorrido del código fuente es diferente de 0
                 if(v_Recorrido>0){                                              // Compara si el recorrido del código fue mayor a 0
-                    m_addToken(v_codFuente.substring(0,v_Recorrido),5);         // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
+                    m_addToken(v_codFuente.substring(0,v_Recorrido),5,a_Linea,0);         // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     v_Indice=v_Recorrido;                                       // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
                 }
@@ -137,7 +138,7 @@ public class AnalisisLexico {
             Operadores v_Operadores=new Operadores();                           // Llama a la clase Operadores para detectar operadores en el código fuente
             v_Recorrido = v_Operadores.getOperadores(v_codFuente);              // Manda llamar el método getOperadores para regresar el número de caráceres que componen al operador
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
-                m_addToken(v_codFuente.substring(0,v_Recorrido),2);             // Si el recorrido es diferente de 0 encontro un operador y añade el token a la tabla de simbolos
+                m_addToken(v_codFuente.substring(0,v_Recorrido),2,a_Linea,0);             // Si el recorrido es diferente de 0 encontro un operador y añade el token a la tabla de simbolos
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }
@@ -148,7 +149,7 @@ public class AnalisisLexico {
             Delimitadores v_Delimitadores=new Delimitadores();                  // Llama a la clase Delimitadores para detectar delimitadores en el código fuente
             v_Recorrido = v_Delimitadores.getDelimitadores(v_codFuente);        // Manda llamar el método getDelimitadores para regresar el número de carácteres que componen al delimitador
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
-                m_addToken(v_codFuente.substring(0,v_Recorrido),1);             // Si el recorrido es diferente de 0 encontro un delimitador y añade el token a la tabla de simbolos
+                m_addToken(v_codFuente.substring(0,v_Recorrido),1,a_Linea,0);             // Si el recorrido es diferente de 0 encontro un delimitador y añade el token a la tabla de simbolos
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }        
@@ -197,12 +198,15 @@ public class AnalisisLexico {
         return v_Bandera;
     }
     
-    private void m_addToken(String p_Palabra,int p_Tipo){
-        if(true){//!m_buscaToken(p_Palabra)){
-            int v_ID = a_TablaDeSimbolos.size()+1;
-            Token v_newSimbolo = new Token(v_ID,p_Palabra,p_Tipo);
+    private void m_addToken(String p_Palabra,int p_Tipo,int p_noLinea,int p_idToken){
+        if(!m_buscaToken(p_Palabra)){
+            int v_noToken = a_TablaDeSimbolos.size()+1;
+            Token v_newSimbolo = new Token(v_noToken,p_Palabra,p_Tipo,p_noLinea,p_idToken);
             a_TablaDeSimbolos.add(v_newSimbolo);
-        }        
+        }
+        int v_noToken = a_TablaLexico.size()+1;
+        Token v_newSimbolo = new Token(v_noToken,p_Palabra,p_Tipo,p_noLinea,p_idToken);
+        a_TablaLexico.add(v_newSimbolo);
     }
     
     private int m_errorLexema(String p_codFuente,int p_Index){
