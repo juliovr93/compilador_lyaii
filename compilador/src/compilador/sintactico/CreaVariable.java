@@ -26,9 +26,37 @@ public class CreaVariable {
             Token v_Token = a_TablaSimbolos.get(a_Recorrido);
             if(v_Token.m_getIdToken()==12){
                 a_Recorrido++;
-                CreaVariable o_creaVariable = new CreaVariable(a_TablaSimbolos, a_Recorrido, a_Consola);
+                if(a_TablaSimbolos.size()>a_Recorrido){
+                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                    if(v_Token.m_getIdToken()!=62){
+                        a_Recorrido++;
+                        if(a_TablaSimbolos.size()>a_Recorrido){
+                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                            if(v_Token.m_getIdToken()!=112){
+                                
+                            }else{
+                                a_Consola+="Error[]: No se asigno un valor\n";
+                                a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                a_Error=true;
+                            }
+                        }
+                        else{
+                            a_Consola+="Error[]: No se asigno un valor\n";
+                            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+                            a_Error=true;
+                        }
+                    }else{
+                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                        a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+                        a_Error=true;
+                    }
+                }else{
+                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                    a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+                    a_Error=true;
+                }
             }else{
-                a_Consola+="Error[]: No se declaro un identificador en la sentencia \n";
+                a_Consola+="Error[]: No se declaro una variable \n";
                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                 a_Error=true;
             }
