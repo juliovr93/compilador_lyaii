@@ -43,6 +43,7 @@ public class main_compiler extends JFrame{
     
     private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
     private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
+    private ArrayList <Token> a_TablaLexico = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
     private boolean a_bdLexico=false;                                           // Bandera del Análisis Léxico
     private boolean a_bdSintactico=false;                                       // Bandera del Análisis Léxico
@@ -535,6 +536,7 @@ public class main_compiler extends JFrame{
         try{
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
             a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
+            a_TablaLexico = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
             BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
@@ -549,6 +551,7 @@ public class main_compiler extends JFrame{
         }
         AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);          // Llama a la clase para el analisis léxico
         a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();                   // Obtiene la tabla de simbolos generada
+        a_TablaLexico=o_anaLexico.m_getTablaLexico();
         a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
         a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
         m_muestraTabla();                                                       // Muetra la tabla de simbolos
@@ -562,10 +565,10 @@ public class main_compiler extends JFrame{
     }
     
     void m_muestraTabla(){
-        String[] v_tblModel=new String[]{"ID","Lexema","TipoLexema","Tipo","Valor"};
+        String[] v_tblModel=new String[]{"No","Lexema","TipoLexema","Tipo","Valor","Linea","ID"};
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
-        String[] v_Datos={"","","","",""    };
+        String[] v_Datos={"","","","","","",""};
         for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getNoToken()+"";
@@ -573,12 +576,20 @@ public class main_compiler extends JFrame{
             v_Datos[2]=v_Temporal.m_getTipoLexema()+"";
             v_Datos[3]=v_Temporal.m_getTipo()+"";
             v_Datos[4]=v_Temporal.m_getValor()+"";
+            v_Datos[5]=v_Temporal.m_getNoLinea()+"";
+            v_Datos[6]=v_Temporal.m_getIdToken()+"";
             v_Modelo.addRow(v_Datos);
         }
     }
     
     private void m_Sintactico(){
-        
+        AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico);
+        a_txtaConsola.setText(o_analisisSintactico.m_getConsola());
+        if (o_analisisSintactico.m_getError()) {
+            a_btnSintactico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
+        }else{
+            a_btnSintactico.setBackground(Color.GREEN);                         // El botón del análisis léxico se pone en rojo (Falló)
+        }
     }
     
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed

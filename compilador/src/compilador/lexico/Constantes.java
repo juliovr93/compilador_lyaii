@@ -5,6 +5,8 @@
 package compilador.lexico;
 public class Constantes {
 
+    private int a_ID;
+    
     public int getConstante(String p_codFuente){
         int v_Recorrido=0;
         v_Recorrido=m_entQ0(p_codFuente);
@@ -42,6 +44,7 @@ public class Constantes {
                                                             v_Recorrido=-1;
             }
         }
+        a_ID=2;
         return v_Recorrido;
     }
     
@@ -66,6 +69,11 @@ public class Constantes {
                 return v_Recorrido+1;
             }
         }
+        a_ID=3;
         return v_Recorrido;
+    }
+    
+    public int m_getID(){
+        return a_ID;
     }
 }

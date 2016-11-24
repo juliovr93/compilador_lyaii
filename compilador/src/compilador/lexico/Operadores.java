@@ -6,34 +6,40 @@ package compilador.lexico;
 
 public class Operadores {
     
-    public int getOperadores(String p_Palabra){
+    private int a_ID;
+    
+    public int getOperadores(String p_codFuente){
         int v_Indice=0;
-        if(Mas(p_Palabra) >0){
-            v_Indice=Mas(p_Palabra);
+        if(m_Mas(p_codFuente) >0){
+            v_Indice=m_Mas(p_codFuente);
+            a_ID=5;
         }
         else{
-            if(Menos(p_Palabra) >0){
-                v_Indice=Menos(p_Palabra);
+            if(m_Menos(p_codFuente) >0){
+                v_Indice=m_Menos(p_codFuente);
+                a_ID=6;
             }
             else{
-                if(Por(p_Palabra) >0){
-                    v_Indice=Por(p_Palabra);
+                if(m_Por(p_codFuente) >0){
+                    v_Indice=m_Por(p_codFuente);
+                    a_ID=7;
                 }
                 else{
-                    if(Entre(p_Palabra) >0){
-                        v_Indice=Entre(p_Palabra);
+                    if(m_Entre(p_codFuente) >0){
+                        v_Indice=m_Entre(p_codFuente);
+                        a_ID=8;
                     }
                     else{
-                        if(MenorQue(p_Palabra,v_Indice) >0){
-                            v_Indice=MenorQue(p_Palabra,v_Indice);
+                        if(m_MenorQue(p_codFuente,v_Indice) >0){
+                            v_Indice=m_MenorQue(p_codFuente,v_Indice);
                         }
                         else{
-                            if(MayorQue(p_Palabra,v_Indice) >0){
-                                v_Indice=MayorQue(p_Palabra,v_Indice);
+                            if(m_MayorQue(p_codFuente,v_Indice) >0){
+                                v_Indice=m_MayorQue(p_codFuente,v_Indice);
                             }
                             else{
-                                if(Igual(p_Palabra,v_Indice) >0){
-                                    v_Indice=Igual(p_Palabra,v_Indice);
+                                if(m_Igual(p_codFuente,v_Indice) >0){
+                                    v_Indice=m_Igual(p_codFuente,v_Indice);
                                 }
                                 else{
                                     v_Indice=0;
@@ -48,68 +54,86 @@ public class Operadores {
         return v_Indice;
     }
     
-    private int Mas(String p_Palabra){
-        if(p_Palabra.charAt(0)=='+')
+    private int m_Mas(String p_codFuente){
+        if(p_codFuente.charAt(0)=='+')
             return 1;
         else
             return 0;
     }
     
-    private int Menos(String p_Palabra){
-        if(p_Palabra.charAt(0)=='-')
+    private int m_Menos(String p_codFuente){
+        if(p_codFuente.charAt(0)=='-')
             return 1;
         else
             return 0;
     }
     
-    private int Por(String p_Palabra){
-        if(p_Palabra.charAt(0)=='*')
+    private int m_Por(String p_codFuente){
+        if(p_codFuente.charAt(0)=='*')
             return 1;
         else
             return 0;
     }
     
-    private int Entre(String p_Palabra){
-        if(p_Palabra.charAt(0)=='/')
+    private int m_Entre(String p_codFuente){
+        if(p_codFuente.charAt(0)=='/')
             return 1;
         else
             return 0;
     }
     
-    private int MenorQue(String p_Palabra,int p_Indice){
+    private int m_MenorQue(String p_codFuente,int p_Recorrido){
         int v_Recorrido=0;
-        if(p_Palabra.length()-1>p_Indice){
-            if(p_Palabra.charAt(0)=='<'){
-                v_Recorrido=IgualQ(p_Palabra,1);
+        if(p_codFuente.length()-1>p_Recorrido){
+            if(p_codFuente.charAt(0)=='<'){
+                v_Recorrido=IgualQ(p_codFuente,1);
+                if(v_Recorrido==1){
+                    a_ID=105;
+                }
+                if(v_Recorrido==2){
+                    a_ID=109;
+                }
             }
         }
         return v_Recorrido;
     }
     
-    private int MayorQue(String p_Palabra,int p_Indice){
+    private int m_MayorQue(String p_codFuente,int p_Recorrido){
         int v_Recorrido=0;
-        if(p_Palabra.length()-1>p_Indice){
-            if(p_Palabra.charAt(0)=='>'){
-                v_Recorrido=IgualQ(p_Palabra,1);
+        if(p_codFuente.length()-1>p_Recorrido){
+            if(p_codFuente.charAt(0)=='>'){
+                v_Recorrido=IgualQ(p_codFuente,1);
+            }
+            if(v_Recorrido==1){
+                a_ID=107;
+            }
+            if(v_Recorrido==2){
+                a_ID=110;
             }
         }
         return v_Recorrido;
     }
     
-    private int Igual(String p_Palabra,int p_Indice){
+    private int m_Igual(String p_codFuente,int p_Recorrido){
         int v_Recorrido=0;
-        if(p_Palabra.length()-1>p_Indice){
-            if(p_Palabra.charAt(0)=='='){
-                v_Recorrido=IgualQ(p_Palabra,1);
+        if(p_codFuente.length()-1>p_Recorrido){
+            if(p_codFuente.charAt(0)=='='){
+                v_Recorrido=IgualQ(p_codFuente,1);
+            }
+            if(v_Recorrido==1){
+                a_ID=112;
+            }
+            if(v_Recorrido==2){
+                a_ID=111;
             }
         }
         return v_Recorrido;
     }
     
-    private int IgualQ(String p_Palabra,int p_Indice){
+    private int IgualQ(String p_codFuente,int p_Recorrido){
         int v_Recorrido=0;
-        if(p_Palabra.length()-1>=p_Indice){
-            if(p_Palabra.charAt(p_Indice)=='='){
+        if(p_codFuente.length()-1>=p_Recorrido){
+            if(p_codFuente.charAt(p_Recorrido)=='='){
                 v_Recorrido=2;
             }else{
                 v_Recorrido=1;
@@ -118,5 +142,9 @@ public class Operadores {
             v_Recorrido=1;
         }
         return v_Recorrido;
+    }
+    
+    public int m_getID(){
+        return a_ID;
     }
 }

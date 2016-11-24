@@ -6,6 +6,8 @@ package compilador.lexico;
 
 public class PalabrasReservadas {
     
+    private int a_ID;
+    
     public int getPalabrasReservadas(String p_codFuente){                       // Metodo para buscar una palabra reservada
         String v_codFuente=p_codFuente;                                         // Pasa el codigo fuente en una variable 
         int v_Indice=0;                                                         // El indice se inicia con 0
@@ -91,16 +93,21 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=5;
+                a_ID=10;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=5;
+                a_ID=10;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=5;
+                a_ID=10;
+            }
         }else{
             v_Recorrido=5;
+            a_ID=10;
         }
         return v_Recorrido;
     }      
@@ -147,16 +154,21 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=3;
+                a_ID=11;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=3;
+                a_ID=11;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=3;
+                a_ID=11;
+            }
         }else{
             v_Recorrido=3;
+            a_ID=11;
         }
         return v_Recorrido;
     }      
@@ -191,20 +203,25 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=2;
+                a_ID=17;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=2;
+                a_ID=17;
             }
             if(p_codFuente.charAt(0)=='n'){
                 v_Recorrido=m_siQ3(p_codFuente.substring(1));
             }else{
                 if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                    p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-                   p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+                   p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                     v_Recorrido=2;
+                    a_ID=17;
+                }
             }
         }else{
             v_Recorrido=2;
+            a_ID=17;
         }
         return v_Recorrido;
     }
@@ -224,17 +241,22 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=4;
+                a_ID=18;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=4;
+                a_ID=18;
             }else{
                 if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                    p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-                   p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+                   p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                     v_Recorrido=4;
+                    a_ID=18;
+                }
             }
         }else{
             v_Recorrido=4;
+            a_ID=18;
         }
         return v_Recorrido;
     }
@@ -281,16 +303,21 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=3;
+                a_ID=56;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=3;
+                a_ID=56;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=3;
+                a_ID=56;
+            }
         }else{
             v_Recorrido=3;
+            a_ID=56;
         }
         return v_Recorrido;
     }
@@ -337,16 +364,21 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=3;
+                a_ID=57;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=3;
+                a_ID=57;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=3;
+                a_ID=57;
+            }
         }else{
             v_Recorrido=3;
+            a_ID=57;
         }
         return v_Recorrido;
     }
@@ -441,16 +473,21 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=8;
+                a_ID=16;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=8;
+                a_ID=16;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=8;
+                a_ID=16;
+            }
         }else{
             v_Recorrido=8;
+            a_ID=16;
         }
         return v_Recorrido;
     }
@@ -535,17 +572,26 @@ public class PalabrasReservadas {
         if(!"".equals(p_codFuente)){
             if(p_codFuente.charAt(0)==' '){
                 v_Recorrido=7;
+                a_ID=32;
             }
             if(p_codFuente.charAt(0)==10){
                 v_Recorrido=7;
+                a_ID=32;
             }
             if(p_codFuente.charAt(0)<48||p_codFuente.charAt(0)>57&&
                p_codFuente.charAt(0)<65||p_codFuente.charAt(0)>90&&
-               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122)
+               p_codFuente.charAt(0)<97||p_codFuente.charAt(0)>122){
                 v_Recorrido=7;
+                a_ID=32;
+            }
         }else{
             v_Recorrido=7;
+            a_ID=32;
         }
         return v_Recorrido;
+    }
+    
+    public int m_getID(){
+        return a_ID;
     }
 }

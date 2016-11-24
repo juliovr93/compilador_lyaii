@@ -6,6 +6,8 @@ package compilador.lexico;
 
 public class Identificadores {
     
+    private int a_ID;
+    
     public int getIndentificador(String p_codFuente){
         int v_Indice=0;
         v_Indice=m_IdentQ0(p_codFuente);
@@ -58,6 +60,11 @@ public class Identificadores {
                 }
             }
         }
+        a_ID=12;
         return v_Recorrido;
+    }
+    
+    public int m_getID(){
+        return a_ID;
     }
 }
