@@ -46,7 +46,9 @@ public class Principal {
                 a_Error=true;
             }
         }else{
+            Token v_Token=a_TablaSimbolos.get(a_Recorrido-1);
             a_Consola+="Error[]: No se declaro la sentencia 'end' \n";
+            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
             a_Error=true;
         }
     }

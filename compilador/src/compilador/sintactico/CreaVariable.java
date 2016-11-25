@@ -22,33 +22,41 @@ public class CreaVariable {
     }
     
     private void m_creaVariable(){
-        if(a_TablaSimbolos.size()>a_Recorrido){
+    if(a_TablaSimbolos.size()>a_Recorrido){
             Token v_Token = a_TablaSimbolos.get(a_Recorrido);
             if(v_Token.m_getIdToken()==12){
-                a_Recorrido++;
-                if(a_TablaSimbolos.size()>a_Recorrido){
+                if(a_TablaSimbolos.size()>a_Recorrido+1){
+                    a_Recorrido++;
                     v_Token = a_TablaSimbolos.get(a_Recorrido);
                     if(v_Token.m_getIdToken()!=62){
-                        a_Recorrido++;
-                        if(a_TablaSimbolos.size()>a_Recorrido){
-                            v_Token = a_TablaSimbolos.get(a_Recorrido);
-                            if(v_Token.m_getIdToken()!=112){
-                                
+                        if(v_Token.m_getIdToken()==112){
+                            a_Recorrido++;
+                            Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                            a_Recorrido=o_Expresion.m_getRecorrido();
+                            a_Consola=o_Expresion.m_getConsola();
+                            a_Error=o_Expresion.m_getError();
+                            if(a_TablaSimbolos.size()>a_Recorrido){
+                                v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                if(v_Token.m_getIdToken()!=62){
+                                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                    a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                    a_Error=true;
+                                }else{
+                                    a_Recorrido++;
+                                }
                             }else{
-                                a_Consola+="Error[]: No se asigno un valor\n";
+                                v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                a_Consola+="Error[]: Falta cerrar linea ';' \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
                             }
-                        }
-                        else{
-                            a_Consola+="Error[]: No se asigno un valor\n";
-                            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+                        }else{
+                            a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                             a_Error=true;
                         }
                     }else{
-                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
-                        a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
-                        a_Error=true;
+                        a_Recorrido++;
                     }
                 }else{
                     a_Consola+="Error[]: Falta cerrar linea ';' \n";

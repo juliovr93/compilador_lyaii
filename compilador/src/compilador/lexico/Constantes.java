@@ -19,7 +19,7 @@ public class Constantes {
     private int m_entQ0(String p_codFuente){
         int v_Recorrido=0;
         if(p_codFuente.charAt(0)>=48&&p_codFuente.charAt(0)<=57){    
-            v_Recorrido=m_entQ1(p_codFuente.substring(1),1);
+            v_Recorrido=m_entQ1(p_codFuente,1);
         }
         return v_Recorrido;
     }
@@ -30,18 +30,30 @@ public class Constantes {
             if(p_codFuente.charAt(p_Recorrido)>=48&&p_codFuente.charAt(p_Recorrido)<=57){    
                 v_Recorrido=m_entQ1(p_codFuente,v_Recorrido+1);
             }else{
-                if(p_codFuente.charAt(p_Recorrido)!=';')
-                    if(p_codFuente.charAt(p_Recorrido)!=')')
-                        if(p_codFuente.charAt(p_Recorrido)!='+')
-                            if(p_codFuente.charAt(p_Recorrido)!='-')
-                                if(p_codFuente.charAt(p_Recorrido)!='*')
-                                    if(p_codFuente.charAt(p_Recorrido)!='/')
-                                        if(p_codFuente.charAt(p_Recorrido)!='=')
-                                            if(p_codFuente.charAt(p_Recorrido)!='<')
-                                                if(p_codFuente.charAt(p_Recorrido)!='>')
-                                                    if(p_codFuente.charAt(p_Recorrido)!=' ')
-                                                        if(p_codFuente.charAt(p_Recorrido)!=10)
-                                                            v_Recorrido=-1;
+                if(p_codFuente.charAt(p_Recorrido)!=';'){
+                    if(p_codFuente.charAt(p_Recorrido)!=')'){
+                        if(p_codFuente.charAt(p_Recorrido)!='+'){
+                            if(p_codFuente.charAt(p_Recorrido)!='-'){
+                                if(p_codFuente.charAt(p_Recorrido)!='*'){
+                                    if(p_codFuente.charAt(p_Recorrido)!='/'){
+                                        if(p_codFuente.charAt(p_Recorrido)!='='){
+                                            if(p_codFuente.charAt(p_Recorrido)!='<'){
+                                                if(p_codFuente.charAt(p_Recorrido)!='>'){
+                                                    if(p_codFuente.charAt(p_Recorrido)!=' '){
+                                                        if(p_codFuente.charAt(p_Recorrido)!=10){
+                                                            if(p_codFuente.charAt(p_Recorrido)!=32)
+                                                                v_Recorrido=-1;
+                                                        }else{v_Recorrido=p_Recorrido;}
+                                                    }else{v_Recorrido=p_Recorrido;}
+                                                }else{v_Recorrido=p_Recorrido;}
+                                            }else{v_Recorrido=p_Recorrido;}
+                                        }else{v_Recorrido=p_Recorrido;}
+                                    }else{v_Recorrido=p_Recorrido;}
+                                }else{v_Recorrido=p_Recorrido;}
+                            }else{v_Recorrido=p_Recorrido;}
+                        }else{v_Recorrido=p_Recorrido;}
+                    }else{v_Recorrido=p_Recorrido;}
+                }else{v_Recorrido=p_Recorrido;}
             }
         }
         a_ID=2;

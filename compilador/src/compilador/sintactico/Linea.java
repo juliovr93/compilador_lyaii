@@ -24,6 +24,7 @@ public class Linea {
     private void m_Linea(){
         if(a_TablaSimbolos.size()>a_Recorrido){
             Token v_Token = a_TablaSimbolos.get(a_Recorrido);
+            //Crear una variable
             if(v_Token.m_getIdToken()==56||v_Token.m_getIdToken()==57){
                 a_Recorrido++;
                 CreaVariable o_creaVariable = new CreaVariable(a_TablaSimbolos, a_Recorrido, a_Consola);
