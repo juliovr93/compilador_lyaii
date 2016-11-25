@@ -631,9 +631,12 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_mniGuardarComoActionPerformed
 
     private void a_txtpCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_a_txtpCodigoKeyPressed
+        a_bdSintactico=false;
         a_btnLexico.setBackground(Color.YELLOW);
         a_btnSintactico.setBackground(Color.BLACK);
+        a_btnSintactico.setEnabled(a_bdSintactico);
         a_btnSemantico.setBackground(Color.BLACK);
+        
     }//GEN-LAST:event_a_txtpCodigoKeyPressed
 
     private void a_btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnLexicoActionPerformed

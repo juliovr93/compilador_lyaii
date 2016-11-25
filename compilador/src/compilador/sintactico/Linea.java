@@ -31,6 +31,66 @@ public class Linea {
                 a_Consola=o_creaVariable.m_getConsola();
                 a_Recorrido=o_creaVariable.m_getRecorrido();
                 a_Error=o_creaVariable.m_getError();
+            }else{
+                if(v_Token.m_getIdToken()==12){
+                    if(a_TablaSimbolos.size()>a_Recorrido+1){
+                        a_Recorrido++;
+                        v_Token = a_TablaSimbolos.get(a_Recorrido);
+                        if(v_Token.m_getIdToken()!=62){
+                            if(v_Token.m_getIdToken()==112){
+                                a_Recorrido++;
+                                Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                                a_Recorrido=o_Expresion.m_getRecorrido();
+                                a_Consola=o_Expresion.m_getConsola();
+                                a_Error=o_Expresion.m_getError();
+                                if(a_TablaSimbolos.size()>a_Recorrido){
+                                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                    if(v_Token.m_getIdToken()!=62){
+                                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                        a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                        a_Error=true;
+                                    }else{
+                                        a_Recorrido++;
+                                    }
+                                }else{
+                                    v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                    a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                    a_Error=true;
+                                }
+                            }else{
+                                a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                a_Error=true;
+                            }
+                        }else{
+                            a_Recorrido++;
+                        }
+                    }else{
+                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                        a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+                        a_Error=true;
+                    }
+                }else{
+                    if(v_Token.m_getIdToken()==17){
+                        if(a_TablaSimbolos.size()>a_Recorrido+1){
+                            a_Recorrido++;
+                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                            if(v_Token.m_getIdToken()==58){
+                                
+                            }else{
+                                a_Consola+="Error[]: Falta declarar '(' \n";
+                                a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                a_Error=true;
+                            }
+                        }else{
+                            v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                            a_Consola+="Error[]: No se declaro condicion \n";
+                            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                            a_Error=true;
+                        }
+                    }
+                }
             }
         }
     }
