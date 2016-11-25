@@ -26,7 +26,7 @@ public class BloqueCodigo {
         do{
             if(a_TablaSimbolos.size()>a_Recorrido){
                 Token v_Token = a_TablaSimbolos.get(a_Recorrido);
-                if(v_Token.m_getIdToken()!=11){
+                if(v_Token.m_getIdToken()!=11&&v_Token.m_getIdToken()!=61){
                     Linea o_Linea=new Linea(a_TablaSimbolos, a_Recorrido, a_Consola);
                     a_Recorrido=o_Linea.m_getRecorrido();
                     a_Consola=o_Linea.m_getConsola();
