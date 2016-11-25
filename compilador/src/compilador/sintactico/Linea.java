@@ -147,6 +147,8 @@ public class Linea {
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                             a_Error=true;
                         }
+                    }else{
+                        a_Recorrido++;
                     }
                 }
             }

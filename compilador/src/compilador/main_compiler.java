@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 //Componentes para Look And Feel
 import de.javasoft.plaf.synthetica.SyntheticaPlainLookAndFeel;
 import java.awt.Color;
+import java.awt.Desktop;
 import javax.swing.UIManager;
 
 //Componentes para abrir el archivo
@@ -95,6 +96,9 @@ public class main_compiler extends JFrame{
         a_mnuHerramientas = new javax.swing.JMenu();
         a_mniCompilar = new javax.swing.JMenuItem();
         a_mnuAyuda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -372,6 +376,32 @@ public class main_compiler extends JFrame{
         a_MenuBar.add(a_mnuHerramientas);
 
         a_mnuAyuda.setText("Ayuda");
+
+        jMenuItem1.setText("Analisis Léxico");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        a_mnuAyuda.add(jMenuItem1);
+
+        jMenuItem2.setText("Analisis Sintáctico");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        a_mnuAyuda.add(jMenuItem2);
+
+        jMenuItem3.setText("Analisis Semantico");
+        jMenuItem3.setEnabled(false);
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        a_mnuAyuda.add(jMenuItem3);
+
         a_MenuBar.add(a_mnuAyuda);
 
         setJMenuBar(a_MenuBar);
@@ -653,6 +683,28 @@ public class main_compiler extends JFrame{
         System.exit(0);
     }//GEN-LAST:event_a_mniSalirActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            File path = new File ("src/compilador/files/Lexico.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            File path = new File ("src/compilador/files/Sintactico.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     public static void main(String args[]) {
         try{
             UIManager.setLookAndFeel(new SyntheticaPlainLookAndFeel());         //Carga el tema look and feel
@@ -692,6 +744,9 @@ public class main_compiler extends JFrame{
     private javax.swing.JTextArea a_txtaConsola;
     private javax.swing.JTextPane a_txtpCodigo;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
