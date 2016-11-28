@@ -19,6 +19,10 @@ public class AnalisisLexico {
     public AnalisisLexico(String p_codFuente){
         a_codFuente=p_codFuente;
         m_anaLexico(a_codFuente);
+        if(a_TablaDeSimbolos.size()==0){
+            a_consola+="Error []: No se encontro ningún léxema\n";
+            a_bdLexico=false;
+        }
     }
     
     private void m_anaLexico(String p_codFuente){
@@ -62,6 +66,24 @@ public class AnalisisLexico {
         return v_codFuente;
     }
     
+    private String m_Comentario(String p_codFuente){
+        String v_codFuente=p_codFuente;
+        boolean v_bandera=true;
+        if(v_codFuente.charAt(0)=='#' || v_codFuente.charAt(0)==32){
+            while(!"".equals(v_codFuente) && v_bandera){
+                 if(v_codFuente.charAt(0)==10){
+                     v_bandera=false;
+                     v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                 }else{
+                     v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                 }
+            }
+            a_Linea++;
+            
+        }
+        return v_codFuente;
+    }
+    
     private String m_buscaLexema(String p_codFuente){
         String v_codFuente=p_codFuente;
         int v_Recorrido=0,v_Indice=0;                                           // Variables de control para el recorrido del codigo fuente
@@ -70,6 +92,14 @@ public class AnalisisLexico {
         /***************  Saltos de Linea y Espacios  *************************/
         if(!"".equals(v_codFuente)){
             v_codFuente=m_SaltoLinea_Espacio(v_codFuente);
+        }
+        
+        /***************  Comentarios  ****************************************/
+        
+        if(!"".equals(v_codFuente)){
+            v_codFuente=m_Comentario(v_codFuente);
+            v_Inserta=true;
+            v_Indice=0;
         }
         
         /*********************  Palabras Reservadas  **************************/
@@ -176,12 +206,6 @@ public class AnalisisLexico {
                     }else{
                         v_codFuente=v_codFuente.substring(1,v_codFuente.length());
                     }
-                }
-            }
-            else{
-                if(a_TablaDeSimbolos.size()==0){
-                    a_consola+="Error []: No se encontro ningún léxema\n";
-                    a_bdLexico=false;
                 }
             }
         }
