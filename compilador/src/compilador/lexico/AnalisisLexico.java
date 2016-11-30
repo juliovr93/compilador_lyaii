@@ -16,6 +16,7 @@ public class AnalisisLexico {
     private ArrayList<Token> a_TablaLexico = new ArrayList<Token>();
     private boolean a_bdLexico=true;
     
+    
     public AnalisisLexico(String p_codFuente){
         a_codFuente=p_codFuente;
         m_anaLexico(a_codFuente);
@@ -58,7 +59,12 @@ public class AnalisisLexico {
                         v_bandera=true;
                         v_codFuente=v_codFuente.substring(1,v_codFuente.length());
                     }else{
-                        v_bandera=false;
+                        if(v_codFuente.charAt(0)=='\t'){
+                            v_bandera=true;
+                            v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                        }else{
+                            v_bandera=false;
+                        }
                     }
                 }
             }
@@ -69,7 +75,7 @@ public class AnalisisLexico {
     private String m_Comentario(String p_codFuente){
         String v_codFuente=p_codFuente;
         boolean v_bandera=true;
-        if(v_codFuente.charAt(0)=='#' || v_codFuente.charAt(0)==32){
+        if(v_codFuente.charAt(0)=='#'){
             while(!"".equals(v_codFuente) && v_bandera){
                  if(v_codFuente.charAt(0)==10){
                      v_bandera=false;
@@ -79,7 +85,6 @@ public class AnalisisLexico {
                  }
             }
             a_Linea++;
-            
         }
         return v_codFuente;
     }
@@ -97,9 +102,12 @@ public class AnalisisLexico {
         /***************  Comentarios  ****************************************/
         
         if(!"".equals(v_codFuente)){
-            v_codFuente=m_Comentario(v_codFuente);
-            v_Inserta=true;
-            v_Indice=0;
+            String v_Tem= m_Comentario(v_codFuente);
+            if(v_codFuente!=v_Tem){
+                v_codFuente=v_Tem;
+                v_Inserta=true;
+                v_Indice=0;
+            }
         }
         
         /*********************  Palabras Reservadas  **************************/

@@ -243,6 +243,7 @@ public class main_compiler extends JFrame{
 
         a_txtaConsola.setEditable(false);
         a_txtaConsola.setColumns(20);
+        a_txtaConsola.setForeground(new java.awt.Color(255, 51, 51));
         a_txtaConsola.setRows(5);
         a_scrllConsola.setViewportView(a_txtaConsola);
 

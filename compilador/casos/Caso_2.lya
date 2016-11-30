@@ -1,0 +1,24 @@
+#######################################################################################
+#		                		Caso: No: 2			         	         #
+#######################################################################################
+
+# En este caso podemos observar como el el analizador lexico detecta errores de construccion de lexemas
+
+# 1.- El primer error que detecta es un simbolo extraño al lenguaje declarado en la linea [15]
+# 2.- El segundo error que detecta es lexema ajeno al que marca en el lenjuaje en la linea [17]
+# 3.- El tercer error que detecta es lexema ajeno al que marca en el lenjuaje en la linea [18]
+# 3.- El cuarto  error que detecta son simbolos ajenos de los declarados en el lenguaje en la linea [20]
+
+start
+    ent x=0;
+    mientras(x<6){
+        cad msg = "Hola Mundo";
+        x= x$+1 ;
+        ent a12b3=1;
+        ent xy&z=0;
+        si(a12b3<xy&z){
+            imprime(msg);
+            $%&
+        }
+    }
+end

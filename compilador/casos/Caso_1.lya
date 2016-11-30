@@ -1,7 +1,25 @@
-#
-#
+#######################################################################################
+#		                		Caso: No: 1			         	         #
+#######################################################################################
+
+# En este caso podemos observar como el el analizador lexico detecta errores de construccion de lexemas
+
+# 1.- El primer error que se puede observar se encuentra en la linea [14] al declarar un valor no reconocido por el lenguaje
+# 2.- El segundo error que el analizador detecta es la construccion de una variable en la linea [17] con un simbolo 
+# no reconocido 'zs$sa'
+# 3.- El tercer error que el analizador puede detectar es el de un simobolo extraño al lenguaje en la linea [18]
+#4.- Por ultimo, el analizador lexico encuentra que el lexema que define una cadena no esta completo en la linea [22]
 
 start
-ent x=5asd;
-ent y=6;
+    ent x=5asd ;		# Error: No se reconoce lexema: ' 5asd '
+    ent y=6;
+    ent z=0;
+    mientras(x<za%as){		# Error: No se reconoce lexema: ' za%as'
+        si(5<7){			# Error: No se reconoce simbolo: ' % '
+            cad msg="Hola Mundo";
+        }
+       si(x<y){
+            cad msg="Buenos dias;	#Error: Cadena no completada
+        }
+    }
 end
