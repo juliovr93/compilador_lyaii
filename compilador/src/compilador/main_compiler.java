@@ -268,7 +268,6 @@ public class main_compiler extends JFrame{
 
         a_btnLexico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnLexico.setText("Análisis Léxico");
-        a_btnLexico.setEnabled(false);
         a_btnLexico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 a_btnLexicoActionPerformed(evt);
@@ -277,7 +276,6 @@ public class main_compiler extends JFrame{
 
         a_btnSintactico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnSintactico.setText("Análisis Sintáctico");
-        a_btnSintactico.setEnabled(false);
         a_btnSintactico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 a_btnSintacticoActionPerformed(evt);
@@ -678,7 +676,10 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
-        m_Sintactico();
+        if(m_Guardar()){
+            m_Lexico();
+            m_Sintactico();
+        }
     }//GEN-LAST:event_a_btnSintacticoActionPerformed
 
     private void a_mniSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniSalirActionPerformed
