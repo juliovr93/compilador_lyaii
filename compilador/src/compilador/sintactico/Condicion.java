@@ -41,7 +41,8 @@ public class Condicion {
                         o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
                         a_Recorrido=o_Expresion.m_getRecorrido();
                         a_Consola=o_Expresion.m_getConsola();
-                        a_Error=o_Expresion.m_getError();
+                        if(o_Expresion.m_getError())
+                            a_Error=true;
                     }else{
                         a_Consola+="Error[]: No se declaro una valor \n";
                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";

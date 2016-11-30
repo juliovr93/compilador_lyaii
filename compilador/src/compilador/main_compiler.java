@@ -614,7 +614,7 @@ public class main_compiler extends JFrame{
     
     private void m_Sintactico(){
         AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico);
-        a_txtaConsola.setText(o_analisisSintactico.m_getConsola());
+        a_txtaConsola.setText(a_txtaConsola.getText()+o_analisisSintactico.m_getConsola());
         if (o_analisisSintactico.m_getError()) {
             a_btnSintactico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
         }else{

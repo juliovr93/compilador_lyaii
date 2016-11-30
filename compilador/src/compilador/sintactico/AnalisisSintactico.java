@@ -17,7 +17,8 @@ public class AnalisisSintactico {
         a_TablaSimbolos=p_TablaSimbolos;
         Principal o_Principal = new Principal(a_TablaSimbolos,0,a_Consola);
         a_Consola=o_Principal.m_getConsola();
-        a_Error=o_Principal.m_getError();
+        if(o_Principal.m_getError())
+            a_Error=true;
     }
     
     public boolean m_getError(){

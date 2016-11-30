@@ -33,7 +33,8 @@ public class Principal {
         BloqueCodigo o_bloqueCodigo=new BloqueCodigo(a_TablaSimbolos,a_Recorrido,a_Consola);
         a_Consola=o_bloqueCodigo.m_getConsola();
         a_Recorrido=o_bloqueCodigo.m_getRecorrido();
-        a_Error=o_bloqueCodigo.m_getError();
+        if(o_bloqueCodigo.m_getError())
+            a_Error=true;
         m_end();
     }
     

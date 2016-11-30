@@ -34,7 +34,8 @@ public class CreaVariable {
                             Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
                             a_Recorrido=o_Expresion.m_getRecorrido();
                             a_Consola=o_Expresion.m_getConsola();
-                            a_Error=o_Expresion.m_getError();
+                            if(o_Expresion.m_getError())
+                                a_Error=true;
                             if(a_TablaSimbolos.size()>a_Recorrido){
                                 v_Token = a_TablaSimbolos.get(a_Recorrido);
                                 if(v_Token.m_getIdToken()!=62){
@@ -68,6 +69,11 @@ public class CreaVariable {
                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                 a_Error=true;
             }
+        }else{
+            Token v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+            a_Consola+="Error[]: No se declaro una variable \n";
+            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
+            a_Error=true;
         }
     }
     

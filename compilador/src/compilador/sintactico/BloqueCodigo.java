@@ -30,7 +30,8 @@ public class BloqueCodigo {
                     Linea o_Linea=new Linea(a_TablaSimbolos, a_Recorrido, a_Consola);
                     a_Recorrido=o_Linea.m_getRecorrido();
                     a_Consola=o_Linea.m_getConsola();
-                    a_Error=o_Linea.m_getError();
+                    if(o_Linea.m_getError())
+                        a_Error=true;
                 }else{
                     v_Bandera=false;
                 }

@@ -30,7 +30,8 @@ public class Linea {
                 CreaVariable o_creaVariable = new CreaVariable(a_TablaSimbolos, a_Recorrido, a_Consola);
                 a_Consola=o_creaVariable.m_getConsola();
                 a_Recorrido=o_creaVariable.m_getRecorrido();
-                a_Error=o_creaVariable.m_getError();
+                if(o_creaVariable.m_getError())
+                    a_Error=true;
             }else{
                 if(v_Token.m_getIdToken()==12){
                     if(a_TablaSimbolos.size()>a_Recorrido+1){
@@ -42,7 +43,8 @@ public class Linea {
                                 Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
                                 a_Recorrido=o_Expresion.m_getRecorrido();
                                 a_Consola=o_Expresion.m_getConsola();
-                                a_Error=o_Expresion.m_getError();
+                                if(o_Expresion.m_getError())
+                                    a_Error=true;
                                 if(a_TablaSimbolos.size()>a_Recorrido){
                                     v_Token = a_TablaSimbolos.get(a_Recorrido);
                                     if(v_Token.m_getIdToken()!=62){
@@ -83,7 +85,8 @@ public class Linea {
                                     Condicion o_Condicion = new Condicion(a_TablaSimbolos, a_Recorrido, a_Consola);
                                     a_Recorrido=o_Condicion.m_getRecorrido();
                                     a_Consola=o_Condicion.m_getConsola();
-                                    a_Error=o_Condicion.m_getError();
+                                    if(o_Condicion.m_getError())
+                                        a_Error=true;
                                     if(a_TablaSimbolos.size()>a_Recorrido){                                        
                                         v_Token = a_TablaSimbolos.get(a_Recorrido);
                                         if(v_Token.m_getIdToken()==59){
@@ -96,7 +99,8 @@ public class Linea {
                                                         BloqueCodigo o_bloqueCodigo=new BloqueCodigo(a_TablaSimbolos,a_Recorrido,a_Consola);
                                                         a_Consola=o_bloqueCodigo.m_getConsola();
                                                         a_Recorrido=o_bloqueCodigo.m_getRecorrido();
-                                                        a_Error=o_bloqueCodigo.m_getError();
+                                                        if(o_bloqueCodigo.m_getError())
+                                                            a_Error=true;
                                                         if(a_TablaSimbolos.size()>a_Recorrido){
                                                             v_Token = a_TablaSimbolos.get(a_Recorrido);
                                                             if(v_Token.m_getIdToken()==61){
@@ -160,7 +164,8 @@ public class Linea {
                                         Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
                                         a_Recorrido=o_Expresion.m_getRecorrido();
                                         a_Consola=o_Expresion.m_getConsola();
-                                        a_Error=o_Expresion.m_getError();
+                                        if(o_Expresion.m_getError())
+                                            a_Error=true;
                                         
                                         if(a_TablaSimbolos.size()>a_Recorrido){
                                             v_Token = a_TablaSimbolos.get(a_Recorrido);
