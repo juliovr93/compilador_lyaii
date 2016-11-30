@@ -148,7 +148,68 @@ public class Linea {
                             a_Error=true;
                         }
                     }else{
-                        a_Recorrido++;
+                        if(v_Token.m_getIdToken()==32){
+                            if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                a_Recorrido++;
+                                v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                
+                                if(v_Token.m_getIdToken()==58){
+                                    if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                        a_Recorrido++;
+                                        v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                        Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                                        a_Recorrido=o_Expresion.m_getRecorrido();
+                                        a_Consola=o_Expresion.m_getConsola();
+                                        a_Error=o_Expresion.m_getError();
+                                        
+                                        if(a_TablaSimbolos.size()>a_Recorrido){
+                                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                            if(v_Token.m_getIdToken()==59){
+                                                if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                                    a_Recorrido++;
+                                                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                                    if(v_Token.m_getIdToken()==62){
+                                                        a_Recorrido++;
+                                                    }else{
+                                                        a_Consola+="Error[]: Falta declarar ';' \n";
+                                                        a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                                        a_Error=true;
+                                                    }
+                                                }else{
+                                                    v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                                    a_Consola+="Error[]: Falta declarar ';' \n";
+                                                    a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                                    a_Error=true;
+                                                }
+                                                
+                                            }else{
+                                                a_Consola+="Error[]: Falta declarar ')' \n";
+                                                a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                                a_Error=true;
+                                            }
+                                        }else{
+                                            v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                            a_Consola+="Error[]: Falta declarar ')' \n";
+                                            a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                            a_Error=true;
+                                        }
+                                        
+                                    }
+                                }else{
+                                    a_Consola+="Error[]: Falta declarar '(' \n";
+                                    a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                    a_Error=true;
+                                }
+                                    
+                            }else{
+                                v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                a_Consola+="Error[]: Falta declarar ')' \n";
+                                a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
+                                a_Error=true;
+                            }
+                        }else{
+                            a_Recorrido++;
+                        }
                     }
                 }
             }

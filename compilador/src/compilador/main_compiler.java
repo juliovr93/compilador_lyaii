@@ -633,6 +633,7 @@ public class main_compiler extends JFrame{
     private void a_btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnCompilarActionPerformed
         if(m_Guardar()){
             m_Lexico();
+            m_Sintactico();
         }
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
