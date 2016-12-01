@@ -10,11 +10,14 @@ import java.util.ArrayList;
 public class AnalisisLexico {
     
     private String a_codFuente;
+    private String a_codFuenteHTML="";
     private String a_consola="";
     private int a_Linea=1;
     private ArrayList<Token> a_TablaDeSimbolos = new ArrayList<Token>();
     private ArrayList<Token> a_TablaLexico = new ArrayList<Token>();
     private boolean a_bdLexico=true;
+    
+    private StringBuilder sb_comentarios = new StringBuilder();
     
     
     public AnalisisLexico(String p_codFuente){
@@ -74,8 +77,10 @@ public class AnalisisLexico {
     
     private String m_Comentario(String p_codFuente){
         String v_codFuente=p_codFuente;
+        int v_contador=0;
         boolean v_bandera=true;
         if(v_codFuente.charAt(0)=='#'){
+            v_contador++;
             while(!"".equals(v_codFuente) && v_bandera){
                  if(v_codFuente.charAt(0)==10){
                      v_bandera=false;
@@ -83,8 +88,11 @@ public class AnalisisLexico {
                  }else{
                      v_codFuente=v_codFuente.substring(1,v_codFuente.length());
                  }
+                 v_contador++;
             }
             a_Linea++;
+            sb_comentarios.append("<p><span style='color:#839bc1'>" + p_codFuente.substring(0,v_contador) + "</span></p>");
+            a_codFuenteHTML+=sb_comentarios.toString()+"\n";
         }
         return v_codFuente;
     }
@@ -331,5 +339,9 @@ public class AnalisisLexico {
     
     public boolean m_getLexico(){
         return a_bdLexico;
+    }
+    
+    public String m_getCodFuenteHTML(){
+        return a_codFuenteHTML;
     }
 }

@@ -583,6 +583,10 @@ public class main_compiler extends JFrame{
         a_TablaLexico=o_anaLexico.m_getTablaLexico();
         a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
         a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
+
+        a_txtpCodigo.setContentType("text/html");
+        a_txtpCodigo.setText(o_anaLexico.m_getCodFuenteHTML());
+
         m_muestraTabla();                                                       // Muetra la tabla de simbolos
         if(a_bdLexico){                                                         // Analiza la bandera el analisis léxico
             a_btnLexico.setBackground(Color.GREEN);                             // Si es correcto pone en boton en verde (Correcto)
