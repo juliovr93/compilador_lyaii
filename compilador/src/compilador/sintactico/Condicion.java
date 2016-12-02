@@ -10,12 +10,14 @@ import java.util.ArrayList;
 
 public class Condicion {
     
+    private ArrayList <Token> a_TablaLexico;
     private ArrayList <Token> a_TablaSimbolos;
     private int a_Recorrido;
     private String a_Consola="";
     private boolean a_Error=false;
     
-    public Condicion(ArrayList <Token> p_TablaSimbolos,int p_Recorrido,String p_Consola){
+    public Condicion(ArrayList <Token> p_TablaLexico,ArrayList <Token> p_TablaSimbolos,int p_Recorrido,String p_Consola){
+        a_TablaLexico=p_TablaLexico;
         a_TablaSimbolos=p_TablaSimbolos;
         a_Recorrido=p_Recorrido;
         a_Consola=p_Consola;
@@ -23,22 +25,22 @@ public class Condicion {
     }
     
     private void m_Condicion(){
-        Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos, a_Recorrido, a_Consola,0);
         a_Recorrido=o_Expresion.m_getRecorrido();
         a_Consola=o_Expresion.m_getConsola();
         a_Error=o_Expresion.m_getError();
-        if(a_TablaSimbolos.size()>a_Recorrido){
-            Token v_Token = a_TablaSimbolos.get(a_Recorrido);
+        if(a_TablaLexico.size()>a_Recorrido){
+            Token v_Token = a_TablaLexico.get(a_Recorrido);
             if(v_Token.m_getIdToken()==105||
                     v_Token.m_getIdToken()==107||
                     v_Token.m_getIdToken()==109||
                     v_Token.m_getIdToken()==110||
                     v_Token.m_getIdToken()==111){
-                if(a_TablaSimbolos.size()>a_Recorrido+1){
+                if(a_TablaLexico.size()>a_Recorrido+1){
                     a_Recorrido++;
-                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                    v_Token = a_TablaLexico.get(a_Recorrido);
                     if(v_Token.m_getIdToken()!=59){
-                        o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                        o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos, a_Recorrido, a_Consola,0);
                         a_Recorrido=o_Expresion.m_getRecorrido();
                         a_Consola=o_Expresion.m_getConsola();
                         if(o_Expresion.m_getError())

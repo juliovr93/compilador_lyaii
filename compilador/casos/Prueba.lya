@@ -19,7 +19,7 @@ start
             cad msg="Hola Mundo";
         }
        si(x<y){
-            cad msg="Buenos dias";	#Error: Cadena no completada
+            cad msg="Buenos dias;	#Error: Cadena no completada
         }
     }
 end

@@ -8,13 +8,15 @@ import compilador.Token;
 import java.util.ArrayList;
 
 public class Linea {
+    private ArrayList <Token> a_TablaLexico;
     private ArrayList <Token> a_TablaSimbolos;
     private int a_Recorrido;
     private String a_Consola="";
     private boolean a_Error=false;
     
     
-    public Linea (ArrayList <Token> p_TablaSimbolos,int p_Recorrido,String p_Consola){
+    public Linea (ArrayList <Token> p_TablaLexico,ArrayList <Token> p_TablaSimbolos,int p_Recorrido,String p_Consola){
+        a_TablaLexico=p_TablaLexico;
         a_TablaSimbolos=p_TablaSimbolos;
         a_Recorrido=p_Recorrido;
         a_Consola=p_Consola;
@@ -22,31 +24,35 @@ public class Linea {
     }
     
     private void m_Linea(){
-        if(a_TablaSimbolos.size()>a_Recorrido){
-            Token v_Token = a_TablaSimbolos.get(a_Recorrido);
+        if(a_TablaLexico.size()>a_Recorrido){
+            Token v_Token = a_TablaLexico.get(a_Recorrido);
             //Crear una variable
             if(v_Token.m_getIdToken()==56||v_Token.m_getIdToken()==57){
                 a_Recorrido++;
-                CreaVariable o_creaVariable = new CreaVariable(a_TablaSimbolos, a_Recorrido, a_Consola);
+                CreaVariable o_creaVariable = new CreaVariable(a_TablaLexico,a_TablaSimbolos,a_Recorrido,a_Consola);
                 a_Consola=o_creaVariable.m_getConsola();
                 a_Recorrido=o_creaVariable.m_getRecorrido();
+                a_TablaSimbolos=o_creaVariable.m_getTabla();
+                a_TablaLexico=o_creaVariable.m_getLexico();
                 if(o_creaVariable.m_getError())
                     a_Error=true;
             }else{
                 if(v_Token.m_getIdToken()==12){
-                    if(a_TablaSimbolos.size()>a_Recorrido+1){
+                    if(a_TablaLexico.size()>a_Recorrido+1){
                         a_Recorrido++;
-                        v_Token = a_TablaSimbolos.get(a_Recorrido);
+                        v_Token = a_TablaLexico.get(a_Recorrido);
                         if(v_Token.m_getIdToken()!=62){
                             if(v_Token.m_getIdToken()==112){
                                 a_Recorrido++;
-                                Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                                Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos, a_Recorrido, a_Consola,0);
+                                a_TablaSimbolos= o_Expresion.m_getTabla();
+                                a_TablaLexico=o_Expresion.m_getLexico();
                                 a_Recorrido=o_Expresion.m_getRecorrido();
                                 a_Consola=o_Expresion.m_getConsola();
                                 if(o_Expresion.m_getError())
                                     a_Error=true;
-                                if(a_TablaSimbolos.size()>a_Recorrido){
-                                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                if(a_TablaLexico.size()>a_Recorrido){
+                                    v_Token = a_TablaLexico.get(a_Recorrido);
                                     if(v_Token.m_getIdToken()!=62){
                                         a_Consola+="Error[]: Falta cerrar linea ';' \n";
                                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
@@ -55,7 +61,7 @@ public class Linea {
                                         a_Recorrido++;
                                     }
                                 }else{
-                                    v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                    v_Token=a_TablaLexico.get(a_Recorrido-1);
                                     a_Consola+="Error[]: Falta cerrar linea ';' \n";
                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                     a_Error=true;
@@ -75,34 +81,36 @@ public class Linea {
                     }
                 }else{
                     if(v_Token.m_getIdToken()==16||v_Token.m_getIdToken()==17){
-                        if(a_TablaSimbolos.size()>a_Recorrido+1){
+                        if(a_TablaLexico.size()>a_Recorrido+1){
                             a_Recorrido++;
-                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                            v_Token = a_TablaLexico.get(a_Recorrido);
                             if(v_Token.m_getIdToken()==58){
-                                if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                if(a_TablaLexico.size()>a_Recorrido+1){
                                     a_Recorrido++;
-                                    v_Token = a_TablaSimbolos.get(a_Recorrido);
-                                    Condicion o_Condicion = new Condicion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                                    v_Token = a_TablaLexico.get(a_Recorrido);
+                                    Condicion o_Condicion = new Condicion(a_TablaLexico,a_TablaSimbolos, a_Recorrido, a_Consola);
                                     a_Recorrido=o_Condicion.m_getRecorrido();
                                     a_Consola=o_Condicion.m_getConsola();
                                     if(o_Condicion.m_getError())
                                         a_Error=true;
-                                    if(a_TablaSimbolos.size()>a_Recorrido){                                        
-                                        v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                    if(a_TablaLexico.size()>a_Recorrido){                                        
+                                        v_Token = a_TablaLexico.get(a_Recorrido);
                                         if(v_Token.m_getIdToken()==59){
-                                            if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                            if(a_TablaLexico.size()>a_Recorrido+1){
                                                 a_Recorrido++;
-                                                v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                                v_Token = a_TablaLexico.get(a_Recorrido);
                                                 if(v_Token.m_getIdToken()==60){
-                                                    if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                                    if(a_TablaLexico.size()>a_Recorrido+1){
                                                         a_Recorrido++;
-                                                        BloqueCodigo o_bloqueCodigo=new BloqueCodigo(a_TablaSimbolos,a_Recorrido,a_Consola);
+                                                        BloqueCodigo o_bloqueCodigo=new BloqueCodigo(a_TablaLexico,a_TablaSimbolos,a_Recorrido,a_Consola);
                                                         a_Consola=o_bloqueCodigo.m_getConsola();
                                                         a_Recorrido=o_bloqueCodigo.m_getRecorrido();
+                                                        a_TablaSimbolos=o_bloqueCodigo.m_getTabla();
+                                                        a_TablaLexico=o_bloqueCodigo.m_getLexico();
                                                         if(o_bloqueCodigo.m_getError())
                                                             a_Error=true;
-                                                        if(a_TablaSimbolos.size()>a_Recorrido){
-                                                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                                        if(a_TablaLexico.size()>a_Recorrido){
+                                                            v_Token = a_TablaLexico.get(a_Recorrido);
                                                             if(v_Token.m_getIdToken()==61){
                                                                 a_Recorrido++;
                                                             }else{
@@ -111,7 +119,7 @@ public class Linea {
                                                                 a_Error=true;
                                                             }
                                                         }else{
-                                                            v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                                            v_Token=a_TablaLexico.get(a_Recorrido-1);
                                                             a_Consola+="Error[]: Falta declarar '}' \n";
                                                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                             a_Error=true;
@@ -123,7 +131,7 @@ public class Linea {
                                                     a_Error=true;
                                                 }
                                             }else{
-                                                v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                                v_Token=a_TablaLexico.get(a_Recorrido-1);
                                                 a_Consola+="Error[]: Falta declarar '{' \n";
                                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                 a_Error=true;
@@ -134,7 +142,7 @@ public class Linea {
                                             a_Error=true;
                                         }
                                     }else{       
-                                        v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                                        v_Token=a_TablaLexico.get(a_Recorrido-1);
                                         a_Consola+="Error[]: Falta declarar ')' \n";
                                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                         a_Error=true;
@@ -146,33 +154,33 @@ public class Linea {
                                 a_Error=true;
                             }
                         }else{
-                            v_Token=a_TablaSimbolos.get(a_Recorrido-1);
+                            v_Token=a_TablaLexico.get(a_Recorrido-1);
                             a_Consola+="Error[]: No se declaro condicion \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                             a_Error=true;
                         }
                     }else{
                         if(v_Token.m_getIdToken()==32){
-                            if(a_TablaSimbolos.size()>a_Recorrido+1){
+                            if(a_TablaLexico.size()>a_Recorrido+1){
                                 a_Recorrido++;
-                                v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                v_Token = a_TablaLexico.get(a_Recorrido);
                                 
                                 if(v_Token.m_getIdToken()==58){
-                                    if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                    if(a_TablaLexico.size()>a_Recorrido+1){
                                         a_Recorrido++;
-                                        v_Token = a_TablaSimbolos.get(a_Recorrido);
-                                        Expresion o_Expresion = new Expresion(a_TablaSimbolos, a_Recorrido, a_Consola);
+                                        v_Token = a_TablaLexico.get(a_Recorrido);
+                                        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos, a_Recorrido, a_Consola,0);
                                         a_Recorrido=o_Expresion.m_getRecorrido();
                                         a_Consola=o_Expresion.m_getConsola();
                                         if(o_Expresion.m_getError())
                                             a_Error=true;
                                         
-                                        if(a_TablaSimbolos.size()>a_Recorrido){
-                                            v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                        if(a_TablaLexico.size()>a_Recorrido){
+                                            v_Token = a_TablaLexico.get(a_Recorrido);
                                             if(v_Token.m_getIdToken()==59){
-                                                if(a_TablaSimbolos.size()>a_Recorrido+1){
+                                                if(a_TablaLexico.size()>a_Recorrido+1){
                                                     a_Recorrido++;
-                                                    v_Token = a_TablaSimbolos.get(a_Recorrido);
+                                                    v_Token = a_TablaLexico.get(a_Recorrido);
                                                     if(v_Token.m_getIdToken()==62){
                                                         a_Recorrido++;
                                                     }else{
@@ -181,7 +189,7 @@ public class Linea {
                                                         a_Error=true;
                                                     }
                                                 }else{
-                                                    v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                                    v_Token = a_TablaLexico.get(a_Recorrido-1);
                                                     a_Consola+="Error[]: Falta declarar ';' \n";
                                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                     a_Error=true;
@@ -193,7 +201,7 @@ public class Linea {
                                                 a_Error=true;
                                             }
                                         }else{
-                                            v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                            v_Token = a_TablaLexico.get(a_Recorrido-1);
                                             a_Consola+="Error[]: Falta declarar ')' \n";
                                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                             a_Error=true;
@@ -207,7 +215,7 @@ public class Linea {
                                 }
                                     
                             }else{
-                                v_Token = a_TablaSimbolos.get(a_Recorrido-1);
+                                v_Token = a_TablaLexico.get(a_Recorrido-1);
                                 a_Consola+="Error[]: Falta declarar ')' \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
@@ -231,5 +239,13 @@ public class Linea {
     
     public boolean m_getError(){
         return a_Error;
+    }
+    
+    public ArrayList <Token> m_getTabla(){
+        return a_TablaSimbolos;
+    }
+    
+    public ArrayList <Token> m_getLexico(){
+        return a_TablaLexico;
     }
 }

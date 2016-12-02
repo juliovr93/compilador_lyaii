@@ -584,8 +584,8 @@ public class main_compiler extends JFrame{
         a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
         a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
 
-        a_txtpCodigo.setContentType("text/html");
-        a_txtpCodigo.setText(o_anaLexico.m_getCodFuenteHTML());
+        //a_txtpCodigo.setContentType("text/html");
+        //a_txtpCodigo.setText(o_anaLexico.m_getCodFuenteHTML());
 
         m_muestraTabla();                                                       // Muetra la tabla de simbolos
         if(a_bdLexico){                                                         // Analiza la bandera el analisis léxico
@@ -616,8 +616,11 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Sintactico(){
-        AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico);
+        AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico,a_TablaDeSimbolos);
+        a_TablaDeSimbolos=o_analisisSintactico.m_getTabla();
+        a_TablaLexico=o_analisisSintactico.m_getLexico();
         a_txtaConsola.setText(a_txtaConsola.getText()+o_analisisSintactico.m_getConsola());
+        m_muestraTabla();
         if (o_analisisSintactico.m_getError()) {
             a_btnSintactico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
         }else{
