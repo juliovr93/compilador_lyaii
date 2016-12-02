@@ -37,7 +37,7 @@ public class Token {
         return a_Tipo;
     }
     
-    public Object m_getValor(){
+    public int m_getValor(){
         return a_Valor;
     }
     

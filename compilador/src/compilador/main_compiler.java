@@ -7,6 +7,7 @@ package compilador;
 
 //Clase para realizar el análisis léxico
 import compilador.lexico.AnalisisLexico;
+import compilador.semantico.AnalisisSemantico;
 
 //Clase para realizar el análisis sintáctico
 import compilador.sintactico.AnalisisSintactico;
@@ -284,7 +285,11 @@ public class main_compiler extends JFrame{
 
         a_btnSemantico.setBackground(new java.awt.Color(0, 0, 0));
         a_btnSemantico.setText("Análisis Semántico");
-        a_btnSemantico.setEnabled(false);
+        a_btnSemantico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                a_btnSemanticoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -628,6 +633,16 @@ public class main_compiler extends JFrame{
         }
     }
     
+    private void m_Semantico(){
+        AnalisisSemantico o_analisisSemantico = new AnalisisSemantico(a_TablaLexico, a_TablaDeSimbolos);
+        a_txtaConsola.setText(a_txtaConsola.getText()+o_analisisSemantico.m_getConsola());
+        if (o_analisisSemantico.m_getError()) {
+            a_btnSemantico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
+        }else{
+            a_btnSemantico.setBackground(Color.GREEN);                         // El botón del análisis léxico se pone en rojo (Falló)
+        }
+    }
+    
     private void a_mniNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniNuevoActionPerformed
         m_NuevoArchivo();
     }//GEN-LAST:event_a_mniNuevoActionPerformed
@@ -640,6 +655,7 @@ public class main_compiler extends JFrame{
         if(m_Guardar()){
             m_Lexico();
             m_Sintactico();
+            m_Semantico();
         }
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
@@ -671,7 +687,6 @@ public class main_compiler extends JFrame{
         a_bdSintactico=false;
         a_btnLexico.setBackground(Color.YELLOW);
         a_btnSintactico.setBackground(Color.BLACK);
-        a_btnSintactico.setEnabled(a_bdSintactico);
         a_btnSemantico.setBackground(Color.BLACK);
         
     }//GEN-LAST:event_a_txtpCodigoKeyPressed
@@ -714,6 +729,14 @@ public class main_compiler extends JFrame{
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void a_btnSemanticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSemanticoActionPerformed
+        if(m_Guardar()){
+            m_Lexico();
+            m_Sintactico();
+            m_Semantico();
+        }
+    }//GEN-LAST:event_a_btnSemanticoActionPerformed
 
     public static void main(String args[]) {
         try{
