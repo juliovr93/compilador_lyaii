@@ -17,6 +17,7 @@ public class AnalisisSemantico {
         a_TablaSimbolos=p_TablaSimbolos;
         a_TablaLexico=p_TablaLexico;
         m_errorAsignacion();
+        m_errorOperacion();
     }
     
     
@@ -25,25 +26,34 @@ public class AnalisisSemantico {
         for(int v_indice=0;v_indice<a_TablaSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaSimbolos.get(v_indice);
             if(v_Temporal.m_getIdToken()==12){
-                if(v_Temporal.m_getTipo()==56){
-                    Token v_Valor= a_TablaSimbolos.get(v_Temporal.m_getValor()-1);
-                    if(v_Valor.m_getIdToken()!=2){
-                        a_Consola+="Error []: Tipo de valor incompatible \n";
-                        a_Consola+="Error en la linea: "+v_Temporal.m_getNoLinea()+"\n";
-                        a_Error=true;
-                    }
-                }else{
-                    if(v_Temporal.m_getTipo()==57){
+                if(v_Temporal.m_getValor()!=0){
+                    if(v_Temporal.m_getTipo()==56){
                         Token v_Valor= a_TablaSimbolos.get(v_Temporal.m_getValor()-1);
-                        if(v_Valor.m_getIdToken()!=3){
+                        if(v_Valor.m_getIdToken()!=2){
                             a_Consola+="Error []: Tipo de valor incompatible \n";
                             a_Consola+="Error en la linea: "+v_Temporal.m_getNoLinea()+"\n";
                             a_Error=true;
+                        }
+                    }else{
+                        if(v_Temporal.m_getTipo()==57){
+                            Token v_Valor= a_TablaSimbolos.get(v_Temporal.m_getValor()-1);
+                            if(v_Valor.m_getIdToken()!=3){
+                                a_Consola+="Error []: Tipo de valor incompatible \n";
+                                a_Consola+="Error en la linea: "+v_Temporal.m_getNoLinea()+"\n";
+                                a_Error=true;
+                            }
                         }
                     }
                 }
             }
         }
+    }
+    
+    private void m_errorOperacion(){
+        Principal o_Principal = new Principal(a_TablaLexico,a_TablaSimbolos,0,a_Consola);
+        a_Consola=o_Principal.m_getConsola();
+        if(o_Principal.m_getError())
+            a_Error=true;
     }
     
     public String m_getConsola(){
