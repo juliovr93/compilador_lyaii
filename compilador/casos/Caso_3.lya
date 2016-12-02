@@ -1,25 +1,24 @@
 #######################################################################################
-#		                		Caso: No: 3			         	         #
+#                               			Caso: No: 3                              		         #
 #######################################################################################
 
-# En este caso podemos observar como el el analizador sintáctico detecta errores de la clase principal y una 
-# estructura de control
+# En este caso podemos observar como el el analizador sintáctico detecta errores de la clase principal y una estructura de control
 
 # 1.- El primer error que muestra es la falta del simbolo '{' para declarar el bloque de intrucciones que tiene la 
 # sentencia de control 'mientras' en la linea [17]
 # 2.- El segundo error que encuentra es que falta declarar un valor dentro del parentesis en la linea [20]
-# 3.- El tercer error que muestra es la falta de una llave para cerrar la funcion 'si'  en la linea [24]
+# 3.- El tercer error que muestra es la falta de una llave para cerrar la funcion 'si'  en la linea [23]
 # 4.- El cuarto error que podemos encontrar es el error por no cerrar el main principal con la instruccion 'end'
+
 
 start
     si (4==0){
-        ent x=5;
-        mientras(((((7+9))))<5)		#Error: Falta declarar '{' 
+        cad x=5;
+        mientras((7+9)<"s")				#Error: Falta declarar '{' 
             si(x<=(6/3)){
-                ent y = 6*(5/5);
-                ent z = 6+();			#Error: No se declaro un valor 
-                ent w = 1-(5/(5+(6*(9))));
-            }
-				# Error: Falta declarar '}' 
-        cad msg = "Hola Mundo"; 
-				# Error: No se declaro la sentencia 'end' 
+                ent y = 6*(5+5);
+                ent z = "Hola"+;   				#Error: No se declaro un valor 
+                ent acb = 6;
+            }	
+        cad msg = "Hola Mundo"; 			#Error: Falta declarar '}'  / No se declaro la sentencia 'end' 
+}

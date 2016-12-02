@@ -4,21 +4,21 @@
 
 # En este caso podemos observar como el el analizador lexico detecta errores de construccion de lexemas
 
-# 1.- El primer error que detecta es un simbolo extraño al lenguaje declarado en la linea [15]
-# 2.- El segundo error que detecta es lexema ajeno al que marca en el lenjuaje en la linea [17]
+# 1.- El primer error que detecta es un simbolo extraño al lenguaje declarado en la linea [16]
+# 2.- El segundo error que detecta es lexema ajeno al que marca en el lenjuaje en la linea [16]
 # 3.- El tercer error que detecta es lexema ajeno al que marca en el lenjuaje en la linea [18]
-# 3.- El cuarto  error que detecta son simbolos ajenos de los declarados en el lenguaje en la linea [20]
+# 4.- El cuarto  error que detecta son simbolos ajenos de los declarados en el lenguaje en la linea [21]
 
 start
     ent x=0;
     mientras(x<6){
         cad msg = "Hola Mundo";
-        x= x$+1 ;
-        ent a12b3=1;
-        ent xy&z=0;
-        si(a12b3<xy&z){
+        x= x$+1 ;		#Error: No se reconoce simbolo: ' $ ' / Error: No se reconoce lexema: ' x$ '
+        ent abc=1;		
+        ent xy&z=0;		#Error: No se reconoce simbolo: ' & ' / Error: No se reconoce lexema: ' xy&z '
+        si(a12b3<xy&z){		#Error: No se reconoce simbolo: ' & ' / Error: No se reconoce lexema: ' xy&z '
             imprime(msg);
-            $%&
+            $%&			#Error: No se reconoce simbolo: ' $ ' / No se reconoce simbolo: ' % ' / No se reconoce simbolo: ' & '
         }
     }
 end
