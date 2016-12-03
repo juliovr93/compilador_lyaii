@@ -26,7 +26,7 @@ public class Principal {
     private void m_start(){
         Token v_Token = a_TablaLexico.get(a_Recorrido);
         if(v_Token.m_getIdToken()!=10){
-            
+
         }else{
             a_Recorrido++;
         }

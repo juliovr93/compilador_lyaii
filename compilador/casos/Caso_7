@@ -1,0 +1,35 @@
+#######################################################################################
+#                               			Caso: No: 7                              		         #
+#######################################################################################
+
+# En este caso podemos observar como el compilador detecta errores de los 3 tipos lexicos, sintacticos y semanticos
+
+# Errores Lexicos:
+# 1.- El primer error lexico que encuentra el compilador es valor que se quiere asignar al identificador 'adc' ya que no lo reconoce dentro del lenguaje declarado en la linea []
+# 2.- El segundo error lexico que encuentra es la cadena no terminada de la linea []
+
+# Errores Sintacticos:
+# 3.- El tercer error se detecta al no declarar la sentencia 'start'
+# 4.- El cuarto error encontrado es la falta de declaracion de un valor en la linea []
+# 5.- El quinto error se encuentra en la declaracion de la condicion del ciclo mientras en la linea []
+
+# Errores Semanticos:
+# 6.- El sexto error se encuentra al declarar un valor de tipo candena en la variable 'def' de la linea []
+# 7.- El septimo error se ubica en la linea [] al querer realizar una operacion entre enteros y cadenas
+# 8.- El octavo error se detecta en la condicion de la estructura de control 'si' al realizar operacion de distintis ambitos
+
+start				#Error: No se declaro la sentencia 'start' 
+    cad abc = "hi";			#Error: No se reconoce lexema: ' 5ys ' / Error: No se declaro un valor 
+    ent def = 5;			#Error: Tipo de valor incompatible
+    ent xyz=0;
+    mientras (xyz<=5){			#Error: No se declaro un valor 
+        xyz= 5 +6;			#Error: Tipo de valor incompatible
+        si(xyz<5){
+            imprime("Lenguajes y Automatas II");	
+        }
+        si(xyz>6){
+            imprime("Cuarto Parcial");
+        }
+        cad xyz1= "Adios";			# Error: Cadena no completada: '  "Adios ' / Error: No se declaro un valor 
+    }
+end

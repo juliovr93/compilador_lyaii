@@ -44,7 +44,7 @@ import javax.swing.table.DefaultTableModel;
 public class main_compiler extends JFrame{
     
     private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
-    private ArrayList <Token> a_TablaDeSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
+    private ArrayList <Token> a_TablaSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private ArrayList <Token> a_TablaLexico = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
     private boolean a_bdLexico=false;                                           // Bandera del Análisis Léxico
@@ -68,6 +68,7 @@ public class main_compiler extends JFrame{
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         a_ToolBar = new javax.swing.JToolBar();
         a_btnNuevo = new javax.swing.JButton();
         a_btnAbrir = new javax.swing.JButton();
@@ -100,8 +101,14 @@ public class main_compiler extends JFrame{
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
+
+        jMenuItem4.setText("jMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Compilador");
@@ -381,7 +388,7 @@ public class main_compiler extends JFrame{
 
         a_mnuAyuda.setText("Ayuda");
 
-        jMenuItem1.setText("Analisis Léxico");
+        jMenuItem1.setText("Casos de uso lexico");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -389,7 +396,7 @@ public class main_compiler extends JFrame{
         });
         a_mnuAyuda.add(jMenuItem1);
 
-        jMenuItem2.setText("Analisis Sintáctico");
+        jMenuItem2.setText("Casos de uso sintáctico");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -397,14 +404,25 @@ public class main_compiler extends JFrame{
         });
         a_mnuAyuda.add(jMenuItem2);
 
-        jMenuItem3.setText("Analisis Semantico");
-        jMenuItem3.setEnabled(false);
+        jMenuItem3.setText("Casos de uso semántico");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
         a_mnuAyuda.add(jMenuItem3);
+
+        jMenuItem7.setText("Errores");
+        a_mnuAyuda.add(jMenuItem7);
+
+        jMenuItem5.setText("Gramatica");
+        a_mnuAyuda.add(jMenuItem5);
+
+        jMenuItem6.setText("Lenguaje");
+        a_mnuAyuda.add(jMenuItem6);
+
+        jMenuItem8.setText("Versiones");
+        a_mnuAyuda.add(jMenuItem8);
 
         a_MenuBar.add(a_mnuAyuda);
 
@@ -569,7 +587,7 @@ public class main_compiler extends JFrame{
         String v_codigoFuente="";                                               // Se crea una variable que contendra todo el texto del archivo
         try{
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
-            a_TablaDeSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
+            a_TablaSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_TablaLexico = new ArrayList<Token>();                         // Limpia la tabla de simbolos
             a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
@@ -584,7 +602,7 @@ public class main_compiler extends JFrame{
             JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
         }
         AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);          // Llama a la clase para el analisis léxico
-        a_TablaDeSimbolos=o_anaLexico.m_getTablaDeSimbolos();                   // Obtiene la tabla de simbolos generada
+        a_TablaSimbolos=o_anaLexico.m_getTablaDeSimbolos();                   // Obtiene la tabla de simbolos generada
         a_TablaLexico=o_anaLexico.m_getTablaLexico();
         a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
         a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
@@ -607,8 +625,8 @@ public class main_compiler extends JFrame{
         DefaultTableModel v_Modelo=new DefaultTableModel(null,v_tblModel);
         a_tblSimbolos.setModel(v_Modelo);
         String[] v_Datos={"","","","","","",""};
-        for(int v_indice=0;v_indice<a_TablaDeSimbolos.size();v_indice++){
-            Token v_Temporal=a_TablaDeSimbolos.get(v_indice);
+        for(int v_indice=0;v_indice<a_TablaSimbolos.size();v_indice++){
+            Token v_Temporal=a_TablaSimbolos.get(v_indice);
             v_Datos[0]=v_Temporal.m_getNoToken()+"";
             v_Datos[1]=v_Temporal.m_getLexema();
             v_Datos[2]=v_Temporal.m_getTipoLexema()+"";
@@ -621,8 +639,8 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Sintactico(){
-        AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico,a_TablaDeSimbolos);
-        a_TablaDeSimbolos=o_analisisSintactico.m_getTabla();
+        AnalisisSintactico o_analisisSintactico = new AnalisisSintactico(a_TablaLexico,a_TablaSimbolos);
+        a_TablaSimbolos=o_analisisSintactico.m_getTabla();
         a_TablaLexico=o_analisisSintactico.m_getLexico();
         a_txtaConsola.setText(a_txtaConsola.getText()+o_analisisSintactico.m_getConsola());
         m_muestraTabla();
@@ -634,7 +652,7 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Semantico(){
-        AnalisisSemantico o_analisisSemantico = new AnalisisSemantico(a_TablaLexico, a_TablaDeSimbolos);
+        AnalisisSemantico o_analisisSemantico = new AnalisisSemantico(a_TablaLexico, a_TablaSimbolos);
         a_txtaConsola.setText(a_txtaConsola.getText()+o_analisisSemantico.m_getConsola());
         if (o_analisisSemantico.m_getError()) {
             a_btnSemantico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
@@ -780,6 +798,11 @@ public class main_compiler extends JFrame{
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

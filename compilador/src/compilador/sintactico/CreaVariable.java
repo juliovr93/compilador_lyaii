@@ -30,11 +30,10 @@ public class CreaVariable {
                 if(m_buscaToken(v_Token.m_getLexema())){
                     Token v_Temp = a_TablaLexico.get(a_Recorrido-1);
                     m_tipoToken(v_Token.m_getLexema(),v_Temp);
-                    v_Token.m_setTipo(v_Temp.m_getIdToken());
-                    a_TablaLexico.set(a_Recorrido,v_Token);
+                    m_tipoLexema(v_Token.m_getLexema(), v_Temp);
                 }else{
                     Token v_Temp = a_TablaLexico.get(a_Recorrido-1);
-                    v_Token.m_setTipo(v_Temp.m_getIdToken());
+                    m_tipoLexema(v_Token.m_getLexema(), v_Temp);
                     a_TablaLexico.set(a_Recorrido,v_Token);
                     a_Consola+="Error[]: El identificador '"+v_Token.m_getLexema()+"' ya fue declarado \n";
                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
@@ -101,6 +100,16 @@ public class CreaVariable {
             if(v_Temporal.m_getLexema().equals(p_Palabra)){
                 v_Temporal.m_setTipo(p_Token.m_getIdToken());
                 a_TablaSimbolos.set(v_indice,v_Temporal);
+            }
+        }
+    }
+    
+    private void m_tipoLexema(String p_Palabra,Token p_Token){
+        for(int v_indice=0;v_indice<a_TablaLexico.size();v_indice++){
+            Token v_Temporal=a_TablaLexico.get(v_indice);
+            if(v_Temporal.m_getLexema().equals(p_Palabra)){
+                v_Temporal.m_setTipo(p_Token.m_getIdToken());
+                a_TablaLexico.set(v_indice,v_Temporal);
             }
         }
     }

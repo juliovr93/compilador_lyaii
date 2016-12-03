@@ -16,12 +16,12 @@ public class AnalisisSemantico {
     public AnalisisSemantico(ArrayList <Token> p_TablaLexico,ArrayList <Token> p_TablaSimbolos){
         a_TablaSimbolos=p_TablaSimbolos;
         a_TablaLexico=p_TablaLexico;
-        m_errorAsignacion();
-        m_errorOperacion();
+        m_chequeoTipos();
+        m_checaExpresiones();
     }
     
     
-    private void m_errorAsignacion(){
+    private void m_chequeoTipos(){
         boolean v_Bandera=false;
         for(int v_indice=0;v_indice<a_TablaSimbolos.size();v_indice++){
             Token v_Temporal=a_TablaSimbolos.get(v_indice);
@@ -49,7 +49,7 @@ public class AnalisisSemantico {
         }
     }
     
-    private void m_errorOperacion(){
+    private void m_checaExpresiones(){
         Principal o_Principal = new Principal(a_TablaLexico,a_TablaSimbolos,0,a_Consola);
         a_Consola=o_Principal.m_getConsola();
         if(o_Principal.m_getError())

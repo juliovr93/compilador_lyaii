@@ -1,0 +1,29 @@
+#######################################################################################
+#		                		Caso: No: 4			         	         #
+#######################################################################################
+
+# En este caso podemos observar como el el analizador sintactico  detecta errores de construccion de intrucciones
+
+# 1.- El primer error que se detecta el analizador sintactico es la falta de la intruccion 'start'  en el metodo principal en la linea [16]
+# 2.- El segundo error que deteta el analizador sintactido es la ausencia de una variable para asignar el valor de tipo entero en la linea [16]
+# 3.- El tercer error se hubica en la linea [18] teniendo como error la falta de valores para la expresion de una condicion
+# 4.- El cuarto error que se puede observar se encuentra ubicado en la linea [] donde en la condicion de la sentencia de control si, se declara una cadena
+# 5.- El quinto error se detecta sobre la expresion de la linea [] donde genera un error por un valor de tipo incompatible 
+# 6.- El sexto error se detecta sobre la expresion de la linea [] donde genera un error por un valor de tipo incompatible 
+# 7.- El septimo error detecta la falta de cerrar una instruccion con ';' en la linea []
+
+
+    ent = 5;				# Error: No se declaro la sentencia 'start' / Error: No se declaro una variable 
+    cad (cadena = "cadena";
+    ent abc = 120;
+    mientras(){				# Error: No se declaro un valor
+        si("Mexico"){			# Error: Expresion mal declarada
+            imprime("Lenguajes y Automatas");
+        }
+        ent xyz = 5 - 6 + 8 * (6/((((3*"Hola")))));	#Error: Tipo de valor incompatible 
+        mientras(msg>xyz){			#Error: Tipo de valor incompatible 
+            xyz = xyz +1;
+            imprime("Saludos")			# Error: Falta declarar ';' 
+        }
+    }
+end

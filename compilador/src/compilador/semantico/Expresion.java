@@ -83,7 +83,7 @@ public class Expresion {
                         if(v_Token.m_getIdToken()==6){
                             if(a_TablaLexico.size()>a_Recorrido+1){
                                 a_Recorrido++;
-                                Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Valor);
+                                Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Tipo);
                                 a_Recorrido=o_Expresion.m_getRecorrido();
                                 a_Consola=o_Expresion.m_getConsola();
                                 a_Valor=o_Expresion.m_getValor();
@@ -94,7 +94,7 @@ public class Expresion {
                             if(v_Token.m_getIdToken()==7){
                                 if(a_TablaLexico.size()>a_Recorrido+1){
                                     a_Recorrido++;
-                                    Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Valor);
+                                    Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Tipo);
                                     a_Recorrido=o_Expresion.m_getRecorrido();
                                     a_Consola=o_Expresion.m_getConsola();
                                     a_Valor=o_Expresion.m_getValor();
@@ -105,7 +105,7 @@ public class Expresion {
                                 if(v_Token.m_getIdToken()==8){
                                     if(a_TablaLexico.size()>a_Recorrido+1){
                                         a_Recorrido++;
-                                        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Valor);
+                                        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Tipo);
                                         a_Recorrido=o_Expresion.m_getRecorrido();
                                         a_Consola=o_Expresion.m_getConsola();
                                         a_Valor=o_Expresion.m_getValor();
@@ -134,7 +134,7 @@ public class Expresion {
                     if(a_TablaLexico.size()>a_Recorrido+1){
                         a_Recorrido++;
                         v_Token=a_TablaLexico.get(a_Recorrido);
-                        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Valor);
+                        Expresion o_Expresion = new Expresion(a_TablaLexico,a_TablaSimbolos,a_Recorrido, a_Consola,a_Valor++,a_Tipo);
                         a_Valor=o_Expresion.m_getValor();
                         a_Recorrido=o_Expresion.m_getRecorrido();
                         a_Consola=o_Expresion.m_getConsola();
