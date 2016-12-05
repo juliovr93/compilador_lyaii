@@ -161,7 +161,8 @@ public class AnalisisLexico {
                     a_consola+="Error en la linea: "+a_Linea+"\n";
                     
                     v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                    a_consola+="Error [130] Lex: Posible identificador declarado o valor numérico incorrectamente.: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
+                    a_codFuenteHTML+="<font color=color=#6f7077>"+v_codFuente.substring(0,v_Indice)+"</font>";
+                    a_consola+="Error [130] Lex: Posible identificador declarado o valor numérico incorrectamente: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     a_bdLexico=false;                                           // Cambia la bandera de analsis léxico a falso
@@ -254,7 +255,9 @@ public class AnalisisLexico {
                 if(v_Indice==0){
                     v_Indice=m_errorSimbolo(v_codFuente,0);
                     a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+v_codFuente.charAt(v_Indice)+" '\n";
+                    a_codFuenteHTML+="<font color=#000000>"+v_codFuente.charAt(v_Indice)+"</font>";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
+                    a_bdLexico=false;
                     if(v_Indice>0){
                         v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
                         a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
