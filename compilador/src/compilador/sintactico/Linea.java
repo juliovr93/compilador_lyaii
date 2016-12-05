@@ -54,7 +54,7 @@ public class Linea {
                                 if(a_TablaLexico.size()>a_Recorrido){
                                     v_Token = a_TablaLexico.get(a_Recorrido);
                                     if(v_Token.m_getIdToken()!=62){
-                                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                        a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                         a_Error=true;
                                     }else{
@@ -62,12 +62,12 @@ public class Linea {
                                     }
                                 }else{
                                     v_Token=a_TablaLexico.get(a_Recorrido-1);
-                                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                    a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                     a_Error=true;
                                 }
                             }else{
-                                a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
                             }
@@ -75,7 +75,7 @@ public class Linea {
                             a_Recorrido++;
                         }
                     }else{
-                        a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                        a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                         a_Error=true;
                     }
@@ -114,48 +114,48 @@ public class Linea {
                                                             if(v_Token.m_getIdToken()==61){
                                                                 a_Recorrido++;
                                                             }else{
-                                                                a_Consola+="Error[]: Falta declarar '}' \n";
+                                                                a_Consola+="Error[210] Sin: Llave sin cerrar \n";
                                                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                                 a_Error=true;
                                                             }
                                                         }else{
                                                             v_Token=a_TablaLexico.get(a_Recorrido-1);
-                                                            a_Consola+="Error[]: Falta declarar '}' \n";
+                                                            a_Consola+="Error[210] Sin: Llave sin cerrar \n";
                                                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                             a_Error=true;
                                                         }
                                                     }
                                                 }else{
-                                                    a_Consola+="Error[]: Falta declarar '{' \n";
+                                                    a_Consola+="Error[205] Sin: Llave sin abrir \n";
                                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                     a_Error=true;
                                                 }
                                             }else{
                                                 v_Token=a_TablaLexico.get(a_Recorrido-1);
-                                                a_Consola+="Error[]: Falta declarar '{' \n";
+                                                a_Consola+="Error[205] Sin: Llave sin abrir \n";
                                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                 a_Error=true;
                                             }
                                         }else{
-                                            a_Consola+="Error[]: Falta declarar ')' \n";
+                                            a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                             a_Error=true;
                                         }
                                     }else{       
                                         v_Token=a_TablaLexico.get(a_Recorrido-1);
-                                        a_Consola+="Error[]: Falta declarar ')' \n";
+                                        a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                         a_Error=true;
                                     }
                                 }
                             }else{
-                                a_Consola+="Error[]: Falta declarar '(' \n";
+                                a_Consola+="Error[212] Sin: Paréntesis sin abrir \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
                             }
                         }else{
                             v_Token=a_TablaLexico.get(a_Recorrido-1);
-                            a_Consola+="Error[]: No se declaro condicion \n";
+                            a_Consola+="Error[190] Sin: Condición mal estructurada. \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                             a_Error=true;
                         }
@@ -184,39 +184,39 @@ public class Linea {
                                                     if(v_Token.m_getIdToken()==62){
                                                         a_Recorrido++;
                                                     }else{
-                                                        a_Consola+="Error[]: Falta declarar ';' \n";
+                                                        a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                         a_Error=true;
                                                     }
                                                 }else{
                                                     v_Token = a_TablaLexico.get(a_Recorrido-1);
-                                                    a_Consola+="Error[]: Falta declarar ';' \n";
+                                                    a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                     a_Error=true;
                                                 }
                                                 
                                             }else{
-                                                a_Consola+="Error[]: Falta declarar ')' \n";
+                                                a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                                 a_Error=true;
                                             }
                                         }else{
                                             v_Token = a_TablaLexico.get(a_Recorrido-1);
-                                            a_Consola+="Error[]: Falta declarar ')' \n";
+                                            a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                             a_Error=true;
                                         }
                                         
                                     }
                                 }else{
-                                    a_Consola+="Error[]: Falta declarar '(' \n";
+                                    a_Consola+="Error[212] Sin: Paréntesis sin abrir \n";
                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                     a_Error=true;
                                 }
                                     
                             }else{
                                 v_Token = a_TablaLexico.get(a_Recorrido-1);
-                                a_Consola+="Error[]: Falta declarar ')' \n";
+                                a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
                             }

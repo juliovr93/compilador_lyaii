@@ -30,7 +30,7 @@ public class AnalisisSemantico {
                     if(v_Temporal.m_getTipo()==56){
                         Token v_Valor= a_TablaSimbolos.get(v_Temporal.m_getValor()-1);
                         if(v_Valor.m_getIdToken()!=2){
-                            a_Consola+="Error []: Tipo de valor incompatible \n";
+                            a_Consola+="Error [310] Sem: Asignación de un valor de diferente tipo al de la variable al que se le asigna. \n";
                             a_Consola+="Error en la linea: "+v_Temporal.m_getNoLinea()+"\n";
                             a_Error=true;
                         }
@@ -38,7 +38,7 @@ public class AnalisisSemantico {
                         if(v_Temporal.m_getTipo()==57){
                             Token v_Valor= a_TablaSimbolos.get(v_Temporal.m_getValor()-1);
                             if(v_Valor.m_getIdToken()!=3){
-                                a_Consola+="Error []: Tipo de valor incompatible \n";
+                                a_Consola+="Error [310]: Sem: Asignación de un valor de diferente tipo al de la variable al que se le asigna. \n";
                                 a_Consola+="Error en la linea: "+v_Temporal.m_getNoLinea()+"\n";
                                 a_Error=true;
                             }

@@ -26,7 +26,7 @@ public class Principal {
     private void m_start(){
         Token v_Token = a_TablaLexico.get(a_Recorrido);
         if(v_Token.m_getIdToken()!=10){
-            a_Consola+="Error[]: No se declaro la sentencia 'start' \n";
+            a_Consola+="Error[260]: Sin: No se declaró el método inicio \n";
             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
             a_Error=true;
         }else{
@@ -46,13 +46,13 @@ public class Principal {
         if(a_TablaLexico.size()>a_Recorrido){
             Token v_Token = a_TablaLexico.get(a_Recorrido);
             if(v_Token.m_getIdToken()!=11){
-                a_Consola+="Error[]: No se declaro la sentencia 'end' \n";
+                a_Consola+="Error[260]: Sin: No se declaró el método inicio \n";
                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                 a_Error=true;
             }
         }else{
             Token v_Token=a_TablaLexico.get(a_Recorrido-1);
-            a_Consola+="Error[]: No se declaro la sentencia 'end' \n";
+            a_Consola+="Error[260]: Sin: No se declaró el método inicio \n";
             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
             a_Error=true;
         }

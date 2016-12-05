@@ -45,17 +45,17 @@ public class Condicion {
                         if(o_Expresion.m_getError())
                             a_Error=true;
                     }else{
-                        a_Consola+="Error[]: No se declaro una valor \n";
+                        a_Consola+="Error[185] Sin: Expresión mal estructurada \n";
                         a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                         a_Error=true;
                     }
                 }else{
-                    a_Consola+="Error[]: No se declaro una valor \n";
+                    a_Consola+="Error[185] Sin: Expresión mal estructurada \n";
                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                     a_Error=true;
                 }
             }else{
-                a_Consola+="Error[]: Expresion mal declarada \n";
+                a_Consola+="Error[185] Sin: Expresión mal estructurada \n";
                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                 a_Error=true;
             }

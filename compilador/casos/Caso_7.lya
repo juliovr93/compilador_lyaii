@@ -1,35 +1,43 @@
-#######################################################################################
-#                               			Caso: No: 7                              		         #
-#######################################################################################
-
-# En este caso podemos observar como el compilador detecta errores de los 3 tipos lexicos, sintacticos y semanticos
-
-# Errores Lexicos:
-# 1.- El primer error lexico que encuentra el compilador es valor que se quiere asignar al identificador 'adc' ya que no lo reconoce dentro del lenguaje declarado en la linea []
-# 2.- El segundo error lexico que encuentra es la cadena no terminada de la linea []
-
-# Errores Sintacticos:
-# 3.- El tercer error se detecta al no declarar la sentencia 'start'
-# 4.- El cuarto error encontrado es la falta de declaracion de un valor en la linea []
-# 5.- El quinto error se encuentra en la declaracion de la condicion del ciclo mientras en la linea []
-
-# Errores Semanticos:
-# 6.- El sexto error se encuentra al declarar un valor de tipo candena en la variable 'def' de la linea []
-# 7.- El septimo error se ubica en la linea [] al querer realizar una operacion entre enteros y cadenas
-# 8.- El octavo error se detecta en la condicion de la estructura de control 'si' al realizar operacion de distintis ambitos
-
-start				#Error: No se declaro la sentencia 'start' 
-    cad abc = "hi";			#Error: No se reconoce lexema: ' 5ys ' / Error: No se declaro un valor 
-    ent def = 5;			#Error: Tipo de valor incompatible
-    ent xyz=0;
-    mientras (xyz<=5){			#Error: No se declaro un valor 
-        xyz= 5 +6;			#Error: Tipo de valor incompatible
-        si(xyz<5){
-            imprime("Lenguajes y Automatas II");	
-        }
-        si(xyz>6){
-            imprime("Cuarto Parcial");
-        }
-        cad xyz1= "Adios";			# Error: Cadena no completada: '  "Adios ' / Error: No se declaro un valor 
-    }
-end
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <span><font color="#839bc1">####################################################################################### 
+    </font></span><br><span><font color="#839bc1">#&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 
+    &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; Caso:&#160; No:&#160; 7&#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 
+    &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; # </font></span><br><span><font color="#839bc1">####################################################################################### 
+    </font></span><br><span><font color="#839bc1">#&#160; En&#160; este&#160; caso&#160; podemos&#160; 
+    observar&#160; como&#160; el&#160; compilador&#160; detecta&#160; errores&#160; de&#160; los&#160; 3&#160; tipos&#160; 
+    lexicos,&#160; sintacticos&#160; y&#160; semanticos </font></span><br><span><font color="#839bc1">#&#160; 
+    Errores&#160; Lexicos: </font></span><br><span><font color="#839bc1">#&#160; 
+    1.-&#160; El&#160; primer&#160; error&#160; lexico&#160; que&#160; encuentra&#160; el&#160; compilador&#160; es&#160; valor&#160; 
+    que&#160; se&#160; quiere&#160; asignar&#160; al&#160; identificador&#160; 'adc'&#160; ya&#160; que&#160; no&#160; lo&#160; 
+    reconoce&#160; dentro&#160; del&#160; lenguaje&#160; declarado&#160; en&#160; la&#160; linea&#160; [] </font></span><br><span><font color="#839bc1">#&#160; 
+    2.-&#160; El&#160; segundo&#160; error&#160; lexico&#160; que&#160; encuentra&#160; es&#160; la&#160; cadena&#160; no&#160; 
+    terminada&#160; de&#160; la&#160; linea&#160; [] </font></span><br><span><font color="#839bc1">#&#160; 
+    Errores&#160; Sintacticos: </font></span><br><span><font color="#839bc1">#&#160; 
+    3.-&#160; El&#160; tercer&#160; error&#160; se&#160; detecta&#160; al&#160; no&#160; declarar&#160; la&#160; sentencia&#160; 
+    'start' </font></span><br><span><font color="#839bc1">#&#160; 4.-&#160; El&#160; cuarto&#160; 
+    error&#160; encontrado&#160; es&#160; la&#160; falta&#160; de&#160; declaracion&#160; de&#160; un&#160; valor&#160; en&#160; la&#160; 
+    linea&#160; [] </font></span><br><span><font color="#839bc1">#&#160; 5.-&#160; El&#160; 
+    quinto&#160; error&#160; se&#160; encuentra&#160; en&#160; la&#160; declaracion&#160; de&#160; la&#160; condicion&#160; del&#160; 
+    ciclo&#160; mientras&#160; en&#160; la&#160; linea&#160; [] </font></span><br><span><font color="#839bc1">#&#160; 
+    Errores&#160; Semanticos: </font></span><br><span><font color="#839bc1">#&#160; 
+    6.-&#160; El&#160; sexto&#160; error&#160; se&#160; encuentra&#160; al&#160; declarar&#160; un&#160; valor&#160; de&#160; tipo&#160; 
+    candena&#160; en&#160; la&#160; variable&#160; 'def'&#160; de&#160; la&#160; linea&#160; [] </font></span><br><span><font color="#839bc1">#&#160; 
+    7.-&#160; El&#160; septimo&#160; error&#160; se&#160; ubica&#160; en&#160; la&#160; linea&#160; []&#160; al&#160; querer&#160; 
+    realizar&#160; una&#160; operacion&#160; entre&#160; enteros&#160; y&#160; cadenas </font></span><br><span><font color="#839bc1">#&#160; 
+    8.-&#160; El&#160; octavo&#160; error&#160; se&#160; detecta&#160; en&#160; la&#160; condicion&#160; de&#160; la&#160; 
+    estructura&#160; de&#160; control&#160; 'si'&#160; al&#160; realizar&#160; operacion&#160; de&#160; distintis&#160; 
+    ambitos </font></span><br><span><font color="#839bc1">#Error:&#160; No&#160; se&#160; 
+    declaro&#160; la&#160; sentencia&#160; 'start'&#160; &#160;</font></span><br><span><font color="#839bc1">#Error:&#160; 
+    No&#160; se&#160; reconoce&#160; lexema:&#160; '&#160; 5ys&#160; '&#160; /&#160; Error:&#160; No&#160; se&#160; declaro&#160; un&#160; 
+    valor&#160; &#160;</font></span><br><span><font color="#839bc1">#Error:&#160; 
+    Tipo&#160; de&#160; valor&#160; incompatible &#160;</font></span><br><span><font color="#839bc1">#Error:&#160; 
+    No&#160; se&#160; declaro&#160; un&#160; valor&#160; &#160;</font></span><br><span><font color="#839bc1">#Error:&#160; 
+    Tipo&#160; de&#160; valor&#160; incompatible &#160;</font></span><br><span><font color="#839bc1">#&#160; 
+    Error:&#160; Cadena&#160; no&#160; completada:&#160; '&#160; &#160; &quot;Adios&#160; '&#160; /&#160; Error:&#160; No&#160; se&#160; 
+    declaro&#160; un&#160; valor&#160; &#160;</font></span><br>
+  </body>
+</html>

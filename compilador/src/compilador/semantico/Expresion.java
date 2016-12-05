@@ -36,21 +36,21 @@ public class Expresion {
                 if(a_Tipo!=0){
                     if(v_Token.m_getIdToken()==2){
                         if(a_Tipo!=56){
-                            a_Consola+="Error []: Tipo de valor incompatible \n";
+                            a_Consola+="Error [350] Sem: Operaciones aritméticas con cadenas \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+"\n";
                             a_Error=true;
                         }
                     }
                     if(v_Token.m_getIdToken()==3){
                         if(a_Tipo!=57){
-                            a_Consola+="Error []: Tipo de valor incompatible \n";
+                            a_Consola+="Error [350] Sem: Operaciones aritméticas con cadenas \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+"\n";
                             a_Error=true;
                         }
                     }
                     if(v_Token.m_getIdToken()==12){
                         if(a_Tipo!=v_Token.m_getTipo()){
-                            a_Consola+="Error []: Tipo de valor incompatible \n";
+                            a_Consola+="Error [350] Sem: Operaciones aritméticas con cadenas \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+"\n";
                             a_Error=true;
                         }

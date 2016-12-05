@@ -56,7 +56,7 @@ public class CreaVariable {
                             if(a_TablaLexico.size()>a_Recorrido){
                                 v_Token = a_TablaLexico.get(a_Recorrido);
                                 if(v_Token.m_getIdToken()!=62){
-                                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                    a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                     a_Error=true;
                                 }else{
@@ -64,12 +64,12 @@ public class CreaVariable {
                                 }
                             }else{
                                 v_Token=a_TablaLexico.get(a_Recorrido-1);
-                                a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                                a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                                 a_Error=true;
                             }
                         }else{
-                            a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                            a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";                                
                             a_Error=true;
                         }
@@ -77,18 +77,18 @@ public class CreaVariable {
                         a_Recorrido++;
                     }
                 }else{
-                    a_Consola+="Error[]: Falta cerrar linea ';' \n";
+                    a_Consola+="Error[175] Sin: Falta cerrar línea ';' \n";
                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                     a_Error=true;
                 }
             }else{
-                a_Consola+="Error[]: No se declaro una variable \n";
+                a_Consola+="Error[150] Sin: Variable mal creada, no se respeta el orden de creación \n";
                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                 a_Error=true;
             }
         }else{
             Token v_Token = a_TablaLexico.get(a_Recorrido-1);
-            a_Consola+="Error[]: No se declaro una variable \n";
+            a_Consola+="Error[150] Sin: Variable mal creada, no se respeta el orden de creación \n";
             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
             a_Error=true;
         }

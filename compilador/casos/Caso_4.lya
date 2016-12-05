@@ -12,16 +12,16 @@
 # 6.- El sexto error se detecta sobre la expresion de la linea [] donde genera un error por un valor de tipo incompatible 
 # 7.- El septimo error detecta la falta de cerrar una instruccion con ';' en la linea []
 
-
+start
     ent = 5;				# Error: No se declaro la sentencia 'start' / Error: No se declaro una variable 
-    cad (cadena = "cadena";
+    cad cadena = "cadena";
     ent abc = 120;
-    mientras(){				# Error: No se declaro un valor
+    mientras(abs$){				# Error: No se declaro un valor
         si("Mexico"){			# Error: Expresion mal declarada
             imprime("Lenguajes y Automatas");
         }
-        ent xyz = 5 - 6 + 8 * (6/((((3*"Hola")))));	#Error: Tipo de valor incompatible 
-        mientras(msg>xyz){			#Error: Tipo de valor incompatible 
+        ent xyz = 5 - 6 + 8 * (6/((((3*abc)))));		# Error: Tipo de valor incompatible 
+        mientras(msg>xyz){			# Error: Tipo de valor incompatible 
             xyz = xyz +1;
             imprime("Saludos")			# Error: Falta declarar ';' 
         }

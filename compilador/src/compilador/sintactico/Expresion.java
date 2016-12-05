@@ -109,26 +109,26 @@ public class Expresion {
                             if(v_Token.m_getIdToken()==59){
                                 a_Recorrido++;
                             }else{
-                                a_Consola+="Error[]: Falta cerrar expresion ')' \n";
+                                a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                                 a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                                 a_Error=true;
                             }
                         }else{
                             v_Token=a_TablaLexico.get(a_Recorrido-1);
-                            a_Consola+="Error[]: Falta cerrar expresion ')' \n";
+                            a_Consola+="Error[215] Sin: Paréntesis sin cerrar \n";
                             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                             a_Error=true;
                         }
                     }
                 }else{
-                    a_Consola+="Error[]: No se declaro un valor \n";
+                    a_Consola+="Error[185] Sin: Expresión mal estructurada \n";
                     a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
                     a_Error=true;
                 }
             }
         }else{
             Token v_Token=a_TablaLexico.get(a_Recorrido-1);
-            a_Consola+="Error[]: No se declaro un valor \n";
+            a_Consola+="Error[185] Sin: Expresión mal estructurada \n";
             a_Consola+="Error en la linea: "+v_Token.m_getNoLinea()+" \n";
             a_Error=true;
         }

@@ -5,6 +5,7 @@
 package compilador.lexico;
 
 import compilador.Token;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class AnalisisLexico {
@@ -24,7 +25,7 @@ public class AnalisisLexico {
         a_codFuente=p_codFuente;
         m_anaLexico(a_codFuente);
         if(a_TablaDeSimbolos.size()==0){
-            a_consola+="Error []: No se encontro ningún léxema\n";
+            a_consola+="Error [120] Lex: No se encontró ningún lexema\n";
             a_bdLexico=false;
         }
     }
@@ -39,7 +40,7 @@ public class AnalisisLexico {
             }
         }
         else{
-            a_consola+="Error []: No hay codigo fuente\n";
+            a_consola+="Error [110] Lex: No hay código fuente \n";
             a_consola+="Error en la linea: "+a_Linea+"\n";
             a_bdLexico=false;
         }
@@ -52,19 +53,23 @@ public class AnalisisLexico {
             if(v_codFuente.charAt(0)==32){
                 v_bandera=true;
                 v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                a_codFuenteHTML+="&nbsp;";
             }else{
                 if(v_codFuente.charAt(0)==10){
                     v_bandera=true;
                     a_Linea++;
                     v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                    a_codFuenteHTML+="<br>";
                 }else{
                     if(v_codFuente.charAt(0)==' '){
                         v_bandera=true;
                         v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                        a_codFuenteHTML+="&nbsp;";
                     }else{
                         if(v_codFuente.charAt(0)=='\t'){
                             v_bandera=true;
                             v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                            a_codFuenteHTML+="&#09;";
                         }else{
                             v_bandera=false;
                         }
@@ -80,19 +85,29 @@ public class AnalisisLexico {
         int v_contador=0;
         boolean v_bandera=true;
         if(v_codFuente.charAt(0)=='#'){
-            v_contador++;
+            a_codFuenteHTML+="<font color=#2b5ba8>";
             while(!"".equals(v_codFuente) && v_bandera){
                  if(v_codFuente.charAt(0)==10){
                      v_bandera=false;
+                     a_codFuenteHTML+=v_codFuente.charAt(0);
                      v_codFuente=v_codFuente.substring(1,v_codFuente.length());
+                     
                  }else{
+                    if(v_codFuente.charAt(0)==32){
+                        a_codFuenteHTML+="&nbsp;";
+                    }else{
+                        if(v_codFuente.charAt(0)=='\t'){
+                            a_codFuenteHTML+="&#09;";
+                        }else{
+                            a_codFuenteHTML+=v_codFuente.charAt(0);
+                        }
+                    }
                      v_codFuente=v_codFuente.substring(1,v_codFuente.length());
                  }
                  v_contador++;
             }
             a_Linea++;
-            sb_comentarios.append("<p><span style='color:#839bc1'>" + p_codFuente.substring(0,v_contador) + "</span></p>");
-            a_codFuenteHTML+=sb_comentarios.toString()+"\n";
+            a_codFuenteHTML+="</font><br>";
         }
         return v_codFuente;
     }
@@ -124,6 +139,7 @@ public class AnalisisLexico {
             v_Recorrido = v_palabrasReservadas.getPalabrasReservadas(v_codFuente);// Manda llamar el metodo getPalabrasReservadas para regresar el numero de caracteres que componen a la palabra reservada
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
                 m_addToken(v_codFuente.substring(0,v_Recorrido),3,a_Linea,v_palabrasReservadas.m_getID());             // Si el recorrido es diferente de 0 encontro una palabra reservada y añade el token a la tabla de simbolos
+                a_codFuenteHTML+="<font color=#b71939>"+v_codFuente.substring(0,v_Recorrido)+"</font>";
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }
@@ -136,15 +152,16 @@ public class AnalisisLexico {
             if(0!=v_Recorrido){                                                 // Compara si el recorrido del código fuente es diferente de 0
                 if(v_Recorrido>0){
                     m_addToken(v_codFuente.substring(0,v_Recorrido),4,a_Linea,v_Ident.m_getID());             // Si el recorrido es mayor de 0 encontro un identificador y añade el token a la tabla de simbolos
+                    a_codFuenteHTML+="<font color=#026311>"+v_codFuente.substring(0,v_Recorrido)+"</font>";
                     v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                     v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
                 }else{
                     v_Indice=m_errorSimbolo(v_codFuente,0);
-                    a_consola+="Error []: No se reconoce simbolo: ' "+v_codFuente.charAt(v_Indice)+" '\n";
+                    a_consola+="Error [130] Lex: Posible identificador declarado o valor numérico incorrectamente: ' "+v_codFuente.charAt(v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
                     
                     v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                    a_consola+="Error []: No se reconoce lexema: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
+                    a_consola+="Error [130] Lex: Posible identificador declarado o valor numérico incorrectamente.: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     a_bdLexico=false;                                           // Cambia la bandera de analsis léxico a falso
@@ -159,20 +176,23 @@ public class AnalisisLexico {
             if(0!=v_Recorrido){                                                 // Compara si recorrido del código fuente es diferente de 0
                 if(v_Recorrido>0){                                              // Compara si el recorrido del código fue mayor a 0
                     m_addToken(v_codFuente.substring(0,v_Recorrido),5,a_Linea,v_Constantes.m_getID());         // Si el recorrido es mayor de 0 encontro un tipo de datos y añade el token a la tabla de simbolos
+                    a_codFuenteHTML+="<font color=#d18c04>"+v_codFuente.substring(0,v_Recorrido)+"</font>";
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     v_Indice=v_Recorrido;                                       // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
                 }
                 if(v_Recorrido==-1){
                     v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                    a_consola+="Error []: No se reconoce lexema: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
+                    a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
+                    a_codFuenteHTML+="<font color=color=#6f7077>"+v_codFuente.substring(0,v_Indice)+"</font>";
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     a_bdLexico=false;                                           // Cambia la bandera de analsis léxico a falso
                 }
                 if(v_Recorrido==-2){
                     v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                    a_consola+="Error []: Cadena no completada: ' "+p_codFuente.substring(0,v_Indice)+" '\n";
+                    a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+p_codFuente.substring(0,v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
+                    a_codFuenteHTML+="<font color=color=#6f7077>"+v_codFuente.substring(0,v_Indice)+"</font>";
                     v_Inserta=true;                                             // Cambia la bandera de control de insercion a cierto
                     a_bdLexico=false;                                           // Cambia la bandera de analsis léxico a falso
                 }
@@ -185,6 +205,26 @@ public class AnalisisLexico {
             v_Recorrido = v_Operadores.getOperadores(v_codFuente);              // Manda llamar el método getOperadores para regresar el número de caráceres que componen al operador
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
                 m_addToken(v_codFuente.substring(0,v_Recorrido),2,a_Linea,v_Operadores.m_getID());             // Si el recorrido es diferente de 0 encontro un operador y añade el token a la tabla de simbolos
+                String Operador= v_codFuente.substring(0,v_Recorrido);
+                System.out.println(Operador);
+                if(Operador.equals("<")){
+                    a_codFuenteHTML+="<font color=#000000>&lt;</font>";
+                }else{
+                    if(Operador.equals(">")){
+                        a_codFuenteHTML+="<font color=#000000>&gt;</font>";
+                    }else{
+                        if(Operador.equals("<=")){
+                            a_codFuenteHTML+="<font color=#000000>&lt;=</font>";
+                        }else{
+                            if(Operador.equals(">=")){
+                                a_codFuenteHTML+="<font color=#000000>&gt;=</font>";
+                            }else{
+                                a_codFuenteHTML+="<font color=#000000>"+v_codFuente.substring(0,v_Recorrido)+"</font>";
+                            }
+                        }
+                    }
+                }
+                
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }
@@ -196,6 +236,7 @@ public class AnalisisLexico {
             v_Recorrido = v_Delimitadores.getDelimitadores(v_codFuente);        // Manda llamar el método getDelimitadores para regresar el número de carácteres que componen al delimitador
             if(0!=v_Recorrido){                                                 // Compara si recorrido del codigo fuente es diferente de 0
                 m_addToken(v_codFuente.substring(0,v_Recorrido),1,a_Linea,v_Delimitadores.m_getID());             // Si el recorrido es diferente de 0 encontro un delimitador y añade el token a la tabla de simbolos
+                a_codFuenteHTML+="<font color=#000000>"+v_codFuente.substring(0,v_Recorrido)+"</font>";
                 v_Inserta=true;                                                 // Cambia la bandera de control de insercion a cierto
                 v_Indice=v_Recorrido;                                           // Sustrae el recorrigo del codigo fuente y lo guarda en v_Indice
             }        
@@ -212,11 +253,11 @@ public class AnalisisLexico {
             if(!"".equals(v_codFuente)){
                 if(v_Indice==0){
                     v_Indice=m_errorSimbolo(v_codFuente,0);
-                    a_consola+="Error []: No se reconoce simbolo: ' "+v_codFuente.charAt(v_Indice)+" '\n";
+                    a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+v_codFuente.charAt(v_Indice)+" '\n";
                     a_consola+="Error en la linea: "+a_Linea+"\n";
                     if(v_Indice>0){
                         v_Indice=m_errorLexema(v_codFuente,0);                  // Si el recorrido es menor de 0 indica un error en los tipos de datos cadena
-                        a_consola+="Error []: No se reconoce lexema: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
+                        a_consola+="Error [140] Lex: Lexema imposible de clasificar: ' "+v_codFuente.substring(0,v_Indice)+" '\n";
                         a_consola+="Error en la linea: "+a_Linea+"\n";
                         a_bdLexico=false;
                     }else{

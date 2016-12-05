@@ -44,12 +44,14 @@ import javax.swing.table.DefaultTableModel;
 public class main_compiler extends JFrame{
     
     private File a_Archivo;                                                     // Archivo que se usara para guardar y abrir el codigo fuente
-    private ArrayList <Token> a_TablaSimbolos = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
-    private ArrayList <Token> a_TablaLexico = new ArrayList <Token>();      // ArrayList para Tabla de Simbolos
+    private ArrayList <Token> a_TablaSimbolos = new ArrayList <Token>();        // ArrayList para Tabla de Simbolos
+    private ArrayList <Token> a_TablaLexico = new ArrayList <Token>();          // ArrayList para Tabla de Simbolos
     private boolean a_bnGuardaArchivo;                                          // Bandera para Guardar Archivo
     private boolean a_bdLexico=false;                                           // Bandera del Análisis Léxico
     private boolean a_bdSintactico=false;                                       // Bandera del Análisis Léxico
     private boolean a_bdSemantico=false;                                        // Bandera del Análisis Léxico
+    private String a_codigoFuente="";                                           // Se crea una variable que contendra todo el texto del documento (a_codigoFuente)
+    private boolean a_Color=false;
             
     public main_compiler() {
         initComponents();                                                       // Inicialización de componentes
@@ -192,6 +194,11 @@ public class main_compiler extends JFrame{
         a_pnlCodigo.setBorder(javax.swing.BorderFactory.createTitledBorder("Codígo"));
 
         a_txtpCodigo.setEnabled(false);
+        a_txtpCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                a_txtpCodigoMousePressed(evt);
+            }
+        });
         a_txtpCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 a_txtpCodigoKeyPressed(evt);
@@ -413,15 +420,35 @@ public class main_compiler extends JFrame{
         a_mnuAyuda.add(jMenuItem3);
 
         jMenuItem7.setText("Errores");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         a_mnuAyuda.add(jMenuItem7);
 
         jMenuItem5.setText("Gramatica");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         a_mnuAyuda.add(jMenuItem5);
 
         jMenuItem6.setText("Lenguaje");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         a_mnuAyuda.add(jMenuItem6);
 
         jMenuItem8.setText("Versiones");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         a_mnuAyuda.add(jMenuItem8);
 
         a_MenuBar.add(a_mnuAyuda);
@@ -471,6 +498,8 @@ public class main_compiler extends JFrame{
             v_opcion=JOptionPane.showConfirmDialog(this,"¿Desea guardar el documento?");
             if(v_opcion==0){                                                    // Si la opcion es "si"
                 if(m_Guardar()){                                                // Llama el metodo para guardar el documento
+                    a_codigoFuente="";
+                    a_txtpCodigo.setContentType("text");
                     a_txtpCodigo.setText("");                                   // Limpia el textpane para generar un nuevo digo fuente
                     a_txtpCodigo.setEnabled(true);                              // Habilita el JTextPane para ingresar el código fuente
                     a_mniGuardar.setEnabled(true);                              // Habilita el JMenuItem Guardar
@@ -483,6 +512,8 @@ public class main_compiler extends JFrame{
                 }
             }
             if(v_opcion==1){                                                    // Si la opcion es "no"
+                a_codigoFuente="";
+                a_txtpCodigo.setContentType("text");
                 a_txtpCodigo.setText("");                                       // Limpia el textpane para generar un nuevo codigo fuente
                 a_txtpCodigo.setEnabled(true);                                  // Habilita el textpane para editarlo
                 a_mniGuardar.setEnabled(true);                                  // Habilita el JMenuItem Guardar
@@ -494,7 +525,9 @@ public class main_compiler extends JFrame{
                 a_bnGuardaArchivo=true;                                         // Cambia el estado de la bandera bnGuardarArchivo a verdadero
             }
         }else{                                                                  // Si el documento se encuentra vacio
+            a_txtpCodigo.setContentType("text");
             a_txtpCodigo.setText("");                                           // Limpia el textpane para generar un nuevo codigo fuente
+            a_codigoFuente="";
             a_txtpCodigo.setEnabled(true);                                      // Habilita el textpane para editarlo
             a_mniGuardar.setEnabled(true);                                      // Habilita el JMenuItem Guardar
             a_mniGuardarComo.setEnabled(true);                                  // Habilita el JMenuItem Guardar como
@@ -512,16 +545,17 @@ public class main_compiler extends JFrame{
         v_AbrirArchivo.setFileFilter(new FileNameExtensionFilter("Todos los archivos *.lya","lya","LYA"));
         int v_Seleccion =v_AbrirArchivo.showDialog(null,"Abrir");               // Se comprueba si ha aceptado abrir el archivo
         if(v_Seleccion==JFileChooser.APPROVE_OPTION){                           // Si la opcion fue aceptar
-            try{            
+            try{
+                a_codigoFuente="";
                 a_Archivo = v_AbrirArchivo.getSelectedFile();                   // Se abre el documento en un JFile (a_Archivo)
                 String v_Linea;                                                 // Se crea una variable para leer el documento linea por linea (v_Linea)
-                String v_codigoFuente="";                                       // Se crea una variable que contendra todo el texto del documento (v_codigoFuente)
                 FileReader v_frArchivo=new FileReader(a_Archivo);               // Se usa un FileReader para leer el archivo almacenado en a_Archivo (v_frArchivo)
                 BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);     // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
                 while((v_Linea=v_brArchivo.readLine())!=null){                  // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
-                    v_codigoFuente+=v_Linea+"\n";                               // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del codigo fuente
+                    a_codigoFuente+=v_Linea+"\n";                               // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del codigo fuente
                 }
-                a_txtpCodigo.setText(v_codigoFuente);                           // Inserta el texto del documento en el JTextPane (a_txtpCodigo)
+                a_txtpCodigo.setContentType("text");
+                a_txtpCodigo.setText(a_codigoFuente);                           // Inserta el texto del documento en el JTextPane (a_txtpCodigo)
                 a_txtpCodigo.setEnabled(true);                                  // Limpia el textpane para generar un nuevo codigo fuente
                 a_mniGuardar.setEnabled(true);                                  // Habilita el MenuItem para Guardar
                 a_mniGuardarComo.setEnabled(true);                              // Habilita el MenuItem para Guardar Como...
@@ -543,7 +577,10 @@ public class main_compiler extends JFrame{
             try{                                
                 BufferedWriter v_bwArchivo;                                     // Crea un BufferedWriter para escribir el codigo fuente (v_bwArchivo)
                 v_bwArchivo = new BufferedWriter(new FileWriter(a_Archivo));    // Inicializa el BufferedWriter para escribir el codigo fuente
-                v_bwArchivo.write(a_txtpCodigo.getText());                      // Escribe nuestro codigo fuente almacenado en a_txtpCodigo
+                if(a_Color==false){
+                    a_codigoFuente=a_txtpCodigo.getText();
+                }
+                v_bwArchivo.write(a_codigoFuente);                      // Escribe nuestro codigo fuente almacenado en a_txtpCodigo
                 v_bwArchivo.close();                                            // Cierra el BufferedWriter para guardar los cambios en el archivo
                 return true;                                                    // Regresar un true para certificar que el archivo se guardo
             }catch(Exception Ex){
@@ -565,7 +602,10 @@ public class main_compiler extends JFrame{
                 a_Archivo = v_guardarArchivo.getSelectedFile();                 // Se genera el archivo en un File (a_Archivo)
                 String v_Path= a_Archivo.getAbsolutePath();                     // Obtenemos el path del archivo a guardar
                 PrintWriter v_pwArchivo = new PrintWriter(a_Archivo);           // Se genera un PrintWriter para escribir nuestro archivo en el disco duro
-                v_pwArchivo.print(a_txtpCodigo.getText());                      // Se escribe el codigo fuente almacenado en a_txtpCodigo
+                if(a_Color==false){
+                    a_codigoFuente=a_txtpCodigo.getText();
+                }
+                v_pwArchivo.print(a_codigoFuente);                      // Se escribe el codigo fuente almacenado en a_txtpCodigo
                 v_pwArchivo.close();                                            // Se cierra el archivo para escribirlo
                 if(!v_Path.endsWith(".lya")){                                   // Se comprueba que el archivo se haya guardado en la ruta correcta
                     File v_tempArchivo = new File(v_Path+".lya");               // Si no genera un nuevo archivo para renombrarlo
@@ -583,32 +623,32 @@ public class main_compiler extends JFrame{
     }
     
     private void m_Lexico(){
+        /*
         String v_Linea;                                                         // Se crea una variable para leer el documento linea por linea
-        String v_codigoFuente="";                                               // Se crea una variable que contendra todo el texto del archivo
         try{
             a_txtaConsola.setText("");                                          // Limpia la consola de errores
-            a_TablaSimbolos = new ArrayList<Token>();                         // Limpia la tabla de simbolos
-            a_TablaLexico = new ArrayList<Token>();                         // Limpia la tabla de simbolos
+            a_TablaSimbolos = new ArrayList<Token>();                           // Limpia la tabla de simbolos
+            a_TablaLexico = new ArrayList<Token>();                             // Limpia la tabla de simbolos
             a_bdLexico=false;                                                   // Reinicia para la bandera del análisis léxico
             FileReader v_frArchivo=new FileReader(a_Archivo);                   // Se usa un FileReader para leer el documento (v_frArchivo)
             BufferedReader v_brArchivo=new BufferedReader(v_frArchivo);         // Se usa un BufferedReader para leer el archivo contenido en v_frArchivo de manera más optima (v_brArchivo)
             while((v_Linea=v_brArchivo.readLine())!=null){                      // Se lee la linea actual del BufferedReader (v_brArchivo) y se compara que sea diferente a nulo
-                v_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
+                a_codigoFuente+=v_Linea+"\n";                                   // Si la linea es diferente de nulo añade la linea a la variable que contendra el texto del documento
             }
             v_brArchivo.close();                                                // Cierra el BufferedReader (v_brArchivo)
             v_frArchivo.close();                                                // Cierra el FileReader (v_brArchivo)
         }catch(Exception Ex){
             System.out.println(Ex.getMessage());
             JOptionPane.showMessageDialog(this,"Error al abrir el archivo");    // Mensaje en caso de error al abrir el archivo
-        }
-        AnalisisLexico o_anaLexico=new AnalisisLexico(v_codigoFuente);          // Llama a la clase para el analisis léxico
+        }*/
+        AnalisisLexico o_anaLexico=new AnalisisLexico(a_codigoFuente);          // Llama a la clase para el analisis léxico
         a_TablaSimbolos=o_anaLexico.m_getTablaDeSimbolos();                   // Obtiene la tabla de simbolos generada
         a_TablaLexico=o_anaLexico.m_getTablaLexico();
         a_txtaConsola.setText(o_anaLexico.m_getConsola());                      // Obtiene los errores encontrados en el analisis
         a_bdLexico=o_anaLexico.m_getLexico();                                   // Obtiene la bandera para continuar con el analisis sintáctico
 
-        //a_txtpCodigo.setContentType("text/html");
-        //a_txtpCodigo.setText(o_anaLexico.m_getCodFuenteHTML());
+        a_txtpCodigo.setContentType("text/html");
+        a_txtpCodigo.setText(o_anaLexico.m_getCodFuenteHTML()+"</pre>");
 
         m_muestraTabla();                                                       // Muetra la tabla de simbolos
         if(a_bdLexico){                                                         // Analiza la bandera el analisis léxico
@@ -648,6 +688,7 @@ public class main_compiler extends JFrame{
             a_btnSintactico.setBackground(Color.RED);                           // El botón del análisis léxico se pone en rojo (Falló)
         }else{
             a_btnSintactico.setBackground(Color.GREEN);                         // El botón del análisis léxico se pone en rojo (Falló)
+            a_btnSemantico.setBackground(Color.YELLOW);                        // El botón del análisis sintáctico se pone en amarillo (Preparado)
         }
     }
     
@@ -672,9 +713,11 @@ public class main_compiler extends JFrame{
     private void a_btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnCompilarActionPerformed
         if(m_Guardar()){
             m_Lexico();
+            a_Color=true;
             m_Sintactico();
             m_Semantico();
         }
+        
     }//GEN-LAST:event_a_btnCompilarActionPerformed
 
     private void a_mniGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_mniGuardarActionPerformed
@@ -702,7 +745,7 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_a_mniGuardarComoActionPerformed
 
     private void a_txtpCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_a_txtpCodigoKeyPressed
-        a_bdSintactico=false;
+        
         a_btnLexico.setBackground(Color.YELLOW);
         a_btnSintactico.setBackground(Color.BLACK);
         a_btnSemantico.setBackground(Color.BLACK);
@@ -712,12 +755,14 @@ public class main_compiler extends JFrame{
     private void a_btnLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnLexicoActionPerformed
         if(m_Guardar()){
             m_Lexico();
+            a_Color=true;
         }
     }//GEN-LAST:event_a_btnLexicoActionPerformed
 
     private void a_btnSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSintacticoActionPerformed
         if(m_Guardar()){
             m_Lexico();
+            a_Color=true;
             m_Sintactico();
         }
     }//GEN-LAST:event_a_btnSintacticoActionPerformed
@@ -728,7 +773,7 @@ public class main_compiler extends JFrame{
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            File path = new File ("src/compilador/files/Lexico.pdf");
+            File path = new File ("resource/casos_lexicos.pdf");
             Desktop.getDesktop().open(path);
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -737,7 +782,7 @@ public class main_compiler extends JFrame{
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try {
-            File path = new File ("src/compilador/files/Sintactico.pdf");
+            File path = new File ("resource/casos_sintacticos.pdf");
             Desktop.getDesktop().open(path);
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -745,16 +790,65 @@ public class main_compiler extends JFrame{
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+        try {
+            File path = new File ("resource/casos_semanticos.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void a_btnSemanticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_a_btnSemanticoActionPerformed
         if(m_Guardar()){
             m_Lexico();
+            a_Color=true;
             m_Sintactico();
             m_Semantico();
         }
     }//GEN-LAST:event_a_btnSemanticoActionPerformed
+
+    private void a_txtpCodigoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_a_txtpCodigoMousePressed
+        a_bdSintactico=false;
+        a_Color=false;
+        a_txtpCodigo.setContentType("text");
+        a_txtpCodigo.setText(a_codigoFuente);
+    }//GEN-LAST:event_a_txtpCodigoMousePressed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            File path = new File ("resource/errores.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            File path = new File ("resource/gramatica.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            File path = new File ("resource/lenguaje.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        try {
+            File path = new File ("resource/versiones.pdf");
+            Desktop.getDesktop().open(path);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     public static void main(String args[]) {
         try{
